@@ -35,8 +35,3 @@ This specialization introduces fundamental and advanced recommender system techn
 ### Disclaimer
 
 This repository is intended for educational purposes only. The contents, including subtitles, are not my own. The lab solutions are provided for reference and are not endorsed by the course instructors or platform. Please adhere to the course’s honor code and guidelines when using these resources.
-
--------------
-
-Feel free to contribute or provide feedback to improve this repository!
-
