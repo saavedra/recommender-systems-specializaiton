@@ -1,0 +1,186 @@
+Welcome back, in this lecture we're taking
+a look at decisions support metrics. We're going to understand the concept
+of a decision support metric, and then look at a few different examples
+of metrics including error rate, reversals, precision recall, and
+the area under a receiving an operator characteristic curve, and come away with
+an understanding of the usefulness and limitations of these metrics. So, let's start with the idea
+of decision support. We looked first at the idea of
+predictive accuracy, how correct is it? Decision support recognizes the idea that,
+the ultimate goal for many recommenders is to help
+people make good decisions. And typically decisions for
+recommendations or decision support evaluations, are about distinguishing
+between good things and bad things. So, think about the idea that I'm
+working on a five star scale, and I'm getting a recommendation for movies. And I'm getting that in
+the form of predictions. And my actual opinion of the movie is
+2.5 stars, but the system doesn't know that and I don't know that yet, because
+I haven't gone to see the movie yet. Now, if the system is off by one and
+a half stars, one answer is to say well, one and
+a half stars, that's sort of bad. But whether it's bad really
+depends which direction it's off. If it's off by showing four stars, and
+four star movies I tend to look at, I've just wasted two hours on
+a movie that I didn't like. But if it's by showing me
+one star instead of two and a half, and I wasn't going to
+see it at two and a half, and I'm certainly not going to see it at one,
+I didn't make a bad decision. That's what I want to know,
+that I didn't make a bad decision. It's okay for you to be off,
+as long as you don't sway me between something I would consume and something I wouldn't consume, across the
+line of whether the thing is good or bad. Or to state that more clearly I can think
+of this as the item is good or bad. The prediction or recommendation
+convinces me that it's good or bad. If it's good and
+it convinces me it's good, I'm happy. If it's bad and
+it convinces me it's bad, I'm happy. If it's bad and it convinces me it's good, I'm really sad because I
+consumed something I shouldn't. And if it's good and
+it convinces me I'm bad, I may be pretty unhappy too because
+I missed out on a good opportunity. And so, I want to avoid errors. For recommendations, you can have the same
+concept, decision support may not be so much about the stars, but
+how high it is up on the list. If I'm going to look at the first four
+pages Google returns on a search, and two of those pages are not very good, then
+I'm not very happy with Google's ranking. If you give me a list of ten
+restaurants I should try in a town, and those ten are good but
+the next 40 are lousy. If I only look at ten, I'm pretty happy. So, decision support really
+focuses on the top of the list, though we'll come back to other list
+metrics in the following lecture. The first sets of metrics applied for
+decision support and reccomender systems specifically
+were pretty ad hoc. First people started measuring errors,
+how often is the system wrong? Usually measured as
+a percentage of errors, either a total number or an error rate. And I say it's ad hoc because
+people had to define wrong. And what they would
+often do is decide look, we're going to say this
+range are good things. So, on a five star scale,
+we might say, three and a half to five stars
+means the item's good. And one to two and
+a half stars means it's bad. And in between means that it's not good, it's not bad, it's sort of in between,
+it doesn't matter that much. And then we could count up, how often does a bad movie get a good prediction or
+a good movie get a bad prediction. Or how often does a bad movie appear
+in the top ten or the top 30. And count those up as errors. Now, there's lots of ways to count and
+tally errors. If you're using the same data set
+the total number may be enough. The average error rate per user, or just the average error rate
+overall can work as well. Not commonly used in research, not even
+very commonly used in industry these days. Another similar early measure
+of error was the reversal. A reversal was at an attempt
+to systematize this by saying, what if we just say big
+mistakes were going to tell me. So, if I'm off by 3 points
+on a 5-point scale, I want to count those, because if I'm
+off by 3 points on a 5 point scale, I've absolutely moved from good to bad or
+bad to good. It's a four to a one or
+a five to a two, or vice versa. And that was the measure that was used,
+not commonly used today. More commonly used today,
+are measures that are actually quite old. And they come from the field
+of information retrieval. Precision and recal, are two measures
+that ideally would be used widely. But there are some challenges with them. Precision's defined as
+the percentage of selected items or designated items that
+are actually relevent. So, I can define this as the number
+of items that are relevent and selected, divided by
+the number that are selected. Now, this assumes that
+I have a filter that, I'm going to pick some
+items out from my set. I might say I'm going to pick all the
+items that get a prediction of four and above, or three and a half and above. Or I might say I'm going to pick the items
+that in the top N, that are in the top 20. And I calculate the procession by saying,
+how many of those are actually relevant. Where relevant is defined as they're
+actually good in the underline data set. So, how many of the items that i saw with
+a three and a half star prediction or above, are actually items that the user
+gave three and a half stars or above, versus the ones where they didn't,
+where it was lower than that. And so noise got into my predictions. Recall is the flip side of that. It's the percentage of relevant
+items that actually get selected. So, if there are 4,000 really good
+items in a database of 10,000, how many of those 4,000 items get predicted
+with scores of three and a half or better? How many of them make it in to
+the top 100 list or the top 1000 list? So, they really have different goals. Precision is about returning
+mostly useful stuff. Precision is what you want typically
+if you're looking at a search engine. I want to make sure what
+you give me is useful. Don't waste my time. And it has the assumptions that
+there's more useful stuff, than you really could possibly ever use or
+want. Recall is about not missing things, about not failing to find
+something that would be good. So, recall might be something you
+care about if you are scout for a professional football team. And you don't want to have great players,
+that you didn't realize were out there. Your willing to follow 100
+mediocre players to find one star. Recall is also what you would care about,
+if you were a lawyer looking for evidence or looking for president. There may only be one or
+two things out there, that really are going to make you case. And you'll feel bad,
+if the system was highly precise but failed to define the things you need,
+because it came back and said, I can't find anything relevant, but
+there really were two items out there. If the two goals were in balance
+there's a set of F-metrics. F1 is Is a common one that say, we can just take some form of
+average of Precision and Recall. It's not typically an arithmetic average. But some form of geometric or
+a hybrid average. Now, the number one problem
+with precision and recall, is that to actually measure them correctly
+you need a ground truth for every item. These measures are used in
+the field of information retrieval, where people go through
+very careful annotations of every item to tell whether it
+is relevant to a query or not. The problem there is relevance is
+personal in a recommender system. It's not just yes, it's relevant,
+no it's not, we can now do the analysis. We would need to know everybody's
+opinion on every item. to do a real precision or
+recall measure, and if we had everyone's opinion on every item,
+why bother with a recommender system? So, there's two ways
+this can be addressed. One of them is, that a number of people
+will do fake versions of precision or recall. Where they limit things that
+are relevant to rated items, or they may limit only the things that
+are considered to rated items. In the unary case, zero, one,
+they'll start with the assumption that everything that's relevant is
+something you've already bought. And we'll see how often the system. Recommends things you've already bought. Now, there's some
+interesting biases there. It assumes that you were
+correct to begin with, but you can compute these scores and
+then use them comparatively. And often they shed some light. The other way to avoid
+this is to use sampling. And say we're going to randomly sample
+some items, and then conduct the human rating experiment where we have people
+evaluate those items, by hand in essence. And determine the actual precision and recall over that subset that
+we're going to measure. Both of these are used in the field and
+when you see precision and recall used, you really do want to understand
+exactly what they did. The second problem with precision and recall is,
+it tends to cover the entire data set. It's not targeted at
+the top recommended items. And tha's what was designed for
+information retrieval. A lot of folks use versions
+of precision and recall at n. Among the top n recommended items,
+how many are good? Now, this can be done in
+a lot of different ways, there's different measures and
+we'll get in to some of these. In our rank metrics in the next lecture, that do this in creative ways but
+at it's very basis, precision at n is the number of
+relevant items in the top n over n. Now, recall at n turns out to be
+basically the same as the number of relevant items at n,
+over the total number of relevant items. And so you don't typically see
+people talk about both of them, because they're going to both
+move in lockstep when you fix n. One last measure I want to talk
+about before we move forward, and that's the receiver
+operating characteristic. Curve, which is a plot of
+the performance of a filter or classifier at different thresholds. And it's designed to plot true positives,
+against false positives. I've given you a link here
+to the Wikipedia page, that does a really good job on this. And in fact,
+I'm going to take us to that page. And you don't need to read this here,
+I just want you to see the picture to the right, which shows a set of receiver
+operating characteristic curves. The straight line from the bottom left
+to the top right, is a random filter. It says that I can achieve, let me get
+a point over here, so you can see this. It says that if I pick any point along
+this way, I can achieve a trade-off. For instance,
+I can get 20% of the good stuff. That's what this is,
+if I accept 20% of the bad stuff. 20% true positives,
+with 20% false positives. If I accept 80% of the things, I can get 80% of the good stuff,
+with 80% of the bad stuff. Well, that's why we don't
+use random filters. What these filters are showing in
+a different domain, this is biological I believe, is that I can achieve
+points above that curve. Experimentally varying
+my filter parameter. Do I recommend things to
+you that are up here, where I'm saying they've
+gotta be 4.9 stars, 4.3, maybe I get 4 stars here, and I say I can get you 60%
+of the good things, and you only have to take 30% of the bad ones
+and that might be an interesting point. Now, in recommender systems, these curves
+have been plotted to help understand, what's the cutoff of
+what I should recommend. And then people go the next step, and
+they measure the area under the curve, sometimes referred to as
+the sensitivity of the curve. And that area under the curve, is an overall measure of
+the effectiveness of the recommendation. In fact, I personally find the curve
+itself more useful because it tells you the kind of trade-offs you can make. But if you're trying to
+compare two algorithms, knowing that one as a much higher
+area under that curve would also say that one's much likely to
+perform as an effective filter. So, as we pull these things together,
+once again, people have shown that all these metrics
+tend to correlate with each other. They don't necessarily correlate with
+the prediction accuracy metrics. Decision support metrics have their
+own thing that they're measuring. But, whether you use precision or whether you use an error rate, which is
+sort of a casual version of precision. Or whether you use the ROC curve or area, all of those tend to
+be measuring the same thing. Precision and overall precision,
+are probably the most widely used. They're more easily understood. ROC is best if your goal
+is to tune a recommender to determine the sweet spot for filtering. And none of these metrics
+overcome the problem, of being based on rated items only. Which is why sometimes people
+run synthetic experiments to compute a synthetic precision. So, as we move forward we are going to
+look next at rank-aware metrics, and then continue through the variety
+of different ways of measuring the performance of a reccommendor system. We'll see you there.

@@ -1,0 +1,152 @@
+Hello again, in previous videos,
+we've seen several metrics for evaluating the performance of
+our recommenders' systems. As well as the basics of train, test,
+hold-out, some cross-validation. In this video, we're going to talk
+about some more of the details of computing this data splits and
+of doing cross-validation. So, first let's recap a little bit the
+goals that Offline Evaluation recommender. Our primary objective is the estimate
+the recommenders's quality. We want to measure how good is
+this recommender going to be at producing recommendations
+that users find useful. And also to answer a variety of
+important research questions, within the setup of an offline evaluation. There's a lot of question that we can ask
+about how the recommended behaving in what if we're doing. It's important to know, we often can't
+answer, thus the recommended work. Well, we need to know how strong
+the link between our metrics and the actual user responses. Business metrics such as sales etc., or often times the link is a fairly
+weak one but it's not nonexistent. It's really useful to use
+these offline protocols, in order to do particularly
+a first pass weed out. So you have a bunch of ideas for
+algorithms. You can use the offline evaluation
+to identify the really bad ones, to identify the best contenders. To then go and put to more expensive user
+base testing and online experimentation. But our basic experimental protocol comes
+from machine learning where we hide data. We hold out some data, we try to predict
+or classify the data that's held out. So we've got a big dataset. So we've got a big dataset and we say,
+I'm going to say this part is the test. We say the recommender
+doesn't get to see that data. Train on that data and then see how
+good it is predicting the test results. For cross validation,
+we split the data into several partitions. We hold out each and turn and treat the
+rest of the partitions as training data. This allows us to test for
+one thing overall items or ratings or users by taking all of them and
+then we treat the rest as training data. The extreme version of this is called hold
+one out, where we just take one user or one rating, treat all other
+ratings as training data and try to predict that one rating. Let us get the use the most
+possible data to train is really slow and
+we measure our score of classification or recommendation accuracy based on
+these different train test splits. The basic structure of doing this
+is we partition our data set indicate partitions for k for validation. And then for each one we train on
+everything other than our set and we test on our set. If we use a many partitions then each
+test partition gets more training data. Say, if we split into 5 groups then each
+one trains an 80% and test some 20%. If we split into 20 groups then each
+one trains a 95% and test some 5%. So, you get more training data but,
+you're doing more experiments, which takes a lot more time. So, you have a trade off, 5 and 10 are
+common and recommender system research. As a few different ways
+we can split the data. One, we can just partition the ratings, take the ratings, divide them into 5
+equal piles, test on each one in turn. We can also split users which
+allows us more control and how we're measuring each user to
+measure the expected user experience. Which case we split the users
+into test partitions, so we put each user or
+put each test user in the test set. But only some of the ratings,
+we keep some of the ratings as a profile. You could also do the same with items, but this isn't very common if it's ever
+done in recommender systems research. So, to show how this works,
+if we have our big data set and we're going to say,
+we're going to split the users. Into five partitions. Since we're doing cross validation for
+one run, we're going to test on this and then
+we're going to train on everything else. For another run we're
+going to test on this one and then this one is train,
+and this one is train. And we go through
+the whole list like that. But we got this set of test users, you've got say let's look at
+one user's row of ratings. Rating, this is the ratings. For you, so this is our test data. And then this,
+all of that is our train data. We split the users, the ratings for
+this user into two pieces, we've got the real test ratings. The ones we're going to use see
+how accurate they get predicted. The rest of this user's ratings we're
+going to call the probe ratings. Because users do come into
+the system the first time with no ratings and
+it's hard to do a recommendation for them. But often times, we're trying to recommend
+for a user, with an established history. So what we do is we take the test user and
+we say, okay a bunch of the ratings
+we're going to treat. As the established history and then we're
+going to test on some of the ratings say 5 and see how accurate
+the system is predicting those. But that's the basic structure of
+what's going to happen in this cross validation strategy. To split the user ratings is very
+common to split them randomly. So we pick five random ratings from
+the users say those were the test ratings. We can also split their ratings
+by time which gives you a more accurate simulation
+of the user experience. because the user rated
+those items in some order. So you take their five
+most recent rating and you use their previous ratings to
+predict those five most recent. The best but most expensive way to
+do this is and we're going to talk more in detail about this in a later
+video on temporal evaluation. Is to only train on ratings that came
+into the system before the test rating. This gives us the most
+accurate measure of the user's experience at the time that
+they entered that rating. Now with all of these things there's
+a trade off between the fidelity of the measurement and
+the cost of doing the computation. So a lot of times we don't do
+that we train on all of the other training ratings. So the train set consists of all of these train ratings plus the probe
+ratings for all of the test users. And the test set consist
+of just the test ratings. So a lot of times we just
+do the random selection or the temporal selection and we train on
+all of the ratings from other users. We're using log data such as clicked logs,
+purchase logs. We don't know anything about absent items. We don't know anything about absent
+items for ratings either, but this presents a particular
+problem when we have clicks. We don't know anything about
+what the user didn't click. The basic structure is the same but in the
+next video we're going to talk some more about some of the ounces of
+dealing with this kind of data. One of the applications of this cross
+validation beside are general measuring the recommender performance
+what's called a Parameter Sweep. So, in the second course we saw neighborhood based recommenders
+that have neighborhood sizes. How many similar items do we consider? How may similar users do we consider? And we want to find what's
+the best parameter value. So what we do is we cross-fold
+the data set and we try many settings. And then we pick the best
+setting on one or more metrics. We might plot on the x-axis
+neighborhood size and on the y-axis RMSE and indicate, well how did our item recommend perform. And is performance gotta
+lot better RMSE got lower. As we increase the neighborhood size and I forgot some in the neighbor
+sort of getting worse because the laws similarity neighbors
+added additional noise to the system. And then we can say well,
+it looks like the best value is about there and we'll use that many
+neighbors for our recommender. Very common, a lot of different
+algorithms have parameters. Cross validation is a key component
+of our standard methods for identifying the best parameters. We do have one thing to wash out for
+in that, the problem of over fitting. And overfitting is a problem that's
+general to machine learning. And it's what happens when the recommender
+or the other learning algorithm learn it's training data too well and
+hurts general performance. So, data even randomly selected data,
+that's selected in a good statistical way. It might well have corks and what we're trying to do is we're
+looking the training data. We're trying to learn the best recommender
+for the general case for users, items, ratings, we've never seen before. But if the recommender, it's possible for
+a learning algorithm or recommender to get very good at
+predicting the training data. That what it's done is memorized
+corks of our training data. And then that actually hurts its
+performance in its actual application because those corks no longer apply. We can have this problem in
+parameter sweeping because it may be some particular number of neighbors
+works really well for our training data. But there's a quirk that leads
+to some of those values. So the most robust way when we're going
+to sweep for parameters and communicate results of a recommender performance is
+we set aside a validation set of ratings. We don't use these when we're
+tuning our recommender. We then crossfold on the remaining
+ratings to pick optimal parameter values. And we take the best configuration
+from that cross-fold and we test its performance in the validation set, and
+that's the measure we actually report. So, good practice, split users
+into k partitions, 5 is common. Split user ratings by time,
+this going to give us good balance between the performance,
+the cost of doing the experiment. And the fidelity of the evaluation for comparison with previous results,
+a lot of paper. Many, many papers use random
+user rating splitting. So you can do that,
+get more comparable results and then you include the user query or
+probe ratings in the train data. Whatever you do, document your protocol carefully so you
+can run it again, so others can compare. If you're trying to publish research,
+it's a really good idea to publish the exact evaluation configuration you
+did as a rerunable script if possible. That way,
+it's very clear exactly what you did so that it can be replicated and
+we can actually have comparable results. If you're working in an internal setting
+of doing recommendations in a company. It's good to document this stuff so you and your colleagues have good
+documentation of exactly what you did. So that when you compare
+another algorithm, that you're experimenting with next year. Against your results now, you're
+actually doing the same measurement. There's a few variations, we can generate
+case samples instead of partitions. This isn't really cross validation
+anymore but if you have a lot of users, it can be more efficient to test
+than a randomly selected sub set. Which is a statistically
+balanced thing to do. You can only hold out one item
+per user instead of five or wherever, that use your very targeted
+recommendations testing results. So, are things that you can
+do to stratify sampling, say to get rid of popularity basis. Again, whichever strategy you are using, make sure you do document
+your protocol very carefully.

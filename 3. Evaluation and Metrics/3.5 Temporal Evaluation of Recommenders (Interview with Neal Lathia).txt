@@ -1,0 +1,144 @@
+>> Welcome back. In the last several lectures, we've talked
+about a number of approaches to evaluating recommender systems and
+understanding how well they perform. Today, we're pleased to
+have with us Neal Lathia, Senior Research Associate at the
+University of Cambridge who will talk to us about how to evaluate how
+the recommender performs over time. Neal, welcome to the class. >> Hello. >> So, why does time matter in understanding recommender
+systems behavior? >> Well, so if you think about how
+recommender systems are evaluated right now and I mean,
+evaluated in offline experiments. Usually people take a data set and
+they exploit it, and they train their algorithm on one side of the dataset,
+and it'll test it on the other. And the thing that this method
+which has been used throughout recommender system research history,
+the thing that it misses is that this assumes that everything
+that matters in your recommender system can be captured in that one
+split of the dataset that you have. >> So, why does time matter for understanding recommender
+systems behavior? >> So if you think about the way
+that recommender systems have been evaluated offline over the years,
+typically people will take a dataset and they will spit it into a training side and
+a test set. They'll use the training set to build
+some model and the test set will be used to measure some kind of performance
+of an algorithm's output. Now that method is perfectly fine,
+but it assumes one key thing which is that the snapshot of the data that
+you're working with is enough to measure everything that is important for
+your recommender system. And so during my PhD,
+I was visiting this question and wondering what are some of
+the things that get overlooked when you are evaluating a recommender
+system in this way. And so, we can think of a couple of
+examples and they all relate to time. So, how engaged are your users? Are they returning to your system? Are they receiving recommendations
+that are up to date? And then maybe more related to
+your back-end and your algorithm. So, how is your system responding
+to the new users and items? And how does the performance of your
+algorithm change as you retrain it with latest dataset? And all of this sort of falls under
+the hope that we have when we're building these systems which is
+that the more people engaged, the more data they give,
+the more their experience improves. And so of course, evaluating recommender
+systems is still a very tricky thing, but the traditional methods do
+not seem to capture this idea of experience improving over time. So, just to highlight that I ran one
+short user study a few years back where I was wondering what happens if people's
+recommendations don't change over time and how does that affect the way people view
+the quality of the recommender system? So the small user study was very simple, it told people that they're going to get
+Instead of recommendations every week for five weeks and
+I threw people into one of three worlds. One of them was just meant to
+be the absolutely terrible randomly selected recommendations. Another set was really popular items that
+just remained popular all the time and the last bit was popular items
+that would change every week, and we asked people to rate how they thought
+the quality of the system's output was. And the slide that I put up here
+shows the summarize output of that experiment which was that
+if your algorithm is bad, people will think it's bad all the time. If your algorithm has popular items
+that people would think are good, but they never change, people's impression
+of your system degrades quite quickly. And finally, if you do have some kind
+of notion of time in your system, then people's impression of
+the quality of its output remains consistently on the good side. >> So, how can we design an evaluation
+strategy that lets us observe and measure these kinds of effects over time? >> So, one of the key aspects of all
+the datasets that are coming out these days related to recommender systems is
+that the ratings that people will give or the implicit feedback that they
+provide comes with timestamps. And this was the case for
+the Netflix dataset and it proved to be useful in the algorithms
+that were part of the competition, but these same timestamps can be used
+to create a framework to evaluate how algorithms are performing over time
+and the set up is actually quite simple. So you take your whole
+datasets sorted by time and then you simulate what would
+happen if you were updating and retraining your dataset,
+let's say, once a week. And in that case, you'll just use the time
+stamps to take the first week of data and test on the second week. And then the first two weeks of data,
+test on the third week and so on. >> So with this framework,
+what kind of measurements can we take to understand how
+the recommender's behavior and performance is changing over
+the lifetime of the dataset? >> Well, there's a number of things
+that you can now evaluate and the absolute basic stuff is the same
+stuff that you would evaluate in a non-temporal evaluation settings. So let's take an example
+which is accuracy, which I have here on this slide. And so on the left, what I have done
+is I ran an experiment with a Netflix dataset using a nearest neighbor
+algorithm and I just plot how accurate is the algorithm at predicting
+the following week every week. And so, it's the exact same sort of
+measure that we would traditionally use. But now instead of having one output or one number as a result of your experiment,
+you have a time series of numbers and what I've done on the right is I've just
+taken that and I've averaged it over time. So but once you have covered your bases
+with accuracy and looked at that in-depth, there is a number of other things that
+you can start doing with temporal performance that you could not do in
+typical singular train test experiments. So the two examples that I have here
+are measuring diversity and novelty, and the way that I defined
+these was very simple. It's agnostic of what actual content say,
+genres of films are being recommended. But instead, looking at the output
+of your recommender system, like an ordered sequence of sets. So just to specify that a little bit more,
+let's think about diversity. And if I give you ten items as
+recommendations this week and then the following week,
+I give you another ten items, I can just look at the intersection of
+that set to see how diverse are your recommendations from one week to the next. Similarly for novelty, I can say this week
+I'm recommending these ten items to you and I look at the entire set of Items that
+I have recommended to you to date and see how much new stuff am I giving you this
+week that I have never given you before. >> So,
+what impact does this understanding have? What changes in how we go about
+building a recommender is the result of this temporal understanding? >> There's a number of changes
+that you can begun in making. The first change in the approach
+that I was taking to my research was that there are. Oftentimes, that you start
+becoming focus with making your algorithm as accurate as possible
+on a particular dataset and running this kind of experiments
+teaches you that the dynamics of dataset over time with
+the recommenders system make the exercise of trying to squeeze every tiny last ounce
+of accuracy a little bit less useful. But on the other hand, the positive
+changes that you can make are that now you can start taking these metrics and
+the approaches that these metrics are exposing and putting them back into
+the design of your recommender system. So in this slide, I have an example which
+is can you improve the diversity of your recommender system where diversity
+is measured like I just said? So, looking at the set of items that
+you're recommending now compared to the set of items that you
+recommended previously and we found that algorithms like
+nearest neighbor were slightly more diverse than
+a factorization based approach. And then when we were trying to
+see how we could best get even more diversity out of all of them,
+we just took a very simple approach. Which was each week, we will give user
+recommendations based on a different algorithm that they have not received
+recommendations from before and this immediately boosts diversity way
+up to around the 80% mark on average. And then when we were analyzing what
+impact this would have overall, it would improve diversity while
+sort of averaging accuracy into somewhere between where
+nearest neighbor would perform and a factorization algorithm we perform. So beyond trying to improve the diversity
+of your recommender system over time, there are number of other
+domains that you can look at and a number of other matrix
+that you can look at. So the experiments that I can conducted,
+looked at diversity and then they also looked at things like can you improve
+the accuracy of your system over time? And moreover, can you detect
+when there are malicious users who are trying to break your
+recommender systems output by injecting data that may
+suit their own needs? One of the nice things that we found
+there was that a malicious attacker would have to inject data at the rate
+that is higher than the honest people who are using your recommender
+system in order to have any effect. And so, what that means is that then you
+can start using the temporal properties of your data in order to build
+a better recommender system that is more diverse that attempts
+to become more accurate over time or like in this last point can detect when
+people are misusing your system by looking at how different user's behaviors
+compared to the general population. And in general, the metrics that
+are most meaningful may be dependent on the context or the particular flavor of
+recommender system that you are building. But nonetheless, I hope that this demonstrates this
+temporal methodology could be bring you useful insights no matter what kind
+of recommended system you are designing. >> So someone is out there building,
+trying integrated recommender into their service station they should
+make sure they store their time stamps and use them aggressively understanding
+what derogative is doing. >> Yes, absolutely. And I mean, if this could begin
+from very small insights, such as are people coming back to your
+system and how often are they doing so all the way to these more say,
+closing the loop of using the temporal dynamics of your
+data to improve your algorithms. >> Well, thank you for joining us. >> Thank you very much for having me.

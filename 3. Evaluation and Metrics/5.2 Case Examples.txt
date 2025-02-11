@@ -1,0 +1,202 @@
+Welcome back. In this lecture we're going to take
+a look at two more examples of real world's scenarios and the challenge
+of designing appropriate evaluation. We're going to look at medical
+recommender that doesn't exist, and ask the question, what can you do to
+decide whether you have potential for a recommender,
+when you don't have a live system? We're also we're going to look at
+the music recommender because frankly, music would be no fun if you never
+heard your favorite song again, but the desire to replay things can
+change just about everything. Now let's dive in. So, let me give you a thought
+exercise about a radical recommender, and then we'll talk
+through the evaluation. You work in the IT group
+of a large medical group. We've got about 2500 doctors,
+hospitals, specialists, you name it. If you have a medical problem,
+we're ready to take care of you. Your quality control group has been
+collecting data from patients, rating their experience with specialists. Maybe others too, but
+let's just focus on specialists right now. So, if you need somebody to work
+with as an oncologist for cancer, if you need a dermatologist for
+your skin, a surgeon of certain types, we actually know what
+other people have said about that doctor. But as the group, our goal is to see if
+we can recommend specialists to patients, based on the patients'
+experiences with other doctors. Can we match you with the specialist
+you're going to feel good after the fact? Well, let's break that
+down a little bit more. As we think about designing this it's
+actually a pretty straight forward recommender system. We'll have explicit and implicit ratings. The explicits are when somebody says yeah,
+this doctor was a four out of five, the implicit might be I went
+to this doctor more than once. I didn't run away and not go. I also can have things like implicit
+ratings of my primary care doctor. Anybody I've been seeing regularly, the presumption might be I
+think that doctor's reasonable. And in our world,
+the doctor would be an item. So, where does this look different
+from our typical recommender system? Maybe the first thing
+that jumps out to me, and you probably have your own Michael, is that doctors really are different. And so if you have,
+I hope not, but if you have some sort of lung cancer, I don't
+want to send you to an ophthalmologist who's really good at curing high diseases,
+but useless when it comes to a lung. So somewhere in here, we're going to have
+to have some notion of search or filter. Because if we don't think about this
+as I can rank the oncologist for you, but I'm certainly not
+going to go back there, and just say well let's find
+a doctor you would like. And what do I end up with, I end up with a
+foot doctor who has a really good sense of humor and no ability to do
+the surgery that you want. So we're going to need to have a pretty
+strongly taxonomized set of items. And for that reason our
+recommendations may only be from 10 or 20 maybe 50 people in
+a particular specialty, from among all the specialty that we have. What's jumps out to you? >> That's the big thing. We've got this big constraint problem,
+because we need to know, not only what is the person that I interact with, what
+doctor's going to be a good fit for them. Collaborative filtering might be able to
+help us assess fit, but we're going to need this constraint to see if the
+physician matches what the person needs. Now, for a body of work to be useful for
+solving that particular problem. What comes to mind is the group of
+Hector Garcia-Molina's group at Stanford, on doing course recommendation. Where they're trying to figure out,
+what courses can we recommend a student, but keeping in mind, prerequisite
+structures and things like that, that severely constrain the space
+of valid items at any given point? So if I'm working on this problem,
+I would start by going and reading that literature to see how
+they solved some of these issues, and see if some of the techniques
+are going to translate over here. But yeah, the constraint is also
+the big thing that jumps out at me. But also there's opportunity for even a little bit more data that
+we haven't talked about yet. Which is particularly for
+cases that are going to need follow up maybe with physical
+therapist is adherence levels. Is a particular therapist
+going to be more or less likely to help develop a treatment, a therapy regimen, that you're actually
+going to be able to adhere to. So if we have adherence data, that
+might give us another form of implicit data that helps us identify whether
+this particular physician is going to be effective at working with a particular
+patient on a medical condition. >> Absolutely true. I think we have one more challenge, but
+we might get to that challenge if we just think about the simplest
+thing we might do. Let's say we just put together
+a standard user user, item item, or SVD-based
+collaborative filtering algorithm. We put in all the matrix. We try the algorithms, and we get back prediction scores for how well each
+doctor would fit each patient. Our first thought might be,
+this is great, why don't we go see if that prediction is better than random,
+for instance. Because if we have some doctor opinions, we could withhold some of them,
+build our model, test this out, and come back with a score, whether it's a
+correlation or a mean error of some sort, and say, can we do a better job,
+or basically, is this random? And that's where we run
+into problem number two. If I said that we were
+a patient advocacy group, it might be okay if everybody
+got recommendations for the same doctor who is the most
+popular surgeon in the department. But if we are running the clinic or running the medical care group,
+we have a vested interest in making sure that we can distribute
+people among all of these physicians. And suddenly,
+it might not be enough to say, yeah, we can predict really well,
+better than random, who everybody likes. They all like Dr. X. That's the best oncologist we have. And you say, but that's not very useful. One, we could have done that
+with popularity, but two, Dr. X can only see a certain
+number of patients. And suddenly we're getting
+into a matching problem. This is actually a very common
+problem in a lot of spaces. In the courseware space,
+the matching problem may be, you can't fit everybody in every class. Not so much true online. But you see this in the dating space,
+the companies that run dating software will tell you very
+openly that part of the problem you run into with dating software is,
+there are a few people who are much more desired than
+the average in their system. And the goal of the system can't be,
+why don't we tell everyone they should go date Tom Hanks or whoever it is,
+because he doesn't really have the time. How do you match people where they are? And so suddenly we're looking at this
+question, can we help people find folks they have a differential preference
+for, and not just that they would like? And that might change
+some of our algorithms. What more important, it might change the
+metrics that we would do with evaluation. So let's take another moment on
+this before we move to music. We certainly could start by saying,
+can we predict two people we'd like? But we might need to change that and
+say, to really be sure that we're doing this right,
+we might need to come back with a prediction list. And run an algorithm in
+the evaluation that says, gee, if we give people somebody
+in the top half of their list, or if we impose a certain coverage level. Can we still give people who they would
+like better, than if we did some sort of random assignment or
+random assignment over popularity? And for something like that we might
+be talking about a list metric. We might be looking at
+a metric more like an ECG. We might be looking at a correlational
+metric on ranked lists. And that's why we have to think through,
+what are we really trying to do here? Because if we came back and said yes,
+we can find the doctors you'd like, and then we spent couple of million dollars. Built this wonderful
+recommendation system, and the next day we get a call from the eye
+department saying, we got a problem, everybody's being told to make their
+appointment with the same doctor. What do we do?
+I don't know, what do we do? But, the good thing we could do is we
+could go and get a job at another place. >> [LAUGH]
+>> Where everybody could see the same. And that other place
+might be a music domain. So let's talk about this
+if you're Spotify where, while there are many problems, you don't
+have to worry about that fact that no, if one person's listening to this song,
+nobody else can listen to this song. >> So, we'll start up with a case
+that's relatively similar to a lot of the cases that we've looked at, of
+something like Spotify's discovered tab, where it's recommending artists,
+albums, tracks. There's also recommendations other places
+like artists similar to this artist. Where they're trying to introduce you to
+new material, to help you find artists, find albums,
+that you might not be familiar with. This problem looks a lot like
+the various content recommendation, movie recommendation problems that we've
+seen in a lot of the other domains. But there's another feature that
+a lot of these systems have, a personalized radio station, where you
+maybe start it with you seed it with some artist of some song, and
+then it continues to play songs for you. But there, a lot of our evaluation
+techniques, the assumptions that we make is that, well, we don't want to
+recommend things people have seen before, because if you've already bought
+the latest Nora Jones album, you probably don't need to buy it again
+unless you're wanting to gift it. But, just because I heard
+post modern jukebox covering Rick Astley yesterday, doesn't
+mean I don't want to hear it again today. So, we have this different dynamic of, people want to hear things
+that they've heard before. >> Yeah,
+this makes things pretty different. When we start thinking about how,
+well are we going to evaluate this? It no longer make sense
+to build a recommender which starts with the assumption that
+if it's raided, I can't recommend it. But we also can't say, well your personalized radio would be
+perfect if it takes your favorite song. I'm sure the one you just mentioned that I
+no longer can even remember the name of, because I hadn't heard about
+it until 30 seconds ago. And plays it over and over and
+over again with nothing else. >> That would get pretty boring. >> And so
+suddenly we need some new metrics, and there's a lot of
+metrics that we could use. I mean, starting with the really
+easy one of, are people happy? How often does somebody turn
+off the personalized radio, or how often do they say, skip this song? If they're skipping a song
+that they often seem to like, might be a sign you're
+playing it too often. If they just turn off
+the station entirely, gotta figure out what does that mean. Maybe they're just done, but
+if they switch to another station, maybe they weren't happy. >> And there for
+subscription-based services, we can look at a little bit longer, a term
+of do they renew their subscription? That's one datapoint that's going to
+come up on a monthly basis on some. Here's though is a place for
+the explicit feedback becomes useful, because you've got the skip feedback or
+something like pandora. You have the skip to say, not that I
+don't like this, but not this right now. Versus you've got the thumbs up and
+the thumbs down to say more or less, like the song that's
+being played right now. And you can look at that kind of data to
+understand how people are interacting with it, see how engaged they are with the son. Then depending on the case, we may
+also be able to do users studies and ask them what they think about this
+radio station or overall the service, and have them explosively articulate
+whether they are finding value in it. >> So, to wrap this together, it starts
+with a deep understanding of the domain, but it also starts with recognizing that minimizing some sort of error
+on a data set is rarely the sole answer when you're trying to figure out if
+you can improve or evaluate a recommender. Maybe if what you're
+recommending is baseball teams, you want to minimize errors. But if you're trying to recommend music,
+what you're trying to do is not worry so much about how many times did I
+recommend something that wasn't perfect. You're trying to say, did I give
+people a basket that they enjoyed. That introduced some new music,
+played some old favorites, played some songs I haven't heard in
+a while that I wouldn't want to hear everyday, but I'm sure glad I heard
+them because it's been a months. And finding the right metric for
+that really depends on answering the question that
+you're looking for here. And that question might be, is this something that will keep
+people interested from year to year? Or are they just going to listen to it for
+little while and then say, this is boring. It's not changing at all, I'm done. But to get that useful evaluation really
+depends on figuring out that question. And then using the toolbox
+of evaluations you have, to find the right answer to that question. >> And the way you interpret and
+evaluate these metrics, once you do kind of
+understand the question, needs to connect back to the domain
+in a variety of different ways. One we we haven`t talked about yet
+is the the relative costs. The cost of a bad song recommendation
+in a radio is three minutes, or may be the 30 seconds that takes
+you to go quick thumbs down. But the cost of a bad recommendation
+when you're trying to match someone with an oncologist or a physical
+therapist, could be very severe and very long lasting. And you need to take that into account
+how that balances the risk trade-offs of the recommender. And how you weight the different pieces
+of data that your evaluation metrics are giving you, depends in very deep
+ways on the way that the recommendation application is going to interact with
+the lives of the people it affects. >> Absolutely, so as we go forward, as
+you get to the final quiz in this course, you'll have a chance to take a look at
+a couple of examples of these problems. Where you can give responses
+that will relate specifically to what are factors that might be relevant
+to evaluating particular circumstances. And those of you who are staying
+through the course all the way sorry, through the specialization
+all the way to our capstone. We'll start struggling with some of these
+issues as we give you some case studies, to start designing your own idea of how are we going to evaluate this
+in a particular realistic scenario. We look forward to seeing you there.

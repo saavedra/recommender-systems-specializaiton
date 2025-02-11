@@ -1,0 +1,107 @@
+Welcome back. In this lecture, we're going to
+explore the goals of evaluation a little bit more formally before we
+go into individual methods and metrics. So today, our goals are to understand
+ways of evaluating a recommendation or recommender algorithm or system, and
+what it means for it to be good or better. We're going to talk about different
+kinds of metrics and understand a little something about how different types
+of interactions are evaluated. We'll also have a little bit of discussion
+of retrospective and live approaches to evaluation, which is a theme we'll be
+carrying through much of the course. So behind these goals is
+the fact that recommender systems have lots of design choices. There are design choices of algorithms and
+which ones to pick. We've taught you several. We'll continue to teach you more if you
+come through this specialization into our fourth course on matrix factorization
+dimensionality reduction techniques. But which one do we use? Even if we have an algorithm,
+how do we tune it? We should optimize it. Right, optimize for what? And that's when we start getting
+into the core goal of evaluation. But there's also just been tremendous
+lessons from commercial experience. Netflix Challenge,
+much of which we'll discuss separately in an interview with one of
+the participants in that challenge. But also lessons both from and
+for the research community. So let's jump in. Historically, there were a set
+of measures that were used in early recommender systems research. There were error measures and
+accuracy measures. These are measures that, say, if I predict that you're going to like
+something with a score of 4.2 stars, and you're actually evaluated with
+four stars, I was off by 0.2. How big is that error? And there's a set of measures we'll
+learn about in coming lectures, mean absolute error, root mean
+squared error, mean squared error. There are different ways of tallying
+up those little bits of wrongness to distinguish as to how accurate
+a particular recommender system is. There were also decision-support metrics. Early people started looking
+at decision-support as simply, do we recommend this item or not? And that led to the receiver operating
+characteristic area under the curve measure. Jack Breese at Microsoft did some work
+early in the field where he looked at a rank measure, treating recommendation
+rank as a decision-support idea that the higher you are in the rank
+the more important it was to be right. Later people used information retrieval
+measures of precision and recall. These are measures that say how many of
+the things that I recommend are good, and how many of the good
+things do I recommend. And all of these were an attempt to say,
+well, in the end what matters is
+did you get the good stuff? So let's try to measure that. Error and decision-support and user experience came together
+with different kinds of measures. One of the early works in the field,
+the work by Shardanand and Maes on the RINGO system
+which later became Firefly, looked at the notion of reversals. That people's trust is undermined
+by particularly big mistakes, taking something that's solidly bad and believing it's solidly good,
+or vice versa. And people looked at other user and
+user-centered metrics. What percentage of the items are we
+able to make recommendations for or predictions for? Do we retain users? Do people use the recommendations? Surveys, there's a lot of
+measures that people used, and all of them have some merit. And then suddenly, people started
+using these things commercially and most of those measures fell apart. Nobody cared that much about accuracy. This is where you got the story
+of the supermarket recommender. I could create a very accurate recommender
+if I printed on every shopping cart, buy bread and bananas. But it was useless.
+People bought bread and bananas whether I recommended it or not. Predicting what people would
+do anyway wasn't thought to be a good use of a recommender. So a whole new of set of metrics came in. Lift, cross-sales, up-sales,
+conversion of offers. Which lead people to think
+about different goals. Am i trying to sell stuff? What am I looking for in user experience? And so the field evolved. We're going to take that through
+looking at a couple of different themes that are going to help guide us as
+we look at the metric specifically in the coming topics. So one of those themes is
+about Prediction versus Top-N. You already know about the idea of
+recommending versus predicting. But from a metric and
+evaluation perspective, when we're looking at predictions,
+we're mostly concerned about accuracy. Did we predict correctly? Perhaps decision-support, is
+the prediction useful in helping somebody decide whether to consume something. And we're looking very locally at each
+prediction being a valuable by itself. If I tell you that
+a particular product is a good product and I it give a high score and
+you think it was a mistake. You don't need to know what
+the other products' worth to say, I just believe that was good. You made a mistake,
+I want that to count as an error. Top-N, on the other hand,
+is mostly about ranking. We don't care nearly as
+much about accuracy. We care about correct ordering. And we also care about decision-support. Are the good things at the top? But the evaluation of Top-N
+tends to be comparative. I can't tell you if the third item
+in the list is a good placement for that item without knowing what the items
+before and the items after are. And so we have two very different
+ways of thinking about it, looking at predictions versus top Top-Ns. A second theme, there's More than
+Just Metrics to computing this evaluation. Even really simple calculations
+have a lot of variables in them. And one of the first ones you'll learn
+about in an upcoming lecture is mean absolute error. What's the average amount
+that the prediction is wrong? Well it's easy to compute that for
+any one item. Just get the prediction and
+get the recommendation and say. We'll get the prediction and
+the actual rating and say, here's how much it's wrong. But what do you do if you have thousands
+of such items and thousands of people. Do I average across the item? How far off are items on average? Do I average across the users? Do I average across the ratings? Even if some people may have ten times or
+100 times as many as others. How do I handle lack of data? How do I handle lack of coverage? What if one algorithm predicts really
+accurately but only makes predictions for 10% of the items that
+should get predictions? It's cherry picking maybe the easy ones. How do I compare that? And comparative evaluation is even harder. What's the right baseline? What do I do if the different
+algorithms have different properties? So we're going to keep coming back to the
+theme that it's not just the measure as a formula. It's how you apply that measure
+in a way that's honest and attached to what you're tying to do. A third theme is a lot of the things
+we're talking about are different when we work with unary data. Click or didn't click. Bought or didn't buy. Many of the metrics we present
+were originally designed for multi point rating scales,
+like one to five. And some measures just don't work for
+purchased data. On the other hand, there are other
+measures that are particularly good at dealing with unary evaluation and
+we'll be talking about those. Theme 4,
+Dead Data versus Live Recommendations. Retrospective evaluation,
+using data that's already out there, looks at how a recomender would have predicted
+items already consumed or already rated. Prospective live experiment
+evaluation says, let's go recommend some stuff and
+see how it performs. These have fundamental differences. We're going to spend an entire
+lecture on this topic. But the fundamental differences include
+what you can generalize from this evaluations and whether the recommender
+is actually performing something useful. Or has just learned a good model
+that doesn't take too much more than the training that they learned from. That's something that
+we'll be coming back to. So again, our goals of
+evaluation are to be useful and to inform the selection of
+recommender algorithms, how we tune them,
+how we design the system as a whole. But we should also think of
+the goal of evaluation as enforcing disciplined thinking about the
+recommendation and the user experience. So that we understand what we're
+building a system to achieve and we document that understanding by
+evaluating it in a way that reflects that. Coming next, we'll dig into the details. See you then.

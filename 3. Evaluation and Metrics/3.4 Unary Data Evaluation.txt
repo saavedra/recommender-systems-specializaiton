@@ -1,0 +1,128 @@
+Welcome back. We've seen prediction metrics,
+top-N metrics, rank aware metrics. In the previous video, we talked
+about cross validation protocols, to be able to how you split up your data,
+to produce the test sets, the train sets. So we can actually do
+the measurements with the metrics. In this video, we're going to make
+discuss some particular protocol considerations for doing top-N evaluation
+that have particular importance what we're doing with newer data say,
+click, log, or purchases. Unfortunately, there are some deep
+unsolved problems in this kinds of evaluations but we're going to
+talk about some of the options for dealing with some of these and the current state-of-the-art as far
+as doing these kinds of evaluations. So one of the big problems facing
+recommender systems evaluation is that of missing data. Most of our data is missing. Unrated items, unpurchased items,
+if we think of a user item matrix, the vast majority of this
+matrix we don't have. With any given user is rate only
+a small fraction of the items or purchase only a small
+fraction of the items. And when an item doesn't have a record,
+there's a lot we don't know about it. If we assume that most
+items are not relevant, the user probably doesn't like the item. But, if they do like that item, it might be a really good recommendation. Because we've got a data set that say,
+items the user has purchased. And if they haven't purchase the item, or if they haven't rated the item,
+couple of options. One, they don't like the item. Two they don't know about the item. And if they don't know about the item but they like it,
+if once they do learn about it. Not only is that a good recommendation,
+that's arguably a better recommendation. Then the one that is in the users purchase
+log, they found out about it somehow or maybe trough the recommender,
+maybe through a friend, maybe through an ad on TV. If the recommender suggest something
+they already knew about and they like it,
+has it provided as much value if they, if it suggest something they don't
+know about and they like it. So, dismissing data,
+when we treat them the missing ratings, the missing values,
+all is the user doesn't like it. Then, what we wind up doing is we penalize
+the recommender for doing it's job. Finding that rating or the item that the
+user really likes but, didn't know about. So suppose we have this recommendation
+list and the user likes, we know the users likes bananas,
+cherries and eggplants, and not durians, but we don't have any data
+on apple, it's recommended apple first. As I said, there's two possibilities. Irrelevant item,
+the user does not like apples or it's a relevant item, the user would like
+apples and may never have heard of them. Unlikely, if that's an apple but you could
+envision many things we'd recommend that the user's never heard of. The problem is that we
+can't tell the difference. Again, if we assume that most items
+are irrelevant, it's probably irrelevant. But we don't know. Another problem that affects
+recommender evaluation in the top-end setting is that of popularity bias. Popular items have the most ratings and
+purchases. So, if you have a test item,
+error test rating, it's more likely that it's for a popular
+item than an unpopular one, just because the popular item has more ratings that you
+could randomly pick your test rating from. So, popular recommenders
+can automatically do well. Popular is a good baseline
+recommender anyway. If you don't know anything about a user,
+recommending the most popular book in the store is not a bad
+zero information recommendation. But if we want the recommender to find
+less-known items the user might like, then the evaluation really gets
+dominated by these popular items. So, recommenders that effectively
+find good items that are less popular perform poorly compared
+to popular on metrics. This has been studied in-depth by
+Alejandro Bellogin in his PhD dissertation and it basically means the popular
+recommender performs particularly well. What's hard to discern is whether it
+performs really well by the metric because it's doing a good
+job of recommendation or because the structure of the evaluation
+is biased in favor of the popular. Is biased to the popular
+item recommenders, can just do a better job at the game. So, he has talked about
+the couple of problems here. One is penalizing good
+recommendation due to missing data. The other is the data favoring
+most popular recommendation. So a few solution,s one is to
+look at rank effectiveness. If we have ratings, if we have
+negative feedbacks that we have for at least a set of items,
+we know how much the user likes them, or they like some and don't like others,
+or relative comparisons. They like this one better than that one. Then we can ask the recommender,
+rather than recommending items from the entire universe of items that knows
+about, we can ask it to just rank that items we have ratings for or
+the items we actually have data for. And then, we measure if the rank
+is consistent with user ratings using a metrics such as map, NDCG,
+or another one called NDPM and that allows us to study whether
+the rank output of the recommender is consistent with what we
+know about user preferences. Effectively saying all this unknown data,
+we're going to not consider the unknowns. We're just going to look at
+the data we do know about. We're going to ask if the recommenders
+judgments are consistent with what we know. Problem is that it requires ratings or
+negative feedback, so it's not so good if all you
+have is positive interactions. All you have is what the user clicked. What you have is what the user bought. Now, if you operate the system in
+a collecting usage logs, you do have the opportunity to deal with this by
+synthesizing some negative feedback. If you present a user with
+a list of three items and they pick the third, and
+they presented vertically, then the user skipped over the first
+two and picked the third, so you could consider that a weak negative
+signal the relevance to the first two. Not a strong negative signal but
+a weak one. Okay, they found three more relevant
+to what they're doing right now than one or two. But if you're just dealing with a public
+data set you don't have that option, and then it requires you to do extensive
+instrumentation of what you're presenting to users and what to do with it. Another proposed solution is to limit a
+candidate set of recommendation randomly. So rather than recommending from
+the universe, you recommend from a subset. So if we've got our big universe of items
+or we've got our test items, what we do What we do is rather than recommend
+from the whole universe, We recommend from a small subset that contains
+the test items and some random decoys. Koren introduced this in a 2008 paper. And the idea behind this is that,
+that item that's good but unknown, if we assume that most
+items are not good for the user, the good but unknown items since
+we've randomly picked the set of decoys is probably over here,
+outside the randomly selected set. But, the most popular items for selecting
+these decoys uniformly at random, is also probably outside the selected set. So, it seems to exacerbate
+the popularity bias. These are some of
+the best methods we have. There's some additional methods such
+as selecting test users in a test item in a stratified fashion, so you
+have equal number number of test items, effectively per item class. So that rather than saying, okay the popular item
+are going to have more test item. We say, we want the distribution
+of test ratings across items be relatively uniform. So, be aware the limitations
+of this limitations when you're reporting the results and
+understanding results that are looking at a top-N evaluation particular
+looking at over urinary data. Look for
+alternatives such as user testing. Trying to get negative data if
+you can instrument your system. Corroborating with additional
+evidence that you kind of triangulate the recommender's performance based on
+multiple different evaluation methods and see if they corroborate each other. There's some promising new
+directions such as one-sided classification which is
+looking at machine learning. Classification with all you have,
+for example of one kind. You can envision say,
+trying to train a spam filter. What all you have is examples of non-spam,
+you don't have any spam examples. Some of the methods there may prove useful
+in evaluating the recommendations in this kind of scenario and there's also new
+metrics and protocols that are being developed that may hold promise for
+resulting some of these difficulties, and using offline data to evaluate
+the quality of our recommendations. Evaluating recommenders is hard. Especially offline or
+limited by the availability of data, there are serious limitations to all
+the methods we have available right now. So be aware of these problems
+when understanding and making claims about the recommender. It's still useful. Very useful. Lots of research is published with it and
+it's also very useful in application settings because even with
+all of the problems of these metrics and these evaluation protocols. They're still useful as a first pass
+to filter out abjectly bad algorithms. But, be aware these biases but the algorithm might just be
+favoring safe recommendations. And there's something that performs worse
+than some of the offline evaluation protocols, but it's really going to
+provide a lot of value to your users.

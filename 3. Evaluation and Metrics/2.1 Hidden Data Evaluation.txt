@@ -1,0 +1,81 @@
+Welcome back, now that we've introduced
+the concept of evaluation and some of the goals of doing
+recommender evaluation. In this video I'm going to talk
+about the basic structure of evaluations using data sets,
+what we call hidden data evaluations, that will help lay the ground work for what's
+happening for the rest of this module. And much to the rest of this course. So we want to evaluate a recommender. We have some data set that we want to
+use as the first pass evaluation of it. But how do we do this? What's the procedure for taking a data set
+like movie launching data set that we've been using for a number of the assignments
+and measuring how good the recommender is. We're going to sketch the basic idea
+of this approach in this video. And the next module is going to cover
+more details and variations of it. The basic idea is to use existing data
+collected from users, ratings of movies or books, logs of how many times
+users have played songs, when they've clicked links,
+those kinds of things. We're going to basically treat that
+as something of a simulation of user behavior. And we're going to test whether
+the recommender can predict the behavior of the users. The idea being a recommender that's good
+at predicting the user's ratings or good at recommending items the user wanted Is
+going to be a recommender that's going to be do better when we actually go to
+recommend live users in a deployed system. So the prerequisites for doing this is
+data, along with your recommender and some evaluation tools. Some data set that's relevant to the
+recommendation problem you want to solve. Ratings of movies, play counts of songs,
+click logs of news articles or search results. It is important to have data that is
+possibly connected to the kind of problem your want to try to solve. Sometimes you can't get data that
+exactly related to your key problem. But, you should try to make
+it as similar as you can. The basic structure to evaluation
+we take our data set, and then we split it into what we call
+a train data set and a test data set. The test data is hidden
+from the recommender. Recommender doesn't get to see it. What it does is it sees the train data. So when a user comes to Amazon and they
+get recommendations, Amazon has the user's prior history with the, with their
+recommenders and their product catalogue. And they have all of the other
+users' prior histories with their product catalogue. And the user is going to come, an Amazon
+is going to show some recommendations and the user may or may not click them. So what we're doing is
+we're simulating that. Since we don't have actual
+users to click recommendations, what we do is we hide
+some of the users data. The test data, we say the train data is
+the store co-interactor with the system, recommenders going to use recommendations. I'm going to use the test data as
+a simulation of what the users might do in respond to those recommendations. So, the recommender is trained on the training, the recommender
+sees the training data as its input. It uses that to produce
+recommendations and predictions. We then compare those recommendations and
+predictions with the data in the test set and measure the difference
+and this produces our output metric, that measures how effective
+the recommender is at doing his job. So we measure how close
+the prediction is to the rating. All of these measures we
+aggregate overall of the users, if the measure is per rating then we
+aggregate it over the user's ratings. So we can measure how close
+is a prediction to a rating. This is a prediction accuracy measure. We can look at if the recomender produces
+a list of ten 20, 30 recommendations. Are any of those recommendations
+item that the user purchased in the available test data that we have. Or we can look at where does it put the
+purchased items to say what we really want the relevant items the stuff the user
+likes, to be towards the top. Now there's one, there's a number of
+issues, one that relatively easy to solve. Is, what if this, was we randomly pick
+this train data or this testing data? What if we accidentally
+pick mostly easy users? That, for that recommender can do
+really good or mostly hard user. That way we solve this is
+we do multiple splits. We either pick five,
+ten whatever different test sets. Sometimes we do a full cross validation. Where we partition the data
+in the multiple partitions. Then for each partition we train on
+the others and test with that partition. Something like this, the data set, we
+split the data set into three partitions and then we generate
+three trained test pairs. Each of which has. Training data and test data. And then in this case,
+we test over all of the users and well, the likelihood of picking a whole
+bunch of users that are easy or hard may not be terribly high. It's even less likely that we're going to
+pick multiple sets of all easy or all hard users. So this helps improve
+the statistical validity of the evaluation that we're doing. The benefits of these kinds of
+evaluation are very efficient and no users are required. Where the limit is only
+on computational power. We can take the data set, we can run as many algorithms as we can
+afford the computational power to run. We don't have users who get tired
+of participating in our studies and things like that. Drawbacks, does predictive
+accuracy matter for a lot of problems like
+recommending things to buy? Somewhat, but it's not, is it really
+the problem we're trying to solve? Also, if a user is shown
+a recommendation list, would they still pick the item that the data set
+says they bought some time or another? The context may be different,
+the recommender may find a better item for them that they'd like. Maybe they bought a particular razor. And the recommendation
+list has a few razors. And if they were shown that list, they
+would have bought a different razor than the one the data set said they bought. We're going to talk more about
+these kind of difficulties, and some ways of addressing them later. So in conclusion, we can use data sets
+to estimate recommender performance. We hide some data,
+we ask the recommender predict it. We then compare the recommenders output,
+to the data that we hid from it in our data set, we use this to estimate
+the recommender's performance.

@@ -1,0 +1,127 @@
+In this video, we want to talk about how
+you design an evaluation to, evaluate a recommender in a particular context or
+particular needs and applications. A question we get asked sometimes
+is what's the right metric for evaluating my recommender? There's a bunch of related questions such
+as how do I sample the data, how do I know the right algorithm to use And
+there's a right answer to this question. You use the metric, the evaluation strategy that
+answers the question that you have. Now that means that you need
+to understand what is going on in the particular application,
+the domain, the use case And then understand what each of the metric
+and evaluation strategy can actually measure, and find one that matches to
+the thing that you really care about. >> So, we've seen this when
+we went to our early tours. We looked at Amazon, and
+say how does Amazon do evaluate. When it puts a product on the screen,
+whether that's a good recommendation. Now, we're not inside Amazon but
+we have a few pretty good ideas. They look at, do you click on it. They look at, do you buy it. They care a whole lot about,
+do you eventually buy it. Not necessarily do you buy it this time They might care a whole lot less
+about what's the mean squared error. They don't care if you rate it all. Maybe they care a little bit because
+if it makes data for other people but if they put recommendations
+with algorithm A and you buy those things and
+they put recommendations with algorithms. Be and you buy 20% less. For that product and maybe overall algorithm a is
+going to be out there running. We want to take you through some
+problems where we can just talk though, knowing there's not
+a unique correct answer. Where we can talk through the evaluation,
+so let's start with an example
+of news recommendation. Many of you may be
+familiar with Google News, Google News combines news from all
+sorts of sources around the web and it does so to the extent that
+you're identified and logged in. With a recommender system
+that is personalized but even if you're not logged in with
+a non-personalized recommender. We just started by saying what kinds
+of questions might we have about the design and performance of Google News. We might start with the question
+like are we putting useful articles On the screen for people. That seems like a reasonable question. What would you ask? >> I'd look at two things. One, I'd look at do users
+click on the articles. And I would look at a more
+advanced version of that of when they click on the article do
+they stay on it long enough. That they might actually have read it. Or did they click on it but they bounce
+right back to go look for something else? And then when we have those click traces
+that's also the kind of data that's amenable to an offline evaluation. You can look at article clicks and you can
+see potential new recommender algorithms. You can see if they recommend
+things that the user clicks. Depending on the exact layout you
+can actually even synthesize some negative data. Because if you recommend
+a list of five articles and the user clicks number three,
+it's not a strong signal. But there's an okay probability
+that the user decided one and two weren't relevant and three was. And so you can use that as a weak
+Preference signal that they Better than one or two, because that you are offline
+evaluation to with like factor method of this matrix to be able test the bunch
+of algorithms without users with them. >> Absolutely. But there a lot of other ways you
+look at useful of this articles. Let's imagine for the moment you
+couldn't run a live experiment. That you're interested in what Google
+does but you're outside Google. You could imagine looking at
+correlated data about the articles being recommended and
+saying I really want to see a statistic on how popular Are the articles
+that are being recommended. How many news sources are showing that information, top
+newspapers for instance on their websites? How wide interest versus narrow interest
+are the articles being recommended? The point here is, once we've decided what
+we want is some measure of usefulness We're not done, we're just starting. We look at all of the possible
+ways we could analyze the data, we look at the data that we have
+available and then we dig into it. Let's do the same thing with
+question about finding potential for improving a recommender. One of the great things that you
+began to have available to you is a diverse set of metrics that might
+be relevant for news recommendation. We also have some metrics
+we haven't talked about yet that you might deal
+with as you go forward. So, we can talk about diversity. How diverse is the set of items
+that's recommended on a page or in a section of the page. We can talk about serendipity. How much are the things that are showing
+up, things that a user wouldn't have expected to see and
+to what extent is that delightful, wow, I didn't know this,
+I'm really glad to know about it. We can look at notions of familiarity, something that's being done in
+a lot of current work of you know when the person sees this today
+say I already knew about that. Is that a good recommendation? Maybe, maybe not. You know, do you want to see who won the
+noble price in the articles about them. I probably do, even if I heard on
+the radio this was the person who won. I might want more depth
+from my news browser. We can look at things like level
+of perceived personalization which is often measured with surveys. You ask the person how much do you
+think what's up here is the same for everybody versus identifying it with you. And what we can look at in
+a very concrete way is a concern that people have had about news
+recommenders in particular Balkanization. Is it possible that we are dividing
+people into people who read one set of articles and
+people who read another set And they don't have any common ground because
+they just don't agree on anything. In politics, you might think of this as
+warring parties or warring philosophies. But this could also be true by country,
+could be true in lots of different ways. So those are just a couple of examples. Maybe you have some additions
+that you'd like to add. >> Well, there's these are. Often many of these
+are difficult to measure. Because we talk about diversity metrics. One thing that is an open area of
+research right now is what, how do we measure diversity in way that correlates
+with what people actually see is diverse? And what diversity means is going to
+be very domain specific Diversity in movie recommendation and diversity in news
+recommendation are not the same thing. And so you need to have an understanding
+of what are the factors that drive the user response to recommendation
+in a particular domain and how they perceive the items there. In order to figure out the best
+way to go about measuring these. And in many cases the research
+is not at all settled on how to do that in a robust way. There's also some potential tradeoffs. For example, looking at
+the perceived personalization and the balkanization,
+if you have a recommender that's very, very personalized that might be
+precisely the setup characteristics that are going to lead to a balkanization
+thing or a balkanization scenario. So we need to look at the recommender
+from a variety of different angles, figuring out how to balance these
+different concerns once we even figured out how to measure them is something. Think that again is going to be
+very very domain specific and here's where there are not
+obvious right answers, we can't tell you this is how you need
+to balance perceived personalization and balkanization and
+here's how you measure diversity. You need to figure out what that means for
+the goals of your users, for the goals of the system operator. And how you build the kind of compelling
+experience that's going to deliver value. >> That's right.
+They used that diversity example. Nobody stop the video or maybe you did and
+said wait, diverse about what? Do we mean diversity in
+terms of the topics covered? I want some sports and some. War and some politics. Do we mean diversity in terms
+of the sources consulted? I want to have some big national and
+international newspapers, and I want some blog sources. Do we mean geographic diversity that
+I want articles about a bunch of different places? If you don't start to think about
+those questions it's hard to do this kind of a design. We're giving you this
+as a heads up because part of the challenge we're going to give
+you if you stick around for our capstone, the final part of this specialization,
+is to go out and think hard about the evaluation And
+the design of a particular recommender. And thinking about this examples
+may help you get to that point. But before we do that, in our next video
+we're going to take you through two more case study examples that are rather
+different from news recommendation. There is one take away message we want you
+to get from this just with this example. It's that you can't really build
+design evaluate or recommender for an application, without understanding
+the application and it's usage. There's no simple answer that says,
+this is a good recommender, just plug it in everyone will be happy. And. If you want an example of that, you'll notice one thing, none of us
+said yet that we sure should have. Are the articles that
+we're recommending right? Now there's lot of fake news out there and if Google News regularly gave fake
+news reports as what it delivered That might not meet its goals as a system
+or its goals, for the goals of its users. If you're not thinking to
+answer that kind of question, you've got to immerse
+yourself inside the topic. So the lesson is pretty clear, it depends. Every evaluation requires its own design. And we'll be back in the next
+video with a couple more examples. See you then.

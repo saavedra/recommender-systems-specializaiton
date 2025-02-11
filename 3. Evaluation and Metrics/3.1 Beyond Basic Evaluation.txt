@@ -1,0 +1,126 @@
+Welcome back. As we move beyond the basic evaluation, we're going to start with what I
+guess I can't call anything but a brief rant because for
+the last well, ten, 12 years, we have been focusing our energy around
+the fact that recommender systems, all too often in research and
+sometimes even in practice have been evaluated to optimize
+exactly the wrong thing. What am I talking about? I'm talking about the fact first and foremost that all of these
+metrics that we're teaching you to evaluate by holding
+back some of our data. Let's see if we leave a piece of
+data out whether the top ten list puts that data at the top. All share a common flaw. They envision recommender systems as
+if they were about machine learning. What?
+You're thinking they are about machine learning? Now they're only partly
+about machine learning. We don't really want to
+recover what the person already knows and simply hasn't told us. Recommender systems are fundamentally
+about recommending things that their users didn't
+already know about. And so if I had a recommender where
+I covered up ten of the movies that you had rated and
+say see if I can get them back, I've just found a recommender that if it
+aces that metric, it's completely useless. All it does is recommend what you
+knew anyway, when what you needed was a recommender that could go out,
+finds ten movies you didn't know about, but would actually like more than the ten
+that you wasted your time on in the past. And it's a challenge that we're going to
+have to spend a few minutes on that we never want to forget that if we spend all
+over time looking that we can recover the past, will never recommend anything
+is better that we add in the past. >> There is a few pieces that worked
+together to cause this problem. And the first one is looking at
+predictive accuracy which has come under a significant amount of criticism in the
+recommender systems research community in the last years of, suppose I can do
+a really good job of predicting ratings. Does that really translate into providing
+a compelling recommendation experience? And the answer is weak coloration. But, there at least we
+have this repeatable and reliable thing that we're measuring. We get into the top N evaluation. There's two significant aspects. There are basically two ways
+of looking at the same issue. One is we assume that the item that we
+hold out that the user bought in the past, is the thing they would buy, no matter
+what was the recommendations we show them. And so we generate this list of
+recommendations and we look and we see okay where in it is
+the thing that the user bought? Where in it is the anchovy paste or
+whatever? And we don't take into account
+the fact that the whole list of items might affect what it is that they bought. If we recommend a different list of items,
+they might change their mind and say, you know what,
+I don't really need the anchovies tonight. I'm really feeling the ice cream sundae. And they would have made a completely
+different decision based on what it is that they thought. >> But wait a minute, the assumption that
+we have is that these users are perfect. The reason they want that anchovy
+paste is because they have already purchased all of the perfect items,
+but if our users are perfect and they can the purchase the perfect items
+before they even see the recommendations, why are we building a recommender
+system in the first place? >> Because we like chewing through energy,
+probably. >> I will take a little issue with one
+thing you said about the predictive part of this which is, I agree that in
+theory whether you can accurately predict what somebody will rate,
+might make sense, and might be valuable. But I think it falls into the same trap,
+if the only things you test your ability to predict, are the things
+the person has done in the past. One of my favorite experiments that we
+ever ran was one when we brought people in, have them use movie recommender and
+then, you'll see how old this is. We handed them a gift certificate
+to blockbuster video and told them to go watch
+the movie they had picked. And tell us how much they like it so that
+we could find out if our predictions were really right by having them go
+watch a movie they had never seen. Now it was expensive, because we then had
+to bribe them by giving them another movie afterwards to pay them for spending
+time watching the movie we picked. But I would argue yeah, that is
+a good prediction of user experience. Going back to the things the person
+saw before always has some risks. >> And one of the other issues that makes
+these particularly troubling is even if, okay we assume the user is not perfect. We're going to try to recommend things. Well, suppose that the user likes
+a particular brand of scissors. But that's because that's what's
+available, that's what they know about. The recommender comes back and it recommends another
+brand of scissors first. And then two or three items later, the
+list is the scissors that the user bought. Suppose that if the user would have
+been shown those recommendations, they would have bought the first scissors,
+loved them and never bought the brand they
+bought in the past again. In this case,
+the recommender did its job perfectly. It found a product the user didn't
+know about, the user loves, it replaces a product in their portfolio and
+the way this recommender algorithms work, we just punished the recommender for
+doing his job. >> I know what you're thinking out there. If everything's so miserable, A,
+why do people do it that way, and B, what are we going to do about it? Let's try to answer that. A, why do people do it that way? Honestly, it's easy. There were huge datasets and
+we have to be honest. Doing this kind of hidden data
+evaluation on huge datasets is a valuable way to get that first cut off
+getting rid of really stupid algorithms. I think you have to agree
+that this big datasets that out there who have been valuable for
+the field. >> Yeah, and you can do,
+we've seen a number of primarizations, when we see hybrids in the next one. There's the combinatorial explosion of the
+kinds of algorithms you can build is huge. You can't test a thousand
+different algorithms on users but with a few hundred dollars
+of cloud computing time, you can test those thousand different
+algorithms on a dataset and then you can win all the way down to the few that
+is seen to be the strongest candidates, that then you can go and better testing
+to understand what they can do, when you actually introduce
+them into real use cases. >> B, what are we going to do about it? What we going to do here is
+going to move forward by looking at getting beyond the simple metrics. Part of how we can link things
+better the user experience is to think about metrics that
+go beyond in the right order that users had in the first place,
+or did I catch a missing item. We're going to look at the things that
+can affect user experience directly like diversity or surprise, how unexpected
+is a particular recommendation. An unexpected recommendation maybe
+very unlikely to hit what people had in the past but be much more likely to
+delight somebody into a new purchase. We're also going to look at least
+level recommendation and properties. Diversity is one example of them but
+there is other properties that look at, are the items in the list
+appropriate as a basket or are they in some way basically
+competing with each other in an unfortunate manner that will not
+lead to the best recommended experience. >> We are also going to look at
+the structure of the experimental setup itself. We talked about the basics of how
+to do the hidden data evaluation. We're going to look at the question of are there things we can do in
+a way we set up that experiment? In order to help reduce
+the likelihood of for example, punishing the algorithm for
+doing it's job. As well as additional experimental
+structures that let us ask more interesting questions about
+the way the algorithm behaves in a way that might tell us something
+about the way users would experience it. >> And finally, as we move forward in this course
+we're looking at real user experience. Now part of that is things
+like running AB test and running surveys of users and lab test. But part of that is also
+the research behind metrics, because if there is a place where
+optimizing to a metric might make sense, it's where we've already done the research
+to establish that user experience is well approximated by whatever metric
+it is that we're optimizing for. With that, let's talk about
+what happens within this topic. And we're going to be looking
+at Experimental Protocols. We're looking at some of
+the Specific Challenges that happen when all you have is purchase data or
+other unary data. We're also going to look at some Advanced
+item-Level and List-Level Metrics and we have a guest lecturer coming in
+to talk about Temporal Evaluation, the specific issue of how do you look
+at these series of recommendations or consumption over time? Because in many areas of consumption,
+things don't just depend on whether you like them or not like them but on
+what came before or what might come next. We'll be evaluating and assessing you
+with an In-Depth Quiz and together with our topic on Online Evaluation,
+there will be a joint assignment where you're putting together the overall
+plan for evaluating a recommender. Let's go forward.

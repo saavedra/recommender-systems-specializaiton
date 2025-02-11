@@ -1,0 +1,197 @@
+Welcome back. In this lecture we're going to take a look
+at a variety of additional item and list-based metrics. With the idea of looking at
+attributes that might more closely relate to business goals or
+user experience, we're going to cover a whole selection
+of these metrics, including coverage, popularity, personalization,
+serendipity, diversity, and talk about some of the others that
+people use in the business community. And talk about why these things
+might be worth trading off accuracy in order to obtain other properties. To motivate this, I want to start
+with two really simple stories. This is a supermarket recommender. You can cut it out if
+you print the slide out, paste it on the shopping cart
+in your favorite supermarket. And then sit at the checkout counter and see how often people
+take your recommendation. If you live in a place where products
+are sold much like they are in the US and much of Europe, you'll discover that
+a large fraction of the people that you suggest buy bananas or
+bread will buy bananas or bread. That must mean it's a great recommender. Or maybe it's a completely
+useless recommender, right? We've discussed this. A recommender that simply predicts
+what people were going to do anyway doesn't have a lot of value. Bananas and bread have high accuracy. But they're missing something else. And we're going to try to talk
+about what that something else is. Another story is an inspiration
+from Cai Ziegler. Who did a whole research project because
+he was tired of going to Amazon.com and having them recommend a whole bunch
+of books from the same series. His case, it was JRR Tolkien's Lord
+of the Rings series, and all its different combinations. And I wanted to check whether
+Amazon had gotten a lot better. So here I am, I'm logged into my account. And it certainly
+recommends a lot of stuff. Let's see,
+there's USB chargers and cables. It recommends five books
+all of them about poker. Maybe it hasn't gotten much better. I'm getting lots of things
+that are sort of the same. And so
+we might need a metric to help Amazon and other folks like them think about how do I get different things if I might
+feel overwhelmed by too much of the same. Well, let's jump in. The first metric that
+we're going to talk about, coverage, is actually a metric that's
+used in a number of different ways. It's first use was as a measure
+of the percentage of products for which a recommender can make
+a prediction or maybe a personalized prediction because some recommenders
+have a fall back to an average. Or maybe even a prediction above a
+confidence threshold for recommenders that are smart enough not to show
+a prediction if they don't believe it. Typically it's a simple percentage. So we want to look at how do we deal
+with it per user, per unrated item. But the simple answer is if
+you don't have any other data. If you take every user item pair and ask, can this system make
+a meaningful prediction or recommendation with some data behind it? For that item for that user, that percentage is what we
+would call the coverage. And there's lots of ways to compute
+it including hiding items and recomputing inside a recommender. Now, there's lots of areas
+where this comes up. One of them is we just might want to know, how often if I build this
+recommender into my movie site will I see a star-score or
+one that's meaningful? And if the answer is, only 12% of
+the time, that might be a problem. But it's also used at times as a background metric when you're
+comparing things in the top end. So we might want to ask what percentage
+of items appear in somebody's top 20? How many items in our catalog is there
+nobody we can recommended these to? We might want to know that as
+a property of the algorithm. We might want to know that as a way
+of looking through our catalog and finding out if there are things
+we shouldn't be selling. Because there's a business interest
+in reaching the entire catalog. I should also throw in a little side note
+that differences in coverage can cause you challenges when you're trying to compute
+other metrics we've already discussed. If you're looking at something
+like an error metric, how do you compare an algorithm
+with high accuracy and low coverage against one that has
+low accuracy but high coverage? Is one better than the other or
+is it just cherry-picking the easy cases? And as we show in this course, one of the answers to that question
+is to say, we better adjust. Maybe we need a fallback algorithm for the cases where the low coverage
+algorithm can't make a prediction. Or maybe we need to let all of the
+algorithms cherry-pick their best cases, both of those lead to valid comparisons. Another simple metric is popularity. Sometimes we hear of it
+in its inverse novelty. Popularity can be applied to either
+individual recommendations or an average over a list of recommendations. And it's just simply how
+popular is this item. But how do we define popularity? It could be the percentage
+of users who buy or rate the item, if that's the data we have. It could be external
+data we have over sales. So, if I'm a movie site, I might use
+box office sales as an indicator. If I were a book site and
+I didn't have enough data of my own, I might use data on how many copies
+were printed as a measure of popularity. But for any of these we can just
+very directly use popularity and say, do I want to recommend
+popular items like bananas? Or do I want less popular items? If I have two algorithms and
+one of them is a little more accurate but a lot more popular, how do I want to
+deal with that in a trade off? And the notion of novelty is a positive
+way of talking about less popular. Can I get you things that
+you're less likely to know? Others have recently looked
+at concepts of familiarity. Are you likely to be aware
+of this item already or not? And there's many different
+ways to go after looking at, are these items that you might have
+known anyway and is that good or bad? A third measure is personalization. And this one can be easy or hard to
+measure depending on what you mean. One way of measuring how personalized
+a recommender is, is to take on an item by item basis, the prediction
+for those items across all users. And look at a measure of the variance
+such as the standard deviation of those predictions. The higher it is,
+the more personalized the system is, the more it gives something
+different to each person. The lower it is, the less personalized. This is just the way of
+comparing it between two algorithms over the same data set. If you want to know how much
+everyone's getting the same thing and how much everyone isn't,
+that's one simple way to do it. Another way that might make
+more sense in the top-N world is to look at the list overlap among
+top-N lists of different users. How highly correlated or
+how overlapping are the top 20 lists or the top 100 lists by user pair. That can give you a measure of
+how personalized things are. In the research world, frequently what
+people do is actually ask the users. How much does this feel
+like it was just for you versus it could have
+been given to anyone? And that's a user subjective
+measure of personalization. Two more, one I want to be
+a little bit more formal with. Because the term is so informal. And that's one called serendipity. It's been used in a lot of different
+ways in recommender systems. There are bunch of articles
+published about creating serendipitous recommendations. If you just looked it
+up in the dictionary, serendipity would be the occurrence or development of events by chance
+in a happy or beneficial way. When we think of this in recommender
+systems, we're talking about surprise, delight and not the expected results. The thing that makes a recommendation
+serendipitous is someone looks at it, says, I never would have expected that. And then loves it. One of the formulas for
+looking at serendipity in a system is looking over
+a set of recommendations at the relationship between the difference
+between the predicted score and some primitive estimate of how popular or
+obvious something is. Times a relevant score
+that's usually zero or one. So we say,
+over all of the items that we have, Count anything that people
+don't like as negative. This might be a top 20 list. I'm going to go to through
+the 20 items in the list. Anything the person doesn't like,
+we're going to say, it's not relevant and we'll count that as a zero. Anything the person does like, we'll see how much more
+highly are we predicting it than you would expect to predict
+it given our primitive estimate? I'll come back to the primitive
+estimate in a second. That value can either be zero, now this is exactly what you would expect
+somebody to have as their first choice. Or it could be greater than zero. If it's less than zero,
+we'll just clamp it at zero. And our total serendipity
+is the summation of all of these bits of delight divided by the
+number of items that we've recommended. So, when we talk about this, actually,
+we're going to go back, one second. When we talk about this primitive
+measure of obviousness, the most commonly used one is overall
+popularity but other people have used serendipity measures that are just
+similarity to what I've recently consumed. What do I expect the recommender
+to recommend to me? Exactly what I've been having. So that can't be delightful. But if you recommend something different
+than I've been having, that might be good. So in practice you don't always need
+an overall metric to increase serendipity. If you figure out what
+things are un-serendipitous like highly popular items or
+items that are different from what you, or items that are similar
+to what you have right now. Those are both un-serendipitous. If you downgrade those a little bit in
+your top-N lists and experiment with that, you'll end up with a list that's
+a little bit more serendipitous. The business goal of this is to get
+people to consume less popular items, to keep people interested. If this were a music recommender, it might
+be, gee, we don't want to keep playing your favorite six songs over and over,
+we want you to get some new things. To keep people coming back to your site. The last metric we'll go
+into in detail is diversity. It's a measure of how different
+the items in a list are. This only applies to a recommendation
+list, you can't have a diversity score for a single item. An item isn't diverse, a set of items is. So, given a top-N list,
+Ziegler used a metric of intra-list similarity which
+was the average pairwise similarity and
+lower score is higher diversity. To do this, you need a pairwise similarity metric
+that's different from your rating space. His work used book categories,
+other people have used tags or vectors of tags or keyword vectors. Mostly content space descriptions. So, you have more diversity if your top-N list spreads out more
+over the space of the content. A common approach to
+diversifying is to say, gee, I'm going to always keep
+the number one item that's recommended. But if later items in my top-N list are
+too similar to the ones I already have, I'll pull them out and replace them
+with items that are not too similar. So that I get a more diversified list. And then there's some factor you might
+put in of how many substitutions you're willing to make? Or how deep in the list you're willing
+to go to find things to substitute? We're not going to go into
+diversification in detail. If you're interested in it, there's a paper by Cai Ziegler on topic
+diversification in recommender systems that outlines the whole
+set of how to do this. There are also alternatives, you can
+do clustering to diversify by bundling. Say, we're going to take three or four clusters and
+show you a few items from each. There's a set of interfaces called
+scatter-gather which do this effectively for search applications and
+they can do it for recommendation. Where we'd say let's get everything
+we think is interesting. And analyze it, and cluster it, and put a representative of
+each cluster on the screen. Then let the person select, well, which of
+these are interesting to you, gather those together, narrow our selection, and
+then, re-cluster and re-scatter. It's a really nice interactive way to find
+the things that you're interested in. And I should point out
+the business goal for diversification is to not
+turn away the customers who are not currently interested in
+that narrow portion of your catalog. So, if I'm not looking for
+luggage and I'm not looking for poker books, maybe,
+I don't think Amazon has anything for me. Okay, I know they probably do if I search. But I'm not buying anything today
+because there's nothing I need. Particularly true because mostly what it
+shows me is stuff I recently bought and the things very close to that. I'm not getting a lot of
+serendipity out of that. So, one last comment on business goals,
+business objectives and metrics. We're using a set of metrics that
+are common in recommender systems work. But there's a whole set of
+metrics that exist in business. There's lift, how much does this
+increase sales immediately? There's net lift, what if we subtract out
+the cost of returns because recommending something that somebody says sure to and
+then returns it is not a good thing. There's time to return for
+next transaction. Some applications like printing out a
+coupon as people check out, giving people a discount for the next time but
+also recommending an item to come back to. The goal is to get them to have
+another transaction sooner. There's long term customer value,
+estimates at lifetime value, that may look just at somebody's
+purchase rate overtime but might look at there at
+things like referrals. Does this customer get you more customers? In fact the whole set of literature
+in marketing is filled with different metrics, many of which apply directly
+to marketing using recommender systems. So to wrap this together, metrics can
+address a lot of the fuzzier goals of producing a diverse, delightfully
+surprising set of recommendations. Or assessing whether we're going deep
+into the long tail of the catalog and not just a few hyper popular items. Experimentally, people have
+taken most of these metrics and shown that users would prefer to
+give up a little bit of accuracy in order to optimize some
+of these experiences. But generally that preference is limited,
+they don't want to give up all accuracy. But they're willing to give up a little
+bit in order to gain some diversity, gain some serendipity, gain things
+that meet other parts of their search goals that go beyond simply,
+is this something I would like? Looking forward, we're going to talk
+a little bit more about how to apply these metrics rigorously,
+different special cases, how to set up the evaluations that
+will make these metrics useful. And we look forward to seeing you there.

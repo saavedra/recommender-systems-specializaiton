@@ -1,0 +1,44 @@
+Welcome to the course on Evaluation and
+Metrics of Recommender Systems. In the previous two courses,
+we've looked at a number of ways of doing recommendation using basic popularity,
+segmented statistics, content of items. Then we've looked at
+collaborative filtering, how to use user item interactions in
+order to produce recommendations. But one thing we've not yet talked
+about is, how do we know which of these approaches is going to work
+better in a particular situation? Or if they're going to work at all or
+we should just pick some random movies for people to watch. In this course, we're going to be learning how to match
+recommenders to their desired outcomes and measure their ability to meet the needs
+in these different kinds of use cases. And also how to optimize
+the recommenders behavior. We've seen a number of parameters
+such as neighborhood sizes, how do you pick which one you need? The tools that we give you in this
+course will answer that question. >> The key concepts in this
+course start with metrics. We'll take you through some basic
+metrics for accessing the accuracy of recommenders, prediction, its ability
+to help in making correct decisions. We'll look at rank metrics that evaluate
+the quality of a top analyst and then we'll move in to more advance metrics
+looking at concept such as diversity and serendipity. We'll look at the whole concept
+of evaluation without users understanding what you can do and the
+framework for dealing with offline data. And covering up or hiding parts of your data to evaluate
+whether you can predict what you'd hidden. And we'll look at evaluation with users. Looking at lab experiments and
+field experiments, including the online A/B tests. As well as some work
+on surveying users and log analysis to understand user behavior. As we put all of that together,
+we'll get a holistic concept of how we can evaluate our recommender system and
+use that evaluation to feed forward and to tune the system and
+redesigning it to work better. >> This course is structured with the
+first week focusing on basic metrics for evaluating the accuracy of predictions and
+recommendations. For this class, it will be
+an assignment and a spreadsheet and there'll be a quiz on the topics. We'll then spend two weeks
+on advanced metrics and offline evaluation structures with
+programming assignment where you'll actually implement and
+run a recommender experiment in LensKit. If you're taking the honors track we
+recommend getting started on this assignment particularly early. Because, it's fairly computationally
+expensive to evaluate several algorithms over several data sets. So, you'll need to leave some time for
+the program to run. We'll also have a quiz
+again over the topics and then we will have a week
+on online evaluation. Throughout this, we have a running
+assignment, weeks 2 through 4, where you design an experiment to
+evaluate a recommenders' system. These are going to be peer-graded,
+you're going to be looking at each other's experimental designs to assess their
+effectiveness and appropriateness. And you can treat this as a warmup for
+the Capstone project at the end of this specialization if you're
+planning to take the entire package. With that, let's get started.

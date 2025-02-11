@@ -1,0 +1,136 @@
+Welcome back. In this lecture, we're going to take
+a look at prediction accuracy metrics. Measures that look at how correct or
+incorrect, maybe even how far off a recommender system is and predicting
+what a person would have rated an item. So our goals for
+today are to understand how to compute three of the common
+prediction accuracy metrics, mean absolute error, mean squared error,
+and root mean squared error. That middle one, mean squared error,
+is not commonly used, but it's useful to understand as a path
+towards root mean squared error. Understand variations on how
+these can be computed, and understand where this type
+of metric is useful and the comparisons among these
+versions of the accuracy metric. So let's start with a little intuition. Error metrics tend to be
+thought of as intuitively a leave one out approach to understanding
+how a recommender would work. So I have this wonderful
+recommender system running. I may have hundreds of thousands of users. I may have tens of thousands of items. Millions of ratings. It's churning along and
+I say wait a minute. How good is this thing at predicting
+what these people are rating? And I would go through a set of ratings,
+maybe all of them, maybe just a set of a certain size and say, if I didn't have this rating
+in the system, let's take it out. And asked the system to predict what
+that user would think of this item, and see how close we are. Off by 0.3, that's not bad. Let's do that with another item,
+and another item. Now as it turns out for
+many algorithms this is hard. It's hard to take a piece of data out. So in many cases,
+evaluations work with short cuts. They may say we'll take 10% out and
+predict that 10% then we'll take another 10% out and we can repeat
+this to get confidence in our measure. But whatever form we're doing,
+we take data that we already have. And we see how well we could
+have generated that data in the absence of having that. This is a fundamentally a dead
+data technique it's retrospective. We're not looking forward although one
+could theoretically say we're going to measure when people rate in the future
+will capture what we would have predicted. What we can never do with this
+kind of technique is say how good are the predictions we gave to items
+the user has chosen never to consume? Because we just don't know what
+they think about those items. So mean absolute error is probably
+the simplest measure here. It defines error as the divergence
+of prediction from actual rating, so the prediction minus
+the rating is the error. We get rid of the sign plus or
+minus by saying P minus R, we're going to take the absolute value. And the reason we do this is because
+two wrong don't make a right. We don't want to say we have a very
+accurate recommender because half the time it's two stars high and half the time it's
+two stars low so on average, it's perfect. An average is off by two stars,
+the direction is a separate issue, and the way we take the mean of
+those absolute errors is to say for every rating let's start there. Let's some up the absolute value
+of prediction minus rating and divide that by the total
+number of ratings. So, simple measure. Mean squared error instead
+of taking the absolute value squares the error, and
+there is two reasons to do this. One is,
+it's another way to get rid of the sign. Now minus 1 and 1 squared both have
+the same value, or minus 2 and 2 squared have the same value. But more important,
+this comes from a belief that large errors are more important than small errors that if I'm off by half a star four times, that's not as big as being
+off by two stars even once. And so if we want to avoid that just to
+run through the math if I took half a star squared I'd get a quarter star,
+if I do that 4 times I have a quarter star times 4 the average
+there is a quarter star off. If I take 2 stars and I'm off and
+3 ratings where I'm perfect, I would get 2 plus 0, 0, and 0, and
+that would be measured twice as bad in mean squared error than having 4 of
+them, all of them off by a quarter star. Now, there is a disadvantage here. Talking about how big your squared
+error is is not on an intuitive scale. If I told you that we can
+predict your number of stars that you are correct,
+are predicting a movie for, and we have a squared error of 1.7 stars. Most people don't go into their head and
+say wait a minute, what's the square root of 1.7 or 0.8 or
+something like that and compute. That's how many stars
+off you are on average. And that's the reason people
+introduced root mean squared error, which just takes the same measurement but
+puts a square root around it. It still penalizes large
+errors more than small. It still gets rid of the sign effects but
+by taking the square root, we're back on a scale where you tell
+me that square root is 1.3 stars, I could say, my error is 1.3 stars,
+at only of a 5 stars scale. That's not a lot of confidence. Now, the difference between 4 and
+4.5 is just not that likely to be reliable,
+and thus I have 3 measures. Now we glossed over something here. I said that we could just add up for
+every rating the error and divide by the number of ratings. And that is the usual model but
+there are alternative models. The most common one is to say we're
+going to look at the error that each user faces and
+tell you the average error for each user, or
+distribution of errors for each user. And in that case I would
+average the users first and if a user had 10 ratings
+I'll divide it by 10, and if a user had 3,000 I'll add up
+the errors and divide by 3,000. And then average those averages together. It's not a very pure
+mathematical thing but it gives you a view of per
+person what's the likely effect. And the distribution of per user
+errors can be quite meaningful. There are a few rare cases where you
+might care about per item error. If you're in the business where pushing
+items to the right people is what really matters more than thinking about people,
+you might average your errors over items, look at the distribution and
+then take an average of that. And our advice to you is consider looking
+at all of these that are relevant for your situation. Understand that averaging over
+ratings is what's normal for most comparative purposes. If you see most published
+results that'll have that. But you can use different averages if you
+have a reason that they relate to what you want to measure for your system. The other thing to do is what do you
+do when you're comparing MAE for different cases,
+different algorithms, for instance. Because you want the same
+dataset in the same scale. Now there's always going to be issues. Even if you have the same data set in
+the same scale, that some algorithms don't produce a recommendation, or a prediction
+value in this case, for every item. There are ones that say,
+I don't have enough data, and what are you going to do about that? And there's two possible
+ways of dealing with that. One of them is to say we're going to
+treat each algorithm in its best case. We're going to look at only
+the common subset of item user pairs of ratings for which we can
+generate predictions by every algorithm, including the ones that cherry pick
+the best or the easiest to compute. And in that case we can
+look at the algorithms comparatively by looking at their MAE or RMSE only over the items that
+they all make predictions for. That's a way of saying at their
+best how good this algorithm. Let's look them cherry pick,
+is not commonly used though. A more common alternative that I think
+makes a lot more sense, is to say that in the real world, we've got to come up with
+some way to to give this thing a score. And what we'll do is, we'll have a baseline that we fall
+back to if the algorithms punts. The algorithm says I have no idea what
+you are going to think about this, we fall back to a sensible baseline. That baseline could simply
+be a non-personalized score like the overall average. More commonly what we'll
+do is a weighted score. And say we're going to use the overall
+average and the user average and combine those in a weighted way to say,
+well, we understand if we normalize ratings over all items how
+good is this compared to other items? We understand your scale. We'll map it to your scale. And so we'll give you a semi personalized
+score, where the scaling at least is personalized, even if the recommendation
+is based on overall averages. And if your algorithm
+can't make a prediction, we'll substitute that prediction for it. You'll see this when we come
+to some of the exercises, that this is a common approach that
+we often want to use in these cases. It allows us to put all
+the algorithms on an even footing in an environment where we really
+do care about predictions. So a couple quick things. All of these error metrics
+are highly correlated. Other people have done these studies
+already, they plotted lots of graphs, if you have a case where an algorithm
+is much better than another one by MAE, it’s probably better by RMSE. And in general,
+if you pick up one measure like this, it’s going to be good for anything. The squared could catch large errors that happen occasionally but
+there are other measures we're going to talk about in the
+next lecture that deal with that better. Both MAE and
+RMSE have lots of public datasets with public results on algorithms, so
+it's easier to do comparisons there. The drawback is that error as a measure is often dominated by the irrelevant
+parts of your product space. If you're very good at identifying
+the top 50 candidates for somebody and precisely targeting them, but you just don't know how much people
+like or dislike the bad stuff. Errors are going to kill your measure. This is the problem we've often talked
+about in the Netflix challenge that if all you really care about is,
+can I find 100 things for somebody, how accurately you can predict
+number 4,000, may just not matter. And so, if that doesn't matter, you should
+be looking at some other kinds of metrics of which we'll have several of
+them in the upcoming lectures.

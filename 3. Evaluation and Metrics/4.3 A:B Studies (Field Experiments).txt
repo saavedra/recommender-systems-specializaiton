@@ -1,0 +1,132 @@
+Welcome back. We've seen in our online
+evaluation discussion, the basics of doing online evaluation
+with actual user interaction and how to look at usage logs of live
+systems to understand something about how our recommenders are performing for
+our users. In this video I want to talk about how
+to design and analyze online experiment. I'm only going to be able to
+scratch the surface of this topic. There's a lot more to learn and to think about when you're actually
+deploying new experiments in the wild. My hope is to provide you with
+the basic starting point, so you can understand the basic ideas,
+but we'll also be providing links to additional resources in
+the associated reading. The Goal of Online Experiment
+is to see the change in a system makes a positive improvement in
+user activity or user response. Does a particular way of
+computing recommendations or a way of presenting recommendations lead
+users to buy more recommended items. Or watch more recommended videos. Or stay listening to the radio, the recommended different
+radio station longer. This is not just applicable
+to recommenders. You can use online experiments
+to test a large array, of designed decisions of rhythmic design,
+user interface design. Broader parts of the user experience,
+how you layout the page, what pages you put where. All of this things you can do
+online experiments to test them. We're going to be focusing primarily on
+the recommender and its algorithm and its user experience but the same basic ideas
+apply to many more types of decisions. The basic structure of one of these tests,
+which is often called an AB test because you're often testing
+two variants in the system. You've got your system,
+say your baseball card trading site, and
+you build two variants of it. And often times one is the current system
+and one is a reposed improvement so variant A is going to
+be the current system that recommends based on popularity. And variant B is going to
+be one that incorporates a collaborative filter recommender
+system in to a suggesting baseball cards that the user
+might want to consider. And then you look at how the users respond
+to these two different versions of the system. In statistical experiment or
+design prolonged, this is called a between subject experiment because you have
+two different groups of users. One group of users sees
+the version A of the site. One group of users sees version B. And you measure the responses
+differently and you see, does one group of users buy more baseball
+cards than the other group of users? You do, you need to make sure that
+your user sticks in the same one, the same experiment. That you have your users separately,
+you pick your users randomly. But if you do that and all of these things
+are standard aspects of experimental design, then you can get a good
+measurement, a controlled measurement of the impact of your proposed system
+change on the way users use your service. So benefits of this are that you can measure the impact on
+actual user behavior. With the offline evaluation
+we're looking at okay, can the recommender accurately fetch the,
+or recreate the data we're hiding from it. But we're still left, so suppose we can? Does that generate more sales? Does that generate happier users? Does that get users to continue
+renewing their subscription? A controlled experiment where you've
+got a good randomization strategy for splitting your users where you have
+a proper, keeping the site constant or the service constant for some users and
+you've got the change in other users. Results in reliable knowledge about what
+Is going to make your service better. You can also scale this out to
+multiple variance, it's not, it doesn't have to just be A from the A,
+B, C, D. But you can understand a lot of things
+about the impact of the pros change or actually have on the way your users,
+your customers interactive your service. In order to do this, you need to
+have a way to measure impact, and often you'll look at one or
+a few key performance indicators, KPIs, that are the main things
+that you want to move. They are the short term
+way you measure success. And, this is really going to vary
+from business for to business. It might be, how many videos do people
+watch if you're a video streaming service? It might be sales volume, it might be conversion rate when we're
+dealing with the recommendations where we want recommendations that result in
+the user clicking on the recommendation, that's click through rate,
+that's important to watch. But, the click through doesn't do much
+good if the user clicks then says, no, I don't want this. It hurts if the user clicks and
+says I don't like the site anymore. So conversion rate, which is the number of
+recommendations that result in the user buying the product recommended That for some business can be a good KPI at
+least for your recommendation unit. You want to select things
+your measures carefully. You want to measure the right thing
+with regards to your business needs and your user needs. And don't incent that
+also not incentivizing things that are going to
+harm in the long term. For example, if you're running
+a search engine, optimizing for users spending a lot of time looking
+at search results is probably not what you want, because if they're spending
+a lot of time looking at search results, they're probably not finding search
+results that are useful to go away to. As opposed to a social network service where you want users to spend a lot
+of time engaging in reading content. These metrics are not one size fits all. You have to understand what
+metric is going to model well, what generates value for
+your business and for your users. A good metric is going to be
+a credible near-term proxy, for long-term customer value. Over the long haul,
+you want to keep customers, keep them buying your products, and
+this is really hard to measure. But you want them to do things like
+recommend this service to their friends. And there are things like, like referral programs that
+allow you to track some of that. But you want the user to stay around for a long time and continue buying
+products in most businesses. Oftentimes it's hard to, we can't
+in the context of one experiment So well what's this going to do to the amount of revenue that I get
+from this user over 5 years. Then we're waiting 5 years in order to
+find out whether our recommender was any good. That's a really long turn around time for
+business decisions. So, a lot of times what you want to do
+is you want to have some credible near term proxy for
+that long term customer value. And it can be, do they renew their subscription next
+month if it's a subscription service? Do they take other actions that correlate
+with renewing their subscription? The conversion rate can be a good one. You also want to instrument heavily,
+and not just measure that major metric. You want recommendation that
+produce good conversion rates. But, that's not the only thing you want to
+measure, you want to measure things like users leaving, you want to measure clicks
+and measure basically as much as you can. For a couple of major reasons. One, you want to diagnose what worked or
+didn't work. And also you want to be able
+to detect things early. If you've got a recommendation, if you've
+got a change that causes the site distort crashing so users leave all the time, you
+probably want to stop that really early. And the,
+now how long do you run this experiment? You can't just roll it out,
+run a couple of days and measure. Because there's a couple of things. One, if you change anything
+visible to the user. Users play with new things,
+there's a novelty effect and sometimes you care about that especially if you're
+dealing with new user conditions. You care about what happens
+when users first encounter? But, a lot of times the thing
+is not going to new forever, you want to know what's this going to do
+for my user base in the steady state. So, do you want to burn-in period where
+you, the users are interacting and where the, but, that's not where
+your measuring whether it worked. After the novelty effect wears off,
+then, did it work? And so, we have this measurement period
+after the novelty effect wears off. You also want to measure for multiple full weeks because different
+days have different patterns. Something is producing good
+recommendations Tuesday afternoon won't necessarily produce good
+recommendations Saturday night. Sometimes you maybe want to have different
+recommenders' for different times but, you want to understand the performance
+over the whole weekly cycle. And you also, different week,
+you can have odd weeks. Weeks of holidays and stuff can be
+different so you want to be careful about your measurement time to make
+sure you're getting enough data to get a good picture of what this
+thing is doing in the long term. So then you want to analyze the results
+using robust statistical methods to ask, did my change improve things in
+a measurable way for my users. So in conclusion, A/B testing lets you
+see the impact of your recommender or other change. On rare users, and it gives you
+a really powerful ability to measure, how the recommender impact your business. That said we going to have,
+links and the readings. For more information particularly we're
+going to have a link to a video that goes much more in-depth on this,
+of a talk given by Veronica Harvey, who runs these kinds of experiments for,
+currently for Microsoft. I'll have a link to that talk that
+he has given at numerous places and some other resources as well, for
+you to refer to is you go to design and execute your own online experiments.

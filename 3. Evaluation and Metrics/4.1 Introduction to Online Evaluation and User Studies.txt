@@ -1,0 +1,217 @@
+Welcome back. In this module, we're going to
+talk about online evaluation and user-centric forms of
+evaluating recommender systems. So we're going to focus
+on understanding goals, understanding how online
+evaluation compliments. Or, in some cases, replaces offline
+evaluation, and to become familiar with, though likely not master
+a variety of mechanisms for user-centered evaluation
+of recommender systems. The natural starting
+point is the question of, hey, haven't our metrics all been about
+user-centered evaluation to begin with? Isn't mean absolute error or
+top-N Precision or diversity, an attempt to
+measure the user experience? Indeed it is. We specifically try to find metrics
+that do a reasonable job of assessing things that we have reasons to
+believe either from empirical evidence or theory, or a past experience,
+reflect user experience. But they're not perfect,
+they really only tell part of the story. In many cases, we really need to
+understand the whole context of usage and how user preference and user behavior
+interacts with that entire context, and the specific recommendations being
+delivered, or predictions being delivered. So when we have a system
+that's showing four stars, but it's also showing how many people
+gave those four stars, and what the variation was, and a set of tags,
+and all these different things together. None of these metrics tell us how users
+balance these different attributes and different objectives,
+to make decisions and how they feel about the combination
+of this information put together. We also frequently need to understand
+how a user's interaction with a recommender system is
+balancing an exploration recommendation type of usage with
+retrieval, and evaluation, and filtering. How much is the person looking for
+something and looking for the system to help them find
+what they're looking for. How much is the system being
+counted on to help people explore. So one of the things we're going to
+learn is real people are complex. So that leaves us with
+a spectrum of techniques, and there's many others involved that we're
+not even going to talk about here. But we are going to introduce
+four of these techniques, and some of them we'll be delving
+into in further video lectures. So let's start with usage logs. Usage logs are a great way of
+evaluating usage in the wild. The way people really use the system. We're going to have an entire lecture that
+walks through some examples of how that's been done with the movie lens system. But we just want to hit the highlights
+of what you do with some of these systems when you have good logging. So simple example number one,
+I want to know what things did the user eventually select and
+how they relate to what I recommended. For that I can build a log of
+what's been displayed to the user, what the user clicked on,
+what the user purchased, or consumed, or read, or whatever
+the different recommender is about, and then do lots of different algorithms. I should say lot's of different
+analysis over algorithms to understand what's happening. So one great thing about usage
+logs are that we can do some retrospective measures. How accurate were
+the recommendations from different recommenders that might
+have been mixed together. If we had a hybrid recommendation system that some of
+the recommendations came from content, some came from an item-item collaborative
+filter, some came from something else. The fact that we could tag those, log
+them and see which were more successful. It's the sort of thing we
+can do with usage logs. And so
+this gives us the ability to measure, not just accuracy based on
+some ground truth ratings. But accuracy based on the actual
+recommendations that the system made, which is really a nice way to
+understand whether the system is doing what it should be doing. Second method that's out there poll,
+surveys, focus groups they all come under the category of let's ask
+users what they think. Sometimes that's the best way
+to understand what a person wants is to ask them. Now I should warn you,
+creating good surveys is hard. You can take an entire course
+just on survey design, and there is some wonderful courses
+out there on survey design. If you want a reliable
+survey it takes some work, you tend to have to ask
+things multiple ways, different times to confirm that
+you get consistent answers. But once you do that, there are some
+great techniques out there for analyzing these surveys. And not only getting at what
+the answers people said were, but what are the underlying
+factors that relate to these. And a method I'm quite partial to these
+days that we use a lot in our work with recommender systems,
+structural equation modelling. If you construct a survey
+in the right way, you could do this not just with surveys
+but we typically do it with surveys. You can build a structural equation model
+that takes a set of static attributes, a set of outcomes, and
+a set of responses of intermediates. And helps you understand
+the flow from start to end of what's influencing your outcomes or
+your success rate. So some of these are latent factors,
+happiness, or novelty. Some of them may be explicit
+things that you manipulate, like which algorithm it is,
+or how you tune it. And all these can come together into
+a model that helps you understand how a recommender system is functioning. If you're interested in this technique, the best place to see it today
+is in the research literature. And if you look up structural
+equation model and recommender systems, you'll see that there
+are literally dozens of examples of people building these models to understand
+user preference in a recommender system. Focus groups are another useful technique. Sometimes getting a couple of users
+together and sharing their experiences, their desires is the sort of thing you
+might do if you we're thinking about building a system or trying to decide
+on a major set of improvements. You bring your people together
+let say your Amazon, and you say hey,
+your all bunch of Amazon shoppers. We want to talk with you
+about how Amazon works and how our recommenders work,
+maybe in the broader context. You might show some pages and
+ask people to react to them, they might react to other ideas. You might even ask people things about
+how user don't use different kinds of recommendations like people who bought
+this also bought that, or shop for this, or promoted alternatives, or other
+things like that, that are in the site. Now you have to be careful that you
+don't confuse information gathering with selling. If you're trying to convince people that
+they should like something, you're not going to get very good information
+from them about whether they would. And separate the sales from
+the actual information gathering. Another method that's really wonderful are
+lab experiments, controlled experiments. In science,
+this is often the gold standard. We're going to, as best as we can,
+control something. We're going to give two people the exact
+same experience, except for some variable. Well, not just two people,
+maybe 100 people in each of two groups. And we'll measure whether one
+of them prefer something or uses something differently than the other. Or maybe we'll do
+a design where instead of each person getting a different treatment,
+each person will get all of the treatments in some sort of randomized order or
+balanced order. There are lots of ways
+to do lab experiments. You can actually do them in a lab,
+bring people in, get them an experience,
+ask them to do things. But you can also do your
+lab experiments online, where you might go out and and say hey,
+would you volunteer to try out my system? We're going to have you do these
+three exercises online and then fill out a survey
+about what you think. And we'll measure everything
+you do along the way. Now, you can get a lot
+of good data this way. We have found, if we have a new algorithm
+that's trying to figure something out or if we have a new insight
+into user experience. I'll come back with example in a minute. Asking people to volunteer and
+show them something and then rate the recommendation list or tell
+us what they think about a set of items. Actually it's very useful, we'll frequently give them questions in a
+form of, how much do you agree with this? From strongly disagree to strongly agree,
+a so-called Likert scale question, or we may even ask them to
+put things in a ranked order. And we tend to be pretty
+careful in our design, but here's an example where
+this is been really useful, we came up with a hypothesis
+that familiarity is something that a recommendor should
+take careful attention of. And the familiarity is the degree
+to which the item that you've recommended is something that
+the user is already familiar with, even if they haven't already consumed or
+experienced it. We had a bunch of ideas about what
+familiarity might be related to, what it might mean,
+we did some brainstorming, we came up with the idea that wow, familiarity might
+have some relationship to popularity. In movies, you're more likely to be
+familiar with a movie that's popular. But it also might have to do with
+things like marketing budget, it might have to do with recency. You're more likely for two movies that
+are equally popular to be familiar with one that's in theaters now than
+one that was in theaters ten years ago. And once we had these ideas,
+we went out and we decided we'd better figure out
+if we can estimate familiarity. And whether users noticed that we did
+a bunch of online lab experiments where we said, go through this list and tell us
+to what extent have you heard of this, that way we could measure familiarity. We could give them list of things
+that we're more or less familiar and see whether they preferred
+the recommendations of one or the other. Now the challenge of any online
+experiment that's a lab experiment, or any lab experiment face-to-face
+is it's decontextualized. It's not natural usage but it gets
+you very carefully controlled data, which can be valuable. The other mechanism and perhaps
+the most important mechanism you'll hear about in testing recommender
+systems is field experiments. A/B tests or massive A/B tests
+because one of the great things in this domain is the ability
+to go out there and try different variants and
+measure the results. Now you can do an A/B test by giving
+some users some version A, and some users version B, you can do it by
+sometimes giving the users version A and sometimes version B and
+measuring the difference. Your design depends on how noticeable and
+how persistent the conditions are. So if what you're trying to do is decide,
+gee, should I use a user-user collaborative filtering
+algorithm or an item-item algorithm. I know none of us a really
+trying that example. We might give half of
+the users each of those and follow them over a month and
+find out all sorts of things. Do they take as many recommendations? Do they search longer or shorter? Do they come back to the system more or
+less? Do they end up liking the things
+that they rate more or less? In that case, it probably
+wouldn't make sense to say well, you get version A one time and
+version B the next time. Because for the reality of the field,
+we want to understand long term behavior. In other cases, where we're testing a particular
+interface that's a pop-up that they're only going to see once we might try
+multiple versions with the same person. So it's a wonderful concept. Now there is an issue in this
+field of massive A/B testing. The companies like Amazon,
+like Microsoft, Google, all of these have infrastructure where they may be running
+dozens of experiments at the same time. And any given user may be
+queued up to be in one or even many of those experiments
+if they don't overlap. And the idea there is to
+do data-driven design. If I don't know whether it makes sense to
+place the recommendation at the top of the page or the bottom of the page,
+I'll try 1,000 people each way. And if the sales are better at the top,
+I'll move it to the top. There's something wonderful about that,
+but there's also something worrisome. The wonderful is,
+we can very quickly optimize our systems. The worrisome is we don't necessarily
+get very much deep understanding. We don't know why it's at the top and the next time we do something
+we've gotta repeat the test. This is actually an area where there
+is a lot of interest in the field and there are researchers not just
+in recommender systems but recommender systems and
+other related fields, information retrieval, even people
+in the natural language community. That are trying to understand to what
+extent can we make these fields, predictive engineering fields with
+models based on understanding, to what extent are we better off
+doing this with the A/B tests. If you want to understand why this
+might be an interesting issue, just compare this to building a bridge. If we have two designs for a bridge, or maybe five, we could say,
+well let's build five bridges and see which ones stay up and which ones
+fall down, but nobody would do that. We want an engineer who can say, I know
+this bridge design is going to stay up. I have the simulations, I have the theory, I have models
+that tell me this is going to work. But it's not clear recommender systems
+are anywhere near as mature as bridges. And there certainly was a period
+of time in bridge building when people would just build some,
+they might not build them and put them up full size, but
+they'd build models of them. At small scale and put weights on them,
+and see if they collapsed. And so understanding where we
+fit there is going to be really interesting for the field. Okay, takeaway from this lecture. There is no substitute for
+real-user centered testing. Sometimes metrics will
+get you what you want but often if you really want to
+understand if this affects behavior, does it affect sales click through
+other things, you need to try it. There are lots of different
+ways to test with users and around users, and
+all of this depends on your goals. If you want to know if people buy
+the things that are recommended you can probably get that from log data. If you want to try out a bunch of
+different ways of recommending it to see what works you might want to try
+a field experiment, online even. If you want to try something new and
+get quick targeted feedback, you might want to do an online or
+in lab controlled experiment. If you want to envision something going
+forward and really understanding user needs and usage you might want to do
+a focus group or a set of surveys. All of these make sense. Now, for the field experiments and
+the usage logs, you actually have to
+have a system running. But all the other techniques can be done
+while you're still stimulating your system or designing it. And that may also affect
+what you do going forward. So the rest of this module it's
+going to take some of these concepts into more detail. See you then.

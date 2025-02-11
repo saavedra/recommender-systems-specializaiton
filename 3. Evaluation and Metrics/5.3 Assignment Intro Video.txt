@@ -1,0 +1,25 @@
+Hi, I'm back with an intro
+to your next assignment. This assignment's a little
+bit unusual in format so I wanted to explain a bit about
+what we're having you do. But then, the actual instructions are
+pretty detailed in the assignment itself. It looks like an ordinary quiz. It has a small set of questions
+with some fairly detailed answers. But, you'll discover that the questions
+require a pretty extensive amount of thought. We're actually going to encourage
+you to take the handout document and look online or
+print out the quiz questions first. Work through it before you go into
+the system each of these questions is asking you to evaluate
+a particular recommender situation. And identify the most appropriate
+form of evaluation that would seem to make sense for
+the goals of that recommender. This may seem like a strange thing
+to do in a multiple choice quiz. In fact, it's going to be graded
+in a somewhat unusual way. Everyone of the questions has some answer
+that will get complete full credit. But also, some answers that get partial
+credit because they are partially right but not the best answer. As you go through it and complete it,
+we will give you an opportunity to take a look at some feedback on why
+any given answer might be better or worse, and we'll reflect on
+these later on in the course. But the idea here is for
+you to take everything you know and a set of situations and think about
+what the best way to a evaluate a recommender with the idea of being
+able to tune it, improve it and figure out how good it is for
+particular purpose. Give it a try and
+we'll talk more about it later.

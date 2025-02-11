@@ -1,0 +1,106 @@
+Welcome back. In this video, we're going to talk
+through some examples of log analysis as a form of evaluation and
+exploration in recommender systems. I'm going to use the example of MovieLens. Now, you're obviously already
+familiar with MovieLens, if you've taken this whole specialization. But here's a quick screenshot that can
+show you what MovieLens looks like today. It's changed over the years. What I want to add to that is the fact
+that we gather all sorts of data. This happens to have been a report
+that I asked for that looked by user ID at the number of log ins, tags,
+and ratings over the past month. I'll come back to that in
+spreadsheet form, but actually, I just got it graphed to show, look. Most of our users who logged in, in
+the past month, logged in once or twice. In fact, if I look here I can
+see that the median was two. But the maximum was 182 times,
+that's a lot, 6 times a day. I can look at other data this way too. Tags 90% of users don't apply tags. Our top users, apply a lot of tags. Ratings are a little more spread out, but
+it's still true that a quarter of our users apply zero or
+one rating in the past month. Half of them, 6 or fewer, three quarters, 25 or fewer,
+that's not a huge number. That's a lot of movies to rate, if
+you're watching movies as you rate them, for somebody whose knew
+it's not a huge number. At the high end, 2,700, and we can see this in the spreadsheet and
+do analysis base on them. And we can actually look at
+the correlations between ratings and other things. Not going to do that because that's not
+actually the biggest question that I have. We logged every thing,
+we can log about this site. When I logged in and
+got this set of displays, it said what all of these movies
+were that were shown to me. If I say see more, in addition to
+generating a set of recommendations. It's logging away that here is a set of 24
+movies that I've just displayed to you. With this, there's a bunch of types of
+interesting analysis that we can do entirely retrospectively. And I want to take you through
+just a couple examples of that. One of the things that we can
+look at is the relationship between what people rate, and whether and when those things were
+recommended to them in the past. So one of our former students,
+now a graduated PhD did a study looking specifically
+at the question of whether recommender systems
+narrow people's behavior. Whether there's a filter bubble,
+whereas people use the recommender system they consume narrower and
+narrower choices. Or whether maybe recommender
+systems broaden people's behavior. Well to do this,
+one of the things he could do is say, let's look at the diversity of
+ratings people have made over time. We have all of people's ratings, and it turns out that if you look
+at users of movielens over time. And you measure diversity by
+things like genre and keyword. And in this case,
+they used a metric that is based on tags that can give you
+a distance between movies. People's tastes narrow over time,
+but he went a step further, because we had good logs. He went back and said,
+well let's see what the effect is of people who see the movie as we
+give them recommendations for, versus people who choose
+movies on their own. How do you do this? Well he said, we're going to assume for the moment that if we displayed
+a recommendation for a movie, like this one here,
+I should see the Shawshank Redemption. I probably should, I haven't. But that if this is displayed to me and
+sometime in the next three hours, after three hours, up to I think
+he used three months from now. I come back and rate it. We're going to assume I was at least
+influenced by the display of it. Now if I rate it right now,
+I didn't see it because of this. I was reminded that I'd seen it before. But if I go off, finish taping this video,
+go watch the movie, come back and rate it or if I watch it
+this weekend or the end of the month. We're going to count that as
+a recommendation that was made, taken and used. By contrast if I come back, and I rate a movie that it was never
+recommended to me during that interval. We're going to say that
+wasn't a recommended movie. What this student Tian Wynn did is he
+created this measure and looked at people and discovered that we have a lot
+of people who don't take recommendations. They use MovieLens, they put stuff in. But they rarely have ever see
+any movie we display to them. What that means to a large extent is
+they're not looking at these lists. Once in a while they might stumble upon
+something that's on the home screen. But they're rushing in to search for
+things and rate them. They're using the system
+in a different way. We also have a bunch of users
+who take recommendations often, often defined as a fraction of how many
+movies they come back later to rate. And he found something interesting. Yes, MovieLens, movie watching
+tastes narrow as you use MovieLens. But they narrow more if you
+never take recommendations. In other words,
+people's tastes narrow naturally. But the recommender might
+help diversify those tastes. Let me give you an example of
+a very different kind of study, we were able to do using log data. We wanted to understand the effect of
+where somebody saw movies in this list. On the probability that
+they would rate it later. We just had the data,
+we went and we looked at it. That led us to do experiments
+that followed up. We've done things like
+varying this list and then tracking what happened,
+but we started with log data. We actually built models about
+how people consume lists of recommendations by log data and
+a little bit of lab experimentation. A third thing we've been doing for
+a long time is trying to track how well the actual performance of the system,
+prediction to eventual rating is compared against the offline
+performance of the system. So the offline performance says,
+let's calculate that prediction with all the data that we have at the time we're
+running our study or running our metric. The online version says,
+well what did we really display? Did we really display something that
+related properly to what the user came up with? All of these things
+are possible with logged data. Just three quick observations about this,
+then we're going to draw it to a close. One is, these days it's a pretty good
+idea to log just about everything. The data is awfully useful. Two, when you do that
+if you're not careful, you log everything in a form where nobody
+can figure out what to do with it. So it's not enough to log things. You've got to develop a structured
+logging form where you have information on user, session, time stamp, anything it is that you might need
+to reconstruct what happened. And three, you've got to go out and
+actually use that data. And thinking about how you can use your
+log data on a regular basis to deliver reports about what's going on will help
+you get the most out of that data. We do some very simple reporting
+where every week I get an email with some statistics about what's
+going on inside movie lens. Certainly, they could
+be more sophisticated. But they at least give us a picture of
+is everything going as we expected. If I were redesigning that today,
+I might come back and say, gee,
+what is the error distribution of ratings against the last prediction
+of those movies? That might be interesting to know. I might have some other things I
+would want to look at related. I'd get some statistics on user retention
+for instance, which are really useful. But with good log data behind the scenes, you can do an amazing variety
+of interesting analysis. So this was our example of log
+data analysis using MovieLens. Look forward to seeing you next time.

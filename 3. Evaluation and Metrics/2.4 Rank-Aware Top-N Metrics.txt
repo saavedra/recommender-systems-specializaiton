@@ -1,0 +1,186 @@
+Welcome back. In this video, we're going to be
+talking about a family of Top-N metrics that are aware of the rank, the position within the recommendation
+list in which the good items appear. So we've seen a couple of
+families of metrics so far. One looks at how accurate
+rating predictions are, how close the predictive rating is to
+the rating that the user provided. And we've looked at
+metrics that look at how good the recommender is at finding things. For example, the precision metric that
+looks at the fraction of the recommended items that the user is
+actually going to like. In this video, we're going to look at
+these metrics that take into account where in the recommendation
+list the items are. And another way of thinking about this is how good the recommender is
+at modeling relative preference. The prediction accuracy metrics
+look at whether the recommender can accurately model the fact
+that I like The Iron Giant. The decision support
+metrics look at whether or not the recommender recommends
+movies I like, like The Iron Giant. But these metrics are going to look at, does it put The Iron Giant
+high on the list? And does it model whether I
+like The Iron Giant better or worse, than Big Hero 6, in a way that's
+consistent with my actual preference. There are two families of these
+rank accuracy metrics and they have different requirements for
+the input data that they use. One set of metrics is going to
+require binary relevance judgment. These metrics are based
+on binary relevance, like the decision support
+metrics that we saw. They need a notion of whether or
+not an item is good, and they will use that in
+conjunction with the ranking. The utility based metrics
+need a measure of absolute or relative goodness of an item. Then you'd be able, not just okay,
+is The Iron Giant good? But, how good is The Iron Giant? Or is it better or worse than Frozen? The first metric we're going to
+look at is mean reciprocal rank. This is a very simple rank metric. It asks the question,
+where is the first relevant item? So you've given me a list of 10,
+20 recommendations. How far down the list do I have to go
+to find an item that the user likes? Now this does need binary
+relevance judgements. We need to know whether or
+not the user likes the item. The way we compute it is for each user
+we generate a list of recommendations. We find the rank of the first
+relevant recommendation. We start from one, so the recommendation
+to the top of the list has rank 1. We then compute the reciprocal rank,
+1 over the rank. And that's the reciprocal rank
+measure that operates per user. The mean reciprocal rank performance of
+the whole system is just taking the mean over the set of users of the reciprocal
+rank achieved for each user. If there are no relevant items, then we basically treat the rank of
+the first relevant item as infinity, so the reciprocal rank achieved for
+that user is zero. To see this in action,
+let's consider a list of recommendations. We have A, B, C, D. Now, let's say that B is
+the first one that the user likes. We don't care about C and D. We found the first one the user likes, B. So the rank k sub B = 2. So the reciprocal rank is 1/2. If A was a relevant item, If A was a relevant item, then the reciprocal
+rank would be a perfect score of one. And it decreases as we go
+further on down the list. So if C is the first relevant item,
+it's going to be one third. If D, it's going to be one fourth. So we see that it decreases. We also see that the further
+we get down the list, the less it decreases by pushing
+the next relevant item or the first relevant item one
+spot further down the list. So, we have a progression of 1, 1/2, 1/3, 1/4, and we can see that the penalty for pushing the item further down
+the list gets smaller and smaller. So here we have a penalty of 1/2,
+here we've got a penalty of 1/6, we have a penalty of 1/12. So, this models the idea that
+in the first part of the list, users are going to be pretty
+sensitive to where things are. First, second, third,
+this makes a big difference. It doesn't much make
+a difference if it's 57 or 58. It's pretty far down the list. So, the penalty for
+getting worse decreases as the relevant recommendations get pushed
+further down the list. So, mean reciprocal rank
+is a very simple metric. Easy to compute,
+easy to understand what it means. It also very clearly models targeted
+search or recommendation tasks, where the user wants a particular thing. And how quickly they can find
+the thing that they want is what we're wanting to
+capture in the evaluation. So, you can see it used in information
+retrieval, where we're wanting to find out when the user types in A job,
+a compile error, for example. And they want to find
+a solution to that error. It doesn't really matter if there are 5,
+10, 50 solutions. If the first one is good and
+is pretty close to the top of the list, mean reciprocal rank captures that
+kind of a task very concisely. It's less clearly appropriate for general
+recommendation scenarios, but it still is very worthwhile metric for evaluating
+the performance of our recommenders. We can envision a scenario
+like a movie recommender suggesting what movie you
+want to stream tonight. You're going to go down the list and
+find the first one you want to watch. Mean reciprocal rank is
+a credible metric for that kind of a recommendation scenario. The next one we're going to
+look at is average precision. So the precision metric that
+we talked about earlier asks, what fraction of recommendations are good? So we've got five recommendations,
+ten recommendations. That of ten recommendations,
+six of them are relevant, then we've achieved a precision of 0.6. This has a couple of issues. One, it only works and
+is comparable with a fixed list size. Also, it treats all errors the same. So, in our ten item list,
+getting the first item wrong is penalized exactly the same
+as getting the tenth item wrong. But users are going to pay more
+attention again to the top of the list. It's the whole idea of rank
+aware evaluation metrics. So we want to emphasize when
+we're measuring our recommender, its accuracy at the top of
+this recommendation list. And average precision modifies
+precision to do just that. What it does is for each user,
+we compute an average precision. And the way that's computed is that for each relevant item, we compute the
+precision of the list through that item. And then we take the average
+of these different precision values to get the average precision
+of the recommendations for that user. So let's see an example of this. So again, if we have our
+recommendations A, B, C, D, E, and let's say this one's good and this one's bad, and good, good, bad. So A is the first good recommendation. So we're going to compute the precision,
+Which is 1. Find a good item. C is the next good item. So we're going to say that precision,
+there's two out of the three items so far that are good, so we're going to
+say the precision equals 2/3. The D is the next relevant item, and
+its precision three of four are good. So its precision is going to be P = 3/4. So then we're going to take
+the average of these three precisions. So 1 + 2/3 + 3/4, all over 3, is the average precision of this recommendation list. What happens is whether or
+not A is relevant is counted three times. It affects the first precision, the second
+precision, and the third precision. Whether or not B is relevant and C irrelevant, that only affects
+two of the precision values. So, the recommender is
+only penalized twice for getting B wrong, so
+we count the precision of the first item more than we count
+the precision of the later items, which captures again our intuition
+that users pay more attention or are more affected by the relevance and
+the accuracy of the recommendations that appear at
+the top of the recommendation list. Once we have the average precision for
+each user, we average it over all the users that we're
+evaluating our recommender for and we get the mean average precision, or MAP. Some additional metrics are looking
+at the rank correlation, correlation of the recommendations. If we have a way of ranking items for
+a user, we might have ratings, we might have a set of
+pairwise preferences. Then we can compare the order
+that the system produces to the order if we ranked
+them by user's preference. One way of doing this is to use
+the Spearman correlation, and Spearman is a rank version
+of the Pearson correlation. What it is, is it's a Pearson
+correction over item ranks. So we assign each item its rank values. If items are tied, then we average
+the ranks of all of the tied items and assign that average rank to all items
+that are ranked in that position. And then we just compute the Pearson
+correlation of these rank values and that gives us a Spearman correlation, and
+it tells us how aligned two rankings are. One major problem with it though,
+is that it punishes all misorderings or inconsistencies equally. If it swaps 1 and 3,
+if it swaps 11 and 13, those are equally bad in Spearman's view. So, what we want to do is weight things
+at the top of the list more heavily. Again, the same thing were trying
+to do with mean reciprocal rank, with mean average precision, we want to place more emphasis on how good
+the recommender is at the top of the list. Discounted cumulative gain
+is a way of doing this. What it does is it looks at the utility
+of the item at each position in the list. So, when we have ratings, this can be
+the rating assigned to that value, five, three, two, whatever,
+if we have unary or binary data we can use utilities of one for good items and
+zero for irrelevant items. And then we discount this utility or
+gain by position in the list. So we place more emphasis on the items at the top of the list and
+then we normalize by comparing the discounted cumulative gain
+of the list the recommender produced versus the discounted cumulative gain
+of a perfect recommendation list. If it ordered it in order from greatest to
+least utility, what DCG would it achieve? And what we get is a measure called
+Normalized Discounted Cumulative Gain, which effectively measures the fraction
+of utility that it's possible to achieve that the recommender
+actually received. So the formula for this looks like
+the discounted cumulative gain, is the utility, which I'm just
+modeling for now as a rating value, over the discount and
+then we sum it up over all of the items. And the discount, if i is the position, the standard discount is
+a logarithmic discounting. So items one and
+two get a discount of one, and then as the item is greater than two, we
+use the log of that rank for our discount. You can use other discounts. One that's been used is based on
+a half-life decay that has a probabilistic model that at some point, say five,
+the probability that the user that the user would click
+the item goes to 0.5. But log base 2 discounting is
+the most common application of discounted cumulative gain. To see this in action, let's consider
+a short recommendation list, A, B, C ,D, where the user rates A,
+4, B, 3, C, 0, and D, 5. So then our DCG for this is going to be 4/1 + 3/1 + 0/1.58 + 5/2, which is equal to 9.5. The perfect DCG, DCG perfect, Is equal to 5/1 because for
+the perfect one, we're considering, what if we put five, four, three,
+these best ones, at the top, in order? So 5/1 + 4/1 + 3/1.58 + 0, which is equal to 10.9. And so then the nDCG is equal to 9.5/10.9. So we have our achieved
+discounted cumulative gain divided by our possible
+discounted cumulative gain, results in a final metric value of 0.872. So we've achieved 87% of the possible
+discounted cumulative gain by using this recommendation list. So compute the nDCG for each user's list,
+then we can average those over the users to get an estimate of
+the system's overall performance. As I said log based
+discounting is very common, for a log base b, we don't discount
+items one through b, because the logarithm of one is zero,
+which results in a division by zero. So, we just say the first b
+items get the same rank of one. There's also a good theoretical basis for doing a half-life discounting with
+an exponential decay function. Because we can think of users as
+being exponentially less likely to click each successive items. They're most likely to click the first,
+less likely to click the second. So what we do is we set a half-life,
+this half-life alpha, which is the rank where the user has
+a 50% probability of clicking the item. And this lets us measure the expected
+utility of the list that's been provided. Different users have different ratings,
+different possible gains. This is why we have to
+do the normalization. So we get this normalization
+by the best achievable gain, where a perfect score is one, so
+achieved all the possible gain. Another metric we can look at is
+the fraction of concordant pairs. What fraction of pairs of items
+are in the correct relative order? This tests the pairwise
+accuracy of the recommender. We can also adapt these metrics
+to measure rank effectiveness. So with Top-N recommendation
+often what we're doing, is we're telling the recommender,
+give me items from the universe, and then we're measuring for
+the ones we know the relevance of. We're going to talk more in detail about
+this in a later video, but we can say just rank them the items for
+which we have relevance judgements, and we can test whether that rank is consistent
+with the user's relevance judgements. So there's several different metrics
+we can use to measure a recommender's ability to order items. nDCG and MAP are increasingly common in
+the recommenders' systems literature. Mean reciprocal rank is showing up in
+the recommenders' systems literature. It's also used a fair amount
+in information retrieval.
