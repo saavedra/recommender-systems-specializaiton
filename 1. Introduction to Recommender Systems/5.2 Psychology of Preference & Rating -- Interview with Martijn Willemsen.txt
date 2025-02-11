@@ -1,0 +1,323 @@
+Welcome back, in this video we have
+a guest with us Martijn Willemsen from the Eindhoven University
+of Technology. Martijn studies the ways
+that judgement and decision making aspects of psychology
+interact with recommender systems. And he'll be talking with us about how
+the psychology of preference relates to the ratings that we
+collect from our users. Martijn welcome to the class. >> Hi there. >> So, first question. MovieLens asks me what I think
+of the movie The Iron Giant and I tell it four and a half stars. What just happened? >> That's a good question, I think. So, you gave a rating, but
+what does it mean to provide a rating? I don't know actually. So what does the scale entail? So you gave a rating on a five star scale. And from a psychological
+perspective I think rating is just a judgement of some property. And I think in this case the rating is
+all about the quality of the movie. Or how much you like it. Now, what is interesting
+about the MovieLens system, it uses these five-star scales that
+we now see a lot on the internet. And the MovieLens system actually is
+a little bit better because it also allows for half stars, so
+it's actually a ten-point scale. It goes from 0.5 stars to 5 stars. I've been wondering how it
+gets to these stars scales. Because you nowadays see them all over
+the place but I actually don't know. I have looked a little bit at this but
+I don't know where they come from. It's like in psychology we've
+been using scales for many years. We call them Likert scales and quite
+often they're also five point scales. And we use them for to ask people about
+their attitudes and stuff like that. But, why we use stars, I don't know. I think there's some
+marketing behind this. Because what is nice about
+this star scale is that, even one star doesn't really look bad. It's, it's at least a star. Okay, but that's about the stars itself. We're talking here about a rating,
+a judgment in the psychological terms. If I look at the rating scale
+from a psychological perspective, I would say it's a unipolar scale. And looking at the stars, it sort of suggests that it's just
+about the amount of goodness. So one star is a little bit good,
+five stars is really good. But that also depends on the labeling,
+I think, they use. So I actually checked MovieLens, there have this new MovieLens version
+that is out now for two years or so. And I couldn't find any
+indication what the stars mean. Of course we all understand that
+five stars is better than one star. But then going back to the old MovieLens,
+because I remembered it had a scale, I checked that out. And there it says that one star is awful, three stars says it's okay,
+and five stars says must see. That's a very interesting labeling,
+I think. But it at least suggests that
+there's more to this than just being a unipolar scale that runs from
+a little bit good to very good. Because actually the one star, it says awful which is almost bad I
+would say, it's a very negative phrase. And that is also interesting
+that if you compare these five star scales with other scales
+we often also use bipolar scales. For example if I ask you a survey and
+ask you to respond to a statement to which you can agree on we
+typically use bipolar scales. We say I disagree, or I agree, and I could
+be somewhere in the middle, neutral. Not sure whether we have this four or
+five star scale for the MovieLens. Now, I've been talking quite a lot now
+already about the scales and the stars and so, it will really depends on
+how you interpret the stars. But I think what is more important
+is to think about what it means, what it means to give such a rating. The most important aspect, I think, with these type of scales is
+the absolute nature of this judgement. So you ask me for a quality judgement or
+a liking judgement, but you do that in an absolute sense. And what do I mean by absolute
+is that there is no comparison, there is no reference point. You just ask me how good this is but
+you don't give me any reference to other movies or whatever. And that's also, I think,
+why ratings are a bit funny. Because it's actually quite a hard
+task to respond to this question, to give a rating on a scale. If you look at people that
+build recommender systems, they sort of assume that if I ask you
+a rating that reflects your, sort of, stable preference for
+something, your stable liking. But what we often find in psychology,
+but also, by the way, when we evaluate recommender systems and
+look at what sort of ratings people give, is that these numbers
+are actually quite unstable. And that sometimes I might
+give Iron Giant 4.5 stars, and then another moment I
+might give it a 4 star, or 5.0 star. So is this really a stable expression? Is it something that basically
+you get out of your head so you have these ratings stored? And for every movie that you have
+seen there is a little slot in your memory that also stores your
+preference, your rating for that movie. I don't think that's the case. And we have had some psychology,
+some discussions in psychology about it. So Baruch Fischhoff already long ago, makes the distinction between what he
+calls basic values and articulated values. And the idea is that actually for
+a lot of assessments that we make, we actually articulate how we like it
+at the moment we are asked about it. We might have some basic value, some basic
+idea of how we like particular things or what we think about particular things. But most of our evaluations or expressions are actually only generated on the spot. So to give you an example I think, I might have some basic values for
+particular food items. So I might actually like hamburgers and
+I might actually always like them. So I have a strong basic value for
+hamburger. But whether I will like
+a particular Chinese dish might depend on many other factors. And I might like Chinese in particular but
+at a particular moment, actually might like it not that much. I'm not sure this is the best
+example [LAUGH] actually but maybe you should go back
+to the movie domain. I think the question is, are there movies that we really value in a very stable way? Actually, I don't know
+The Iron Giant that well. I guess you like it because
+you gave it a 4.5 star. >> [LAUGH]
+>> But is this something that would
+be a basic value to you or would it be something that
+might differ on the context? >> It'd probably differ
+a little bit on the context, especially are we wanting to watch
+something with lots of explosions tonight, then it's probably not very suitable. But most of the time, yeah, let's watch
+the Iron Giant, it's suitable for a wide variety of situations certainly. >> Yeah so, I think in terms,
+if you talk about evaluation, like this, we have to take
+into account that this rating therefore will not be always the same. And that it will very much depend on
+the particular associations that come to mind when you think about
+this particular object. I think that is what is really important. So for this assessment,
+you have to rely on what comes to mind, what you're memory brings you
+when I asked you that question. How would you rate this? And of course, the sort of associations that come
+about wil differ from moment to moment. And therefore, cause some deviations in
+your ratings from one time to another one. And that might differ in the movies. So I think movies that you really liked,
+you will always like. But there might be movies in between that
+you will like when you sit down with your friends having beers and a good night out. Or when you would sit on
+the couch with your girlfriend, going to watch a romantic comedy that
+you would ever watch with your friends. And that with your wife it
+might be a five star and with your friends it might be three star. Of course this makes sense but that means that the ratings we give
+to a system might not be that stable. And the question is, does it mean
+that our preference is not stable? I don't know, I think that part of that, there are some components of our
+preferences are sufficiently stable. But it's actually always two aspects. We have some basic likings and dislikings and
+some aspects that come about depending on the context that are contingent as
+we say in psychology on the situation. Now, if you look at the literature
+in recommender systems, there has been some discussion about this,
+because, that as we notice that, that if you ask people to
+re-rate particular item. That you often get different numbers. And I know, that a lot of our colleagues
+actually call this rating noise. And that they are looking for
+ways to reduce the noise or estimate how much inherent noise there is
+in rating systems so we can basically know how accurate our predictions
+can be in the end. But I wouldn't call it noise. I think because we're pretty
+sure where these deviations might be coming from although we might not
+actually know the mechanism at this time. But it's I think worthwhile to
+investigate because if we know where the deviations come from we
+might actually adapt to it and adjust our system such that
+they take this into account. I think it's important to realize that
+this one number that a user gives you for an item, is there is much more
+behind it than this one number. It's a proxy for their liking but,
+keep in mind it's not more than that. >> Yeah, and it's,
+you talked about quality and liking and those dimensions are not
+necessarily aligned. Like when I think about the way
+I use the ratings scale, I personally usually rate mostly for
+quality. But that means that a lot of my five star
+movies are movies that are really good and I'm glad that I watched them,
+like the Pianist or Schindler's List. Or other things that if I just
+want to have fun on a Friday night, you're a lot better off recommending
+a four star movie like The Avengers. >> Yeah, sure.
+[LAUGH] >> So the fun and quality are kind of collapsed into this one judgement
+that I'm being asked to make, and then we're recommending based on. >> You have to take into
+account that there is maybe a too simple model behind these ratings. But, anyway. >> You've talked about the various
+things that cause ratings to deviate from one time to another and be, at least our observations of these
+judgments being unstable and how a lot of recommender systems research
+has classified this as rating noise. But what are some of the things that
+make a rating more or less reliable, and what can we do in our systems
+to try to get more reliable, preference judgments from users. >> Yeah so as I told you already
+that a lot of this rating behavior depends on the sort of associations
+that people have when they give ratings. I think the role of memory shoots not the,
+disregarded that much. And that is quite often. So, when I start thinking about it,
+is when I entered this field, I was quite surprised at a lot of the
+systems that we use typically when people start using the system they
+asked you a bunch of ratings. Because the system has to
+learn your preferences. You get a whole list of movies or
+other items depending on them. System of course and
+you're just asked to rate these items. But quite often these might be items
+that you have seen quite long ago. If you take MovieLens, for example, it might ask me to rate The Shawshank
+Redemption, which is a great movie, although I can hardly pronounce its name. And I know a lot of the MovieLens
+users gave it a five star and I think I gave it a five star as
+well because I really like it. But it really depends on how much I
+can still remember of that movie. So we once did a study to test for this. And what we did was very simple. We basically took a set of like 150 movies that we knew were aired on
+the Dutch Public Television in the months prior to our experiment. So we know that some people would have
+seen these movies quite recently. But most of these movies if they aired on
+public television they're not very young. They're typically are like five
+years old or four years old. So a lot of people would also have seen
+this movies when they came out and if I ask them now to rate them, they would have
+to rely on their memory from the past. So that's the experiment that we did. We gave them this list of movies,
+we asked them to rate 15 or 20 of these movies that
+they had seen before. And we also asked them, and that's different from
+the standard recommender systems, we also asked them to indicate how long
+was it ago that you saw this movie. So a simple scale, I think we had six or
+seven categories, like one week, one month ago, three months, six months,
+a year, two years, longer ago. Something like that. Now first, although a lot of these movies had been
+on television the month before the study. Most people actually reported that they
+had seen these movies quite long ago, like three or four years or so. But fortunately there were some people
+that had seen it in the last six months, or last three months. So we looked at their ratings and what
+was interesting is that the same movie might actually get a four or five star,
+if people had seen it recently. Whereas they would only
+get a three star or sometimes even a two star when they had
+seen them like three or four years ago. So looking at the distributions
+of the ratings of these movies, all the movies that the people
+had indicated had seen recently, we had many four- or five-star ratings. Whereas all the movies that
+people said were three years or longer ago had mostly three-star ratings,
+and some even two and one. So looking at the rating distributions,
+it almost looked like the ratings were regressing towards
+the average, the three star or so. And this is a problem I think for
+those systems. Because if you ask me to rate a bunch of
+movies when I start using your system. You probably will give me
+a lot of these old movies. And then I will probably
+give a lot of three and four stars, one of them five stars. And you might actually, your system might
+actually be recommending me movies. You're actually trying to predict
+how much I would like this movie in three years from now. Not how much I will like it tonight. [LAUGH] Or something like that. I'm not really sure what will happen but the predictions might not be as
+good as you want them to be. What is happening here,
+I'm not really sure and this is still something I will
+actually like to investigate. But it's quite hard to do that,
+because you, basically how can you? You would need a study where you can
+actually know pretty sure that there are some movies that some people
+have seen recently and some are not. But whatever, I think what is
+happening here is that in general, when you have recently seen a movie,
+you have a vivid memory of that movie. And to be able to give a good rating, you have to come up with some reasons for
+that rating. And if you recently saw it, your vivid
+memory will give you all sorts of good reasons why it might be a good movie. There might be great special effects. There might be this famous actress. All that stuff is gone after three years. You probably might remember
+the lead actor and you might perhaps know
+the director of that movie. You might vaguely remember that
+it was quite funny but you won't remember the exact jokes that people
+made that really made you laugh a lot. So therefore, your rating might actually
+go more towards the middle of the scale, that would be my guess. So it's clear that I think
+the reliability of these ratings might very much depend on the reliability
+of your memory, that's for sure. So I think this gives you part of
+the answer because you were asking me both about the reliability of ratings but also
+how we might actually improve on this. I think that this is a rhetorical question
+because we have a very nice paper on this that we wrote together. With some other people in GroupLens
+where we actually did a study on trying to provide rating support for users. And the thing we did in this paper and I think that the thing we did in
+this paper, is that we tried to give users some support while providing
+ratings through the system. And the study was like this, so we had
+a bunch of movies that people would rate, we would give them support
+doing this rating. And then a few weeks later they came back
+and we asked them to rerate the movies, I think, if I recall correctly, but
+you would know the details as well. And we had two different support systems,
+I remember. So one was actually based on
+this idea that our memory might need some help when we do rating. So one thing we did is to give
+people any relevant tags. So, I think what we did is,
+the MovieLens system has this tag genome. And we can provide tags for a movie, and
+I think what was really cool about this system is we actually gave people tags
+that would fit with them personally. And those tags would describe
+aspects of the movie. And given my story about all
+the associations that come about when you think about ratings, we hoped that this
+tags would actually help people to have better associations with that movie
+that they had seen previously. And therefore would be more
+consistent in their ratings. It didn't help [LAUGH] That much,
+I remember. What did help was the other
+version that we had. So there we gave exemplars. So basically, we had people
+when they hover at the scale. So when they would hover over four stars
+for example, we would show them a movie they had rated before and that would
+also have been rated four stars. So we actually would give examplars
+across the entire rating scale. Using previous ratings
+that people have given. And again, what was really nice about
+how we did that in the paper is we just didn't give any movie that
+this user rated four stars. But we would try to find movies that were
+also similar to the movie they are rating. So because yeah if I'm rating some
+romantic comedy and I've hovering four stars and then you give me Die Hard
+as an example of a four-star movie. Sure that is an exemplar for four stars,
+but it's not a good exemplar for that romantic comedy. So we actually made sure
+that that didn't happen. And I remember that did work quite well. First I think users thought this
+was really useful, although they had a bit of trouble initially
+understanding what was happening. And we also could show that their
+re-ratings were more consistent, if I recall correctly. So I think that was a nice
+example of how you can help ratings to become
+more consistent over time. >> So that ties into my next question
+of with that we're allowing users to do the rating by comparing movies. And saying do I like this movie
+the same as, more, less than Die Hard, to decide where to go
+on the ratings scale. >> Yeah you're right so
+we talked about absolute ratings but we're actually giving,
+it's not just absolute any more. We're giving some baseline or
+some reference point already. Yeah that's a good point.
+>> So I know there have been some research
+papers particularly and I think that's been used in a few deployed systems
+where Rather than asking the users for these absolute judgements of
+rate this apartment, four stars. We asked them instead which apartment
+listing do you like better, and we asked them series of
+these comparative questions. How does the comparative question
+psychologically differ from the absolute how much do you like this movie or
+this apartment listing, question? >> Yeah, I think it's a completely
+different question actually. And people in decision psychology have
+recognized this for many years already. But let me first go back
+to this idea of rating. So I've been using the phrase
+preference quite a lot already as what ratings indicate. So a lot of people in recommending systems
+think ratings reflect preferences. But if you really look
+at the term preference then there's actually something else. Because preference means to prefer
+something and that's a relative statement. I would say I prefer A over B. You could perhaps say I prefer A, but I think by nature preferences
+have some relativity. And that's true for
+our cohortative system as well. I think most our judgments are relative
+judgments, not absolute judgments. And that's also why I needed so much time
+to talk about ratings and why they are so weird. Because I think in general,
+it's way easier for us to say I like this over that, than to say I like
+this 4 stars, and this 4.5 stars. And to give you a clear
+example of this and a difference between the two,
+let's say I've been rating some movies. And let's say for example
+The King's Speech, you know that movie? It's a nice movie so
+I rated it four stars. And the next time I looked
+at Grand Budapest Hotel. I'm not sure how familiar
+that is in the US but it was quite a famous movie
+two years ago in Europe. I might also rate that fours stars so I have two movies I give them
+both are given four star ratings. Now does that mean I
+like them equally well? If you ask me which do you like better the King's Speech or
+the Grand Budapest Hotel I'm pretty sure I liked The Grand Budapest
+Hotel much better than The King's Speech. So even though both get four stars, I still can indicate which
+of these movies I prefer. So in a way, any relative preference might
+actually be more informative as well. One reason why that is,
+is because if you do a relative comparison you
+have more fine grade skill. You can actually base your judgement more
+on smaller differences between the items. To give you a little bit of
+psychology behind this, and let's take one step away
+from movie recommendations, let me tell you a little bit about
+a classical research on this. Most of this research was done by Chris
+Shee who was a psychologist at Chicago. I think the business school
+over there in Chicago. And he in the 90s he had this nice
+distinction between what he calls joint evaluation and separate evaluation and
+he did some very interesting experiments. For example, he would ask people let's
+say you want to hire a programmer. Let's use the context that is easy to
+understand for people in Computer Science. And he has this computer programmer,
+he has a GPA of 2.5, and he has written 10 programs. What's the salary? How much would you pay him per year for
+this job? Now they ask a lot of bunch of
+people about another programmer. Let's say a programmer does a GPA of 4. And he has to make three programs, how
+much that are you, will you pay this guy? I think for most people GPA is
+an easy measure to evaluate of a GPA of course a 4 is
+much better than 3.5. However, how much programs a particular
+person has written so the experience and what that means is much
+more difficult to evaluate. So what happens if you ask people
+separately, they'll probably pay the guy with a higher GPA much more salary than
+they would give the guy with a lower GPA. But if you put in next to each other, we
+have one guy with somewhat lower GPA but he has written ten programs. And another guy that's a higher GPA but
+he has only written three programs. You probably going to pay much more money
+to that guy that has much more experience. So in joint evaluation when you see
+the two next to each other, you some attributes that are hard evaluate when you
+see them on their own now become very easy to evaluate And you can easier see the
+difference and better judgment upon that. So, I think comparing or relative judgments are much
+different from absolute judgments. It's not necessarily so that relative judgments are always
+better than absolute judgment. I think what the point, for example, that Chris Hsee makes is that
+in normal life, we are more often in separate modes in separate evaluation
+more than in joint evaluation modes. So let's say you go to a shop and
+you see two televisions. And in this job you see
+that one television actually has a slightly better
+picture quality than the other one. If you see them next to each other,
+it's easy to see that small difference. But the one that has the better
+picture quality actually is not a very nicely looking television. >> But you bring it home, because you
+know it has the better picture quality. But when you're at home, yeah. You still look at a beautiful
+picture quality, but you cannot see the difference anymore
+of it except for the other one. But you're also looking at this ugly
+television that doesn't have good looks. So I think it's important to find these
+relative differences in some cases, but in other cases, they might
+actually not help you that much. But i do think that when
+people make judgements, it's just easier for them to do this
+relatively, to say i like this over that. Then to give absolute ratings. >> Thank you for
+taking the time to be with us and I think our students are going
+to find this very interesting. >> Okay, thanks a lot for having me and
+I hope I'll get some more insights into the psychology behind the ratings
+>> And preferences. And have fun with the course.

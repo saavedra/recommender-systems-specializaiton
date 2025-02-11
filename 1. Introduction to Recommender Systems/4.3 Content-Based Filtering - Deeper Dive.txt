@@ -1,0 +1,271 @@
+Welcome back, now that we've had
+an overview of content based filtering and the TFIDF approach,
+let's take a little bit of a deeper dive. So what we're looking at today
+is the goal of understanding how do we build content based recommenders
+based on these TFIDF concepts? How do we compute vectors
+to describe items? How do we build profiles
+of user preference? And how do we predict user
+interest in those items that we've described with these vectors? And we hope you'll come away with
+an understanding of the key variants and decisions in implementing
+a content-based recommender this way, including the strengths and
+weaknesses of the approach in general. But also the different decisions
+you may make along the way. So, lets start with the key concept, we're starting with the idea
+of a keyword vector. A keyword vector starts with the notion
+that we can define a content space, a multi-dimensional content space based
+on the universe of all possible keywords. Those keywords may be
+of defined vocabulary. If we're dealing with movies and
+we've decided that the things that describe movies are genres and
+actors and directors, then every genre, actor, and
+director is a dimension in that space. And every item has
+a position in that space. And that position defines a vector. Which is how much is this
+particular movie Woody Allen? How much is it Sandra Bullock? How much is it Tom Hanks? How much of it is romance? How much is it comedy? Every user will also have a taste profile,
+or in some cases, many taste profiles, that is a vector or
+that are vectors in that space. I tend to like things that are a lot Tom
+Hanks and less Woody Allen for instance. And the match between user preference and items is measured by how
+closely the two vectors align. In general,
+we make these vectors the same length. So, we're just looking at this
+multi-dimensional angle, a hard concept when you think about this as
+a 10,000 dimensional space. But if you thought about it as
+a two dimensional space and said there's really only two things
+that are in the world of movies. There's Tom Hanks and there's Meg Ryan,
+an actor and an actress. Or there's violence and there's romance. So I could describe my taste as gee, I like high quantities of Tom Hanks and
+Meg Ryan. Or I like violence but no romance. And then I could line up my
+vector with a given movie. If a movie was all romance,
+no violence, it's not a good fit. If it doesn't have either of
+the actors I like, not a good fit. Now when you have 10,000 dimensions,
+it can be a reasonable fit even if it misses on some dimensions if
+it's closer on the others. Now in practice we'd
+probably rather not have an unlimited number of possible keywords,
+so we may limit or collapse that space. A common technique from natural language
+processing is stemming and stopping. Stemming means we're going to take
+words that have different endings but the same root. And collapse them together so
+that computing and computer and compute are all one keyword. That might be a useful thing to do. Stopping is to say that there
+are stop words, phrases that are so common, they have no meaning,
+whatsoever in telling us about something. Words like the and and. Now if we have defined keywords,
+we probably don't need to do stemming and stopping. But if we're getting our keywords
+from other public sources, we may need to process that data
+to come up with useful keywords. If you want to explore
+the Vector Space Model in more detail, you can take a look at it, at
+the Wikipedia page on vector space model, or the original Salton
+et al paper from 1995. A Vector Space Model for
+Automatic Indexing. Interesting work,
+looking at it, primarily, from the context of queries and
+indexing for search, but we're going to apply the same
+thing to content-based filtering. So here's the challenge, it all sounds great until you
+have to make hard decisions. And the hard decisions start
+the moment you start to represent an item as a keyword vector. So let's assume we have our keywords. How are we going to represent an item's
+relationship to each keyword? Is it a 0/1, either it applies or
+it doesn't apply? Is it a simple occurrence count,
+how many times does this keyword hit? Are we going to use something
+like TFIDF which we have before? We're going to count the occurrences,
+times, some inverse document frequency term. There are other variants out
+there that include how often does the keyword appear in
+relation to the document length. And by the time we're finally done and we've figured out each keyword, we'll have
+a vector of these relative strengths. And then frequently we will want
+to normalized that vector so that we come up with something
+of unit length to compute with. So think about movies with tags
+that have been applied by users. Are tags yes, no? Well, they might be if
+the actor is Tom Hanks and somebody said, this is a Tom Hanks movie. I'm not sure that 12 people
+saying it's a Tom Hanks movie, makes it more Tom Hanksish
+than if 3 people said it. The others might not feel the need to
+tag it, because well it's been done. On the other hand,
+if a tag is descriptive, like exciting or spine-chilling. Maybe the fact that one person says it, doesn't mean as much as
+if 30 people said it. So it might be more significant or
+more relevant if it's applied more often. We can ask the other direction too,
+this is the term frequency, do we care about it? We can also ask if we care about
+inverse document frequency. When we're looking at our preference for actors, are the infrequent actors
+who are only in a few movies, more relevant and important than
+the stars who are in lots of movies. This is the case where inverse document
+frequency probably doesn't work really well. Sure, Tom Hanks has been
+in a lot of movies and, extra number three whose name
+I forget probably hasn't been. But the odds are I'm not really
+a big extra number three fan even if I like the movie that she or
+he was in. But, if I liked a movie Tom Hanks was in, it's a reasonable chance
+it was because of him. So, IDF might not be what we care about. We could even come up with more
+sophisticated weightings for actors, where we'd say, gee,
+the importance is related to how many minutes they're on screen in
+the movie, or something like that. Similarly descriptive things. Is prison scene, a more significant
+preference than car chase or romance? There it might be. If I like a couple of movies
+with prison scenes and I realize there's just not
+that many prison scene movies. That might be a better
+determiner of my taste than that I liked a movie that's romance,
+because there's lots of romances. And maybe each of those romances I liked,
+I liked for some other reason too, like the fact that it had a car chase. So all of these are empirical
+questions that you explore as you try to build a recommender. Let's formalize this just a little bit. We're talking about features or
+tags or terms. We could have a case where an individual
+tag t which is an element of the set of tags t is either applied to an item or
+not. T sub i could be the subset
+of tags applied to item i. Or we could represent that as
+a vector Ti which is a zero, one vector of whether each
+tag is applied or not. Of course if users can apply items to
+tags, each one in individual time, we could represent TUI as a tag application
+of a particular tag by a user to an item. We also could have cases where tags
+are multiply applied, such as this case, where it's done by users and
+make Ti a weighted vector of tags. And, in fact, we're going to see some
+different examples where we think of it in different ways. So a few more examples just to help
+us think through these concepts. What about clothing attributes? Is color something where TF is relevent? If a shirt is blue, does it matter if it says blue six
+times in the description or only once? What about the size? Maybe not. Do we care about IDF how
+often things are blue? We might. If it turns out white appears
+in lots of lots of shorts. Then maybe the reason I liked
+it isn't because it's white but because of the other
+things about the shirt. What about terms used in a hotel review? Do I care how many
+people mention the pool? I don't know, but I might care about how many times
+people use a term like friendly. It's only one that might not mean
+that much if I lot of people did. It's sort of interesting. Then you've got terms like front desk, which maybe your stop
+words in a hotel review. Every hotel pretty much
+has a front desk and if they don't have it they'll
+throw the words front desk into the review anyway saying, strangely
+this hotel didn't have a front desk. Again, do I care about the IDF there? Well, gee, there may not be that
+many hotels in this area with pools. If I keep liking those,
+those are important. What about terms in news articles? Election, or football, or local. Local runs into a problem that It
+probably appears really often and probably isn't that significant. So IDF,
+inverse document frequency makes sense. Election, during an election season,
+it appears really often. Yet, it might be something
+people are really interested in, so we'll have to see how
+that works out in practice. So we've talked about
+creating these item vectors representations of items
+in our vector space. We also need to move to user profiles. And this is where we introduce
+the fundamental limitation of the vector space model. The vector space model
+represents user preference as a single scalar value for each dimension. For each key word or term. That means that there's no difference
+between liking and importance. And that works well in some applications. So in query terms,
+if I like articles about football, that makes them more
+important in my query. It actually doesn't work nearly
+as well in some other terms. I like Hollandaise sauce a lot. But I actually don't care very much
+if it's in the dish I'm ordering. If it is, I'll enjoy it. If it's not, I won't. And we need to make sure that we have some
+model that recognizes that our notion of importance here is not really just about
+liking, it's about retrievability. And this can come up in
+lots of different areas. If you're looking at movie keywords, the fact that something occurs
+in a lot of movies that you've expressed a preference for,
+will mean it appears that you like that. And that gets reflected in
+how we build these profiles. So we have some choices. Are we going to simply add
+together our item vectors? Are we going to normalize them so
+that they come back with the same length? Now that actually turns out
+to be a tricky decision. If we believe an item
+with lots of attributes is more descriptive of your preferences
+than an item with few attributes. Maybe we don't normalize. Give more weight to each attribute,
+rather than to each item. So if you have a movie that is
+a romantic-comedy and that's it. And you have another movie that is an action-adventure-romantic-comedy. Maybe the romantic-comedy
+has equal weight. And therefore romance and
+comedy get an extra boost? Or maybe it's not a good representation
+of what you like because it's too simple. We have to make those decisions. Do we weigh the vectors somehow? Do we use their ratings for weight? The things you like more are more
+important in you preference. Do we use regency or
+confidence for weight? Well, there's a lot of this
+stuff as we go forward. So lets talk about those ratings. If we have simple unitary data the items
+you rated or purchased or looked at. Then typically what we'll do is
+we'll add together those vectors. And we'll do it without weights, because
+we don't have any other basis to do it on. Sometimes we'll do simple
+binary accumulation, where we'll add the positives and
+subtract the negatives. That way if you say something is bad, we can put a negative weight on the
+attributes of that item in your profile. To take an example if I really
+didn't like this Tom Hanks movie, it would subtract a little bit
+from Tom Hanks in my profile. And it might even go negative if I
+have more movies I don't like than the ones that I like. We can take unary with a threshold for
+ratings and say, gee we're going to put anything into
+our profile, if people like it enough. In the MovieLens system, we often think
+of three and a half as the threshold between they liked it, and
+they really didn't particularly liked it. And so we may say we're going to
+add up the keywords associated with all the movies you rated three and
+a half stars and above. And we'll ignore the ones
+that were lower than that. We could use weight, but positive only. Say a five star movie counts as five,
+and a four star movie counts as four, so if you saw a one star movie,
+it only counts as one. Or we could even use weight
+with positive and negative. Normalize our rating scale so
+your average rating is zero and use the weight associated
+with the normalize ratings. If you give it a one and
+that's minus point five on your normalize rating scale and we take a
+half of your vector out of the aggregate. Now as we're building these profiles,
+we can start with hear all your ratings. Let's aggregate them together. But what do we do when we get new data? Well one answer is just throw away
+the profile and recompute it. That's pretty wasteful but
+we can also decide we're going to keep track of the total weight in your
+profile and mix in your new rating, your new data in proportion
+as a linear combination. We might need a special case
+if you change your rating. If I said,
+gee I rewatched Titanic the movie and I don't think it's a four anymore,
+I think it's a two. Then I would go in there and I'd say,
+well let's subtract out the four and add back in the two and
+come back to where I should have been. But in many cases, we can use these
+profiles to represent time decay. And say, gee,
+maybe I want to emphasize the new. So, I have hundreds of movies that I've
+rated, but that's what I used to like. Every time a new rating
+comes in I'm going to count that as 5% of my profile and I'll decay the old profile down to 95%. And so I'm over weighting
+the new things and over time, my profile's going to represent
+mostly what I've liked recently. That's something people do if they
+feel the tastes are changing. The last step is computing predictions. A prediction can be computed as the cosine
+of the angle between two vectors. The profile vector and
+the item vector, why the cosine? Those of you may remember from geometry
+the cosine starts at its maximum, positive one, when the two things have the same
+angle and the angle between them is zero. And, it grows negatively
+as that angle grows. And then cycles back as they
+get closer together again. So, cosine between the vectors, which can be computed as
+the dot-product of normalized vectors. Is a good measure that smoothly
+scales from saying this is a perfect match to this is exactly
+opposite what I like. And then as it weaves its way
+back around through space, back through a perfect match again,
+closer to 1 is better. Now that doesn't actually
+give you a prediction. It gives you a score between -1 and 1, and there's lots of ways to
+go from that to predictions. One of them is to say,
+we're going to map that range back on to the user's rating scale and
+that works reasonably well. You can decide we'll go
+directly to top end. With top end,
+we just have to sort them in order. And as we'll show much
+later in the course, actually later in the specialization
+in our fourth course. One of the options we can do here is a
+technique known as ord rack, where we use the top end order but not the predicted
+values, the cosine values. To map onto a rating scale,
+which sometime works better. Okay, let's wrap this together. One of the strengths of this approach,
+content based filtering using keyword, vector space profiles,
+depends only on content. I can write a recommender for one person. I don't need to know
+anything about anybody else, as long as I have content attributes and
+user preferences for the items. That's a pretty nice approach. I don't need ratings from other people. I don't need all this
+other complex information. That later techniques will depend on. It gives me an understandable profile. I could even go in and edit the profile
+and say wait a minute, I really think this is more important than that and
+change the weights if I wanted to. The computation is pretty easy and
+actually quite efficient, it's flexible. You can integrate this with queries. You can integrate this with
+case-based approaches. So it's a lot to be said for
+content-based approaches. There are also some challenges. Figuring out how to weigh the different
+attributes and the different ratings, how to weight different factors,
+whether more data is really more. Or just redundant reiteration of the same
+requires a bunch of experimentation and ideally experience. So it's not as simple as
+saying well just do it, you've gotta actually understand your data
+and how your data relates to preference. And there's also some
+interesting limitations. There's no notion of
+content interdependency. So if I like Sandra Bullock
+in action movies but not particularly for romantic movies. And I like Meg Ryan in
+romantic comedies but really wouldn't want to see
+her in an action movie. I can't do that in a vector space model. Not unless we create sort of an infinite
+set of combinations of attributes. It's going to figure out that I
+sort of like Sandra Bullock, but I didn't like her sometimes,
+and I sort of liked Meg Ryan. And I sort of like action movies and
+I sort of like romantic comedies, and next thing you know I'm going to get Meg
+Ryan in an action film, just out of luck. Now, sometimes that's not the problem
+because things don't get creative, they don't have a market but
+it's a challenge. And this happens in a lot of cases. It's not just people you could say I
+think violence can be cool in a comedy, where it's comic violence. And maybe I'm not so
+interested in violence in a documentary. Or, I don't like a historical comedy,
+but I like a historical documentary. So, breaking things down to
+attributes doesn't always work and of course, when you're doing
+things based on attributes, you're unlikely to be
+delightfully surprised. Because, what the system recommends is
+sort of what you've already said you like. So, what are our take aways? Content-based filtering based on assessing
+the content profile of each item in a vector space, based on tags or keywords or other attributes
+can be done from metadata. It can be done from user tagging or
+any combination. These user profiles can
+be built by aggregating the items that we're rated or consumed. Maybe with some sort of a waiting scheme
+to wait the things you like better or the things that you might have liked
+more recently, or even liked more often. And we can evaluate unrated items by
+matching the item profile against the user profile using this vector cosine or
+if you like the normalized doc product. As we move forward, we have a number
+of guest interviews coming up, including moving beyond
+the vector space model. To some more modern techniques related
+to natural language processing and recommendation. You are also going to practice
+the work that we did here and we'll break down in great detail for you the implementation of vector
+space content filtering approach. In a spreadsheet for everyone, which we'll
+recommend you do first, and for those pursuing the honors track in a programming
+assignment using the LensKit toolkit. I also want to point
+you much further down, as we go to Matrix Factorization
+later in this specialization. You'll see that some of the techniques
+that we see in these vector spaces relate closely to some of the collaborative
+techniques in matrix factorization. And that at the leading
+edge of where things are going content-based and
+collaborative techniques are beginning to merge together to get the best of both,
+thank you.

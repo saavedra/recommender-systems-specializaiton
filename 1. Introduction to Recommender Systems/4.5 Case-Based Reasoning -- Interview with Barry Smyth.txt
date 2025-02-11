@@ -1,0 +1,161 @@
+Welcome back, in the last several lectures
+we've talked about the general topic of content based filtering and various approaches to going about
+implementing that in a recommender system. In this video we’re pleased
+to have with us Barry Smith, professor at University College Dublin. Previous Director of the Clarity Center
+for Sensor Web Technologies, and now Director and CEO of
+the Insight Center for Data Analytics. He has a long history of doing
+research on recommender systems, particularly using case-based
+reasoning to build them. And has founded two start ups,
+Changing Worlds and Haystacks, both deploying recommender and
+personalization technology. Barry, welcome to the course. >> Hi everyone, great to be here. >> So, what's the basic idea
+behind case-based reasoning? >> Okay so, the case-based reasoning is a essentially
+a form of memory-based reasoning. The idea is to try and use past problems
+and their solutions to solve new problems. So, most case-based reasoning systems,
+represent problems and solutions as cases and they maintain a large library
+of cases called a case-based. And each case typically has problem
+specification that describes the problem and question and has a solution part. And sometimes a case will have some
+information about the outcome of the solution. How it operated and
+practice for example and perhaps even some information about the
+reasoning behind a particular solution. And in a case-based reasoning system as
+faced with solving a new problem, it tries to retrieve a case that is similar to the
+problem being solved, the target problem. And then reuse that similar case as
+a solution to adapt that solution for the purpose of the target problem. So, the idea here is that
+case-based reasoning systems have proven to be very useful. Particularly in domains where we don't
+have strong problem solving knowledge, where we can't codify the knowledge
+that goes into problem solving. We don't have the strong domain models, or
+the first principle reasoning structures. And instead we're reasoning and
+problem solving by example. >> So, how does it relate to
+case-based recommendation and other forms of recommendation? Yeah, it’s a good question, if we look back in time case-based
+reasoning really got off the ground. Probably in the late 1980s there
+was a series of DARPA workshops on case-based reasoning. And the focus back then and
+too much of the 90s was on classical problem solving on representing
+problems as cases, on detecting similarities between cases
+and on adapting the solutions of cases. People moved into some ideas such as
+case-based maintenance where they were looking at how to manage the content of
+case-based and optimize problem solving. And around that time the area of
+recommender systems started to get some attention. And case-based reasoning researchers
+recognized that a lot of the work they had been doing around the idea of
+problem representation and similarity and retrieval could be readily
+adapted to some of the things that were important in recommender systems. So, very simply put, case-based recommenders are a form
+of content-base recommendation. They rely on descriptions of the items
+as the basis for recommendation. What distinguishes case-based
+reasoning perhaps from other forms of content-based recommendation is
+that the items themselves tend to be described using fairly well
+structured descriptions of those items. Classical case-based reasoning
+representations of cases have been about features and values for these features. And so, when we look at the case-based
+recommenders systems we often see items and objects. Recommendable items being represented as
+structured future based representation. And then case-based reasoning, people have applied many different
+traditional forms of case similarity and different techniques to compute in
+case similarity for recommendation. So, translating case-based
+reasoning system into a case-based recommender system is
+akin to representing items as cases. And then when faced with a new query or new a recommendation context you try and
+retrieve a similar set of items and make those the recommendations
+that you suggest to the user. So, you'll find that in the many
+case-based recommenders systems the notion of adaptation isn't so
+prominent and instead we're focusing on representing
+items and retrieving similar items. >> Can you give us an example
+of what some of these item feature values might look like? >> Sure, so let's say a classic example
+might be in movie recommendation or restaurant recommendation. So a restaurant might be
+characterized by the cuisine type, by the price, by its location,
+by its style and formality, for example. A very well defined set of
+structural features and by and large you may find that all of
+the cases in your case-based, or all of the items in your case-based are
+described using the same sets of features. Now, these features will have different
+types of values associated with them. Values such as price might be numeric and
+values such as cuisine type might be drawn from
+an anthology of different cuisine types. And that lands itself then to
+different types of similarity metrics that are specialized for
+confusing similarity between numeric or nominal features, for example. >> Thank you. So, what directions has case-based
+reasoning, taken recommenders, assistance research, what has it contributed
+to the advancement of the field? >> So, I think there's a few interesting
+ways that case-based reasoning has brought along the field of recommender systems. I think first and foremost,
+people started with classical, what we've often called single
+shot recommendation scenarios. Where there's a particular query and
+that query is represented in a case-like representation, and
+used as a probe into a case-based. And a set of recommendations are produced
+by suggesting a set of similar cases and the user receives these similar cases,
+and off they go. And hopefully one of them fits their
+needs, and that's a single-shot case-based reasoning system, or case-based
+recommender system I should say. The case-based recommender space
+then moved into what we've called conversational recommendation. Where a user is engaged in
+a sequence of recommendations, and can provide feedback at
+each recommendation step. So, for example a restaurant
+recommender might recommend a case that is maybe a Chinese restaurant that is
+quite expensive and located nearby. And the user might suggest that they'd
+like something a little bit cheaper and maybe something that is more
+European style in its cuisine. And there's an example of a user giving
+feedback on the recommendation that they had received. And that feedback is incorporated into
+the query and used as a basis for next recommendation cycle. So, this type of conversational
+interaction between the user and the case-based system had been commonplace
+in case-based reasoning systems in general, and was readily adapted then for
+recommender systems. And it introduced particular types
+of feedback such as critiquing, so I'd like something a little more expensive
+or closer by or something that's cheaper. That's an example of a critique,
+simple types of feedback that operate over the level of
+an individual feature in a case and that cause the next set
+of cases to be retrieved. And from there people looked at more
+complex approaches to feedback, sometimes allowing people to critique
+multiple features for example. But people look at other
+different directions for case-based reasoning as well and
+from a recommendation context. One of the interesting areas which
+is proven to the quite important in recommendation work recently is, the
+tension between relevance and diversity. And so, making a set of recommendations that are diverse as well as relevant
+to a user's particular needs. And some of the early work in case-based
+reasoning systems was around this idea of how do you measure case diversity. And how do you cause the retrieval of
+more diverse sets of cases, for example. And that's now been incorporated
+into a lot of classical recommender systems research. >> What are some current
+open questions and hot topics in case-based recommendation? >> Well there's one particular area
+that I'd like to discuss there. It's a particular interest of mine and
+brings together a number of ideas that I think have come together for
+the recommender community and the case-based reasoning community and
+this is the idea of opinion minding. A case-based reasoning techniques
+have often been used as a basis for product recommenders. So, if you go to Amazon and you look at a product like
+an Apple MacBook Air for example. You will see that product described
+using a set of technical features, or what we might call catalog features. There's information about the RAM,
+information about price, information about the hard disk capacity, and
+maybe the screen size and resolution, etc. So, a bunch of technical features and
+they've typically being the features that are associated with cases and
+a case-based recommender. Now, in addition to that on sites
+like Amazon, you have many dozens and perhaps hundreds of reviews that have been
+expressed by real users of these products. And so, recently people have started
+to look at these reviews, and this user generated content as
+a source of case information. And we've in particular,
+looked at this recently, and used techniques such as opinion mining
+techniques to analyze those reviews and extract out new sets of features. And use those features then to
+describe those particular products. So, based on an analysis of the 80 or
+90 user reviews for a Macbook Air, you might realize
+that people talk about its design or it's screen size, or its battery life. Now, more than that not only can you
+extract out the particular features that they tend to discuss but you can also
+evaluate the sentiment of those features. So, you might realize that people talk
+very positively about the design of a MacBook Air, but maybe a little more
+negatively about its premium price. And now you can then start to
+re-described these products as cases and use these mind features as
+the features of these cases. It gives you a much richer representation
+and a different approach to identifying feature values which rather been
+static values of technical features. And now opinions or sentiments that
+have been expressed by real users. But in a sense, this is more in keeping
+with the spirit of case-based reasoning. Case-based reasoning has always been about
+solving problems by using past problem solving experiences. And now we're describing these cases, based on the experiences of
+real users of these products. And so, we're co-defying these
+product cases from these experiences. And so,
+we've explored a number of techniques for extracting these sorts of experiences
+from user generated reviews, and then building new types of
+product recommenders and using this sort of case knowledge and leveraging
+case-based reasoning similarity metrics. A lot of the research
+that I've described here is presented the main case-based
+reasoning conference every year is the International Conference
+on case-based reasoning. And it's an annual event and it collects
+together the latest research on case-based reasoning and case-based recommendation
+is always a big part of that. And so, for people who want to find out
+more about case-based recommendation, they'll find a lot of the most
+recent research at that conference. >> So, if some of our students want to
+read more about case-based reasoning and recent developments in it for
+recommendation, where they go to do so? Well, they will find a lot of
+material published in the annual international conference
+on case-based reasoning. So, that's a place where case-based
+reasoning researchers come together every year and publish the latest research
+on case-based reasoning in general. But you will always find a strong
+emphasis on case-based recommendation at that particular event. And of course if they wish,
+they'll know to look to RecSys, the main recommender systems
+conference each year, also always has a healthy dose of
+case-based recommendation papers. >> Thank you for being with us today. [SOUND]

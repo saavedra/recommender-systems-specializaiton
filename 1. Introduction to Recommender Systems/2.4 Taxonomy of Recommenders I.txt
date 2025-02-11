@@ -1,0 +1,276 @@
+Welcome back. In this pair of lectures,
+we’re going to look at recommender systems as a whole and
+work through a taxonomy of those systems, looking at different dimensions for
+analyzing and classifying them. And then specifically in
+the second part of this pair we're going to look at the algorithms
+inside at an overview level. We're calling this lecture 1-4 A and
+B because they are meant to work together. But we have put them into two parts for those of you who don't want to sit through
+quite so long a lecture in one chunk. So, the learning objectives
+are to understand the different types of recommender systems
+including learning a framework for analyzing recommender systems in
+general and the specific algorithms. And as we do that to build a roadmap for the rest of the course which will be
+organized around those algorithms. We start with an analytic framework
+that has eight dimensions of analysis. Now take you through each
+of these as we go forward. But this framework and
+even this slide will be useful as you will have your own assignment about
+analyzing a recommender system. We'll be asking you to go through and look at the domain, the purpose,
+the context, and so forth. So when we talk about
+Domain of Recommendation, what we really want to know
+is what's being recommended. Are we recommending news articles? Are we recommending products? Are we recommending bundles, where instead
+of a particular product we're saying, look if you're interested in product X,
+we can give you a deal if you buy X, Y, and Z together. Are we matchmaking, where we're
+recommending people to other people? Are we recommending sequences,
+like a music playlist? Where it may not just be the set of songs,
+but that the order of those songs may matter. And a particularly interesting
+property of a recommendation domain is the way in which we treat items
+that have already been experienced. In some domains, we're primarily
+interested in recommending new items, things you haven't experienced before. If you come looking for a movie,
+most of the time, not always, but most of the time, you're looking to
+see a movie that you haven't seen. Or read a book you haven't read. In other domains, most of the things being recommended
+are products you've experienced before. In a music player, we may mostly be
+recommending which song to play next, where 90% of the music you hear
+is music you've heard before. With groceries you may be recommending
+what you might buy this shopping trip. We don't limit ourselves to
+things you've never eaten because people buy groceries again and
+again. And that property,
+along with understanding whether we're recommending individual items,
+bundles, sequences, and the nature of those items tells us
+the type of thing that we're recommending. And as you can see those very widely,
+Google is recommending web pages. You don't always think of
+a search engine as a recommender. But indeed in Google's case, you give
+it a search phrase or a set of terms. And it comes back and says, here
+are some pages I think you would like. Including some that may be sponsored ads,
+as you see in this case. And other pages that are picked
+by it' algorithm which mixes together opinions expressed by other
+users who have created web pages and people who have clicked through before. If you go to a retail environment,
+like the Hammacher Schlemmer store online. As you're looking at Scrabble, you'll
+see a recommendation, actually four of them in the lower right-hand part of the
+screen for other games you might enjoy. This is products being recommended,
+primarily in this case, is individual products. These aren't accessories for
+a Scrabble set. This is, if you're not
+interested in extended Scrabble, you might be interested in one of these
+other games like Touchscreen Poker or the World's Largest Scrabble Game. Our second dimension is
+the purpose of the recommendation. In many cases, the purpose is simple. The recommendation is
+almost an end in itself. We want you to buy or consume or otherwise, take up
+the recommendation we give you. If it's music,
+we want you to listen to it. If it's a movie,
+we want you to go watch it. But, in other cases,
+the recommendations are aggregated as a form of education or
+as a form of building community. And understanding whether
+recommendations are just come in, get a recommendation consume, or
+they are part of this larger purpose, helps us build the system,
+in a way tailored to the user's needs. So as an example of recommendations for
+education. This is a screenshot from a system. Relatively old system,
+about 15 years old, called OWL, for Organization Wide Learning. It was done by Frank Linton at
+the Mighter Corporation in Massachusetts. And it's a particularly
+interesting example because it was a recommender system built in to
+a learning tool for a word processor. These buttons are commands
+in the word processor, like EditFind or EditDeleteWord. They were described and they were assigned
+a particular priority score based on how useful the system thought each command
+would be to the person learning it. The clever thing here is
+that behind the scenes, they built a model of word processor
+usage for many different users. And then fit each user's trace of
+the commands they used to that model and said, what is it that this user's
+not doing that other people who are otherwise similar are doing? And is the thing that they're
+doing more efficient or more powerful, so
+that we should educate this user. So, turns out there are a lot of people
+who didn't know there was a shortcut key to delete word and
+would just hit backspace over and over. And this often would then recommend,
+hey you should learn how to do that. And if you click down
+the edit delete word bottom, it would bring up a short tutorial on how
+to delete a word in the word processor. More than a decade later,
+I work with people at a software firm that made in engineering software on
+a very similar tool whose job was to help people learn the commands in CAD packages
+based on the commands they'd used. And this concept is used widely as
+a way of getting people educated. Not necessarily determining that the
+success is how much they use the command, but the success is that
+they've learned about it and therefore have the opportunity to
+decide intelligently whether to use it. As another example, TripAdvisor,
+a recommender site and review site for travel,
+provides recommendation scores, in this case, numbers of stars, and
+all sorts of review information. But it's goal is not to get
+you to book the travel. In this case, we're looking at
+the top ranked hotels in Las Vegas. And number one,
+according to the 1,798 TripAdvisor members who've submitted reviews,
+is the Mandarin Oriental Las Vegas. TripAdvisor doesn't actually
+care whether we end up at the Mandarin Oriental Las Vegas, or the
+Aria Sky Suites, or some place ranked 200. They would appreciate it if
+we would book through them. I'm sure they would like the revenue. But their goal is to, one, educate
+us about making the right decision, not steer us towards a particular
+decision, and two, to try to get us to join this community where we'll then give
+our feedback back to the community and become loyal to TripAdvisor. One last example of an interesting
+application is ReferralWeb. ReferralWeb, which was a system done by Henry Kautz and others inside AT&T, was a recommender tied
+to an expertise finder. What ReferralWeb did in AT&T, and
+then in later instantiations in other social networks, was mine
+the network of collaborators that you had, who were the people you've worked with,
+taken mostly from artifacts, organization charts, common tech reports
+that you may have authored together, or project descriptions, and then mixed that together with a system that defined
+technical expertise using keywords. So that you could come out and
+say, I'm looking for an expert in something,
+perhaps recommender systems, and it would find experts that were
+close to you in your social graph. This turned out to be recommending
+not only the person to contact, but a way to reach that person
+through people you already knew. And this concept has been extended
+into many of today's social network information seeking tools, from tools like Aardvark,
+which was a question answering site, to tools that overlay on the Facebook
+graph and other social network sites. Our third dimension is
+the dimension of context. What is the user doing at
+the time of the recommendation? Are they shopping? Are they listening to music? Or are they hanging out with other people? And how does that
+constrain the recommender? If I'm listening to music, the last thing
+I want is at the end of every song to have a dialogue box pop up saying, hey,
+I think you would like this song next. Or, here are 12 songs you
+might want to consider. While I'm listening,
+I'd like it to play the song, and that may change
+the recommendation that's made. If the system knows I'm
+mostly risk averse, it'll just play music it has a good
+reason to believe I'll like. If it knows I'm into seeking
+out new experiences, it might mix in more riskier and
+unfamiliar music. If the system knows that I'm
+hanging out with other people, it may make a recommendation for
+groups rather than for individuals. And all of these things can
+affect the level of attention or the degree to which the user is
+willing to accept an interruption. So if you look at an example of this. This is the Pandora website,
+where I created a music channel based on Billy Joel and
+Elton John. As I was doing this lecture, I listened
+to this and found it to be low risk, pleasant music, and what I enjoyed about
+Pandora was that it just played the music. It didn't bug me with interactions. It didn't say, hey,
+would you tell me which ones are good. It gave me the option to give thumbs up or thumbs down as you see
+at the top of the page. I could skip to the next
+song if I felt like it. Or I could just ignore it,
+listen to the music, and write my lecture. Our next dimension starts
+getting into the data. Recommender systems in the broad sense
+are based on somebody's opinion, sometimes only yours, but
+more often some other people's as well. And one of the things we look at is whose
+opinion is the recommender based on. Is it experts? Is it everybody? Is it just people like you? And there are examples of all of these. One of the earliest successful wine
+stores online was a site called Wine.com. And what made it successful was Peter,
+who was knowledgeable about wine and wrote recommendations for
+wine, with tremendous detail. As you see in Peter's
+tasting chart on this page, where you see multiple dimensions
+of how delicate, and dry, and bodied, and crisp is the wine. How oaky and how much tannin,
+as well as long descriptions. This is a site that did
+deliver recommendations, and you can see some of them on the right
+where it says, our wine experts recommend. But they were recommendations
+from experts for other people. And if your goal is to become
+an expert and you're not one, you might want a recommendation from an
+expert rather than a recommendation from somebody like you who also
+knows nothing about wine. By contrast, the PHOAKS system, a research system developed by
+Loren Terveen at AT&T Research. Was a system about aggregating
+opinions expressed by PHOAKS, and yes, the acronym, PHOAKS,
+is one of the great recommender systems. Acronym puns, but by ordinary folks
+in Usenet news message postings. What you see here is PHOAKS' page for a Usenet newsgroup,
+a discussion list news group. In this case, the news group
+devoted to the music of Bob Dylan. And what's listed is
+a set of links That have been frequently endorsed
+by different people. So the column distinct posters
+indicates how many different people have included a link to
+this page in their message. And then on the right of that you see this
+bar that includes light and dark squares. The lighter the square the more
+recently somebody has mentioned it. The darker the square the less recently. And you can quickly come up and
+say, wow, Bob Dylan, Bob Links. That must be the page that
+people have as their go-to page, but remark, the one that's number
+three on the list seems to be growing in popularity as is Deja.com as a place
+that people are including references to. Now you do have the challenge that just
+because somebody mentions something doesn't mean it's positive. And part of what a system like this
+does is attempt to figure out whether the language around it is
+endorsing versus criticizing. But it does give you a sense as to what
+the most popular pages are according to just ordinary people in this newsgroup, which seems like a reasonable reference
+if you're a part of that newsgroup. Next, we look at the level
+of personalization. We're starting,
+this part of the taxonomy, but also this course with non-personalized. Everybody gets the same thing. From there, there are many ways
+to get to personalization. You can semi-personalize by attaching
+a recommendation to a demographic. We're going to show men this thing and
+women something else. We're going to shoe people under 18
+something different from 19 to 25 versus 26 to 35. Or we can personalize in a femoral sense. In a temporary way by matching not
+to your long term interests but to your current activity. You're looking at buying this book. Well, people who buy this
+book we'd like to recommend this other book to go with it. We would recommended it
+to anybody who did that. But since you're one of the people doing
+it well recommended to you and then were get to persistent actual personalization
+around long term interests and preferences. So here's a few example
+of pages like this. When I went to landsend.com and found
+that the thing it was promoting to me was a tankini,
+I knew the site was not personalized. Just a quick look at me suggests that a tankini is not something that
+anybody would want me to wear. Certainly not even me. Now it may be timed to a TV ad. It may be timed to the right time for
+swimsuit season. But it wasn't personalized
+to me in any way. By contrast, when I had gone
+to the Brooks Brother's site. And this is a somewhat old screenshot, and it started showing me polo shirts. I realized something funny was going on. Brooks Brothers is about fancy suits,
+which you've never seen me wear. And they knew enough about me
+to know to show polo shirts. But they didn't even know who I was and it
+turned out that Brooks Brothers subscribed to a service that provided generic information on visitors,
+based on their activity at other sites. And it figured out that I fit into
+the casual men's demographic, and I got a demographically
+appropriate front page. Which I have to admit I appreciate it, though I didn't buy
+a Brooks Brother shirt. CDNOW was one of the early sites doing
+personalizations commercially for music. And one of the features they did was
+very much an ephemeral recommender. Not based on a long
+term preference at all. And they pictured this as
+something that could give you either a way to expand your interests or
+to help you with gifts. You would put in up to three artists and it would look through things
+purchased by other people that matched with purchasing
+albums by those artists. For those of you who are quite young,
+albums are how people used to buy music. The whole collection all together
+before we could get MP3s. This is why you don't spend a lot of time
+on buying CDs necessarily as much today. But if you liked, for instance, or if you had a friend who liked the music of
+Gordon Bach and Enya, it would come back and it would recommend a set of other
+things that it thought you might like. And give you the chance to
+listen to that music and decide whether to purchase it as
+something for yourself or your friend. Now that same CDNOW site also had
+persistent long term recommendations. This happens to be one of John Riedl’s
+recommendations from back in the early days of CDNOW where it was
+suggesting a John Coltrane album. It had a model of his favorite artists, gave him a chance to develop a wish list,
+but would build its recommendations on everything it knew about what he
+had purchased and what he liked. Next we get to issues of privacy and
+trustworthiness. In many cases people want to understand
+who has to know what about me for me to use this recommender? How much personal information
+do I have to give it? Does it have to know who I am? Can I use it anonymously? Is there a way I can deny
+some of those preferences? Well, as we'll see when we go through our
+tour of Amazon, there are things in my profile there that I would rather
+nobody thought were associated with me. You'll see what they are in
+a couple of lectures. Is there a way that I can make sure that
+information doesn't leak out through recommenders in some way? And trustworthiness also
+gets to the question of, is the recommenders system honest? How much is the operator built in biases? Sometimes these biases
+are called business rules, and in some cases they make lots of sense and
+they're consumer-friendly. So some recommenders, for instance, will
+never recommend something that's out of stock, because they only want you to
+find products that are available. Indeed, If you go into a shoe store and
+say what shoes do you recommend, it's really uncommon For
+the person at the shoe store to say, well the ones I really
+recommend we don't sell, but if you go down the block to another
+shoe store you can get them there. So we understand that there's some
+limitations on what would be recommended. Other limitations we may
+not appreciate as much. In some cases, that business rule says, don't sell anything that we don't
+have a high enough markup on. Well, is that what we want? Or don't recommend anything that we think this person's going to buy anyway because
+we don't want to waste the recommendation. We'll come back to all of
+these as the course moves on. People are also worried about
+vulnerability of a recommender to external manipulation. In our movie lens site,
+one of the things we observed is that in the opening days of a new movie,
+it almost always has very high scores. And some of our users were afraid that
+this was a sign of people hacking our site, that they would create
+accounts and flood it with high scores for new movies in order to
+get people to go see that movie. As it turns out,
+that wasn't what was happening. What happened is, as some of us might have
+expected, the people who line up to see a movie on the first day are often people
+who really want to see that movie and love it and come back and
+say how wonderful it was. And you might do better waiting for a week
+or two before you trust a collection of other people on a movie if you're
+not the kind who's that enthusiastic. But we get into all of the issues of
+the transparency of a recommender and the degree to which individuals
+who are giving us data have a reputation that can allow us to
+determine whether to trust them. We're almost at the end. Our seventh dimension is the interface. What type of output are we getting? Are we getting predictions
+of specific scores? Are we getting recommendations for
+a set of items? Are we filtering a search list? Is our presentation, what we call organic,
+natural for the interaction? Or is it explicitly saying hey,
+hey I've got a recommendation? And that leads into a discussion of
+different styles of interface as to whether the system is presenting
+itself as an agent that's helping you. Is it presenting a dialogue where
+you can come back and critique and say, this isn't what I wanted,
+I was thinking something more like that? Or is it acting more like
+a search engine or a tool? We'll explore all of these
+as the course goes forward. And what types of input? Are you being asked specifically
+which items do you like or how much do you like them on some scale? Are we simply taking implicit measures
+like whether you bought something or how often you return to look at a page? To what extent can you update
+those ratings as you come through? We'll have sessions on both input and
+output in our next module where we'll talk through the types of ratings and
+the types of presentations that come up. And the final dimension is
+recommendation algorithm. We've lumped these into four categories,
+non-personalized, content-based, collaborative, and others. And we will address those in more detail
+in the second part of this lecture.

@@ -1,0 +1,247 @@
+Welcome to the module,
+introducing content-based recommenders. Let's start with the basic idea,
+like all recommender systems, we're going to start with
+a notion of stable preferences. But with content-based recommendation,
+we're going to think about content attributes as our measure of
+preference and as stability. So let's consider some examples. Because I know my preferences,
+I think I'll start with me. When I'm reading news,
+I tend to like stories about technology, I like the University of Minnesota,
+Minnesota Vikings, restaurant reviews. Those are stable attributes that
+if they appear in a news story, suggest I might be interested in it. In clothing, I like cotton,
+blue, inexpensive, and casual. You've probably figured this out by now. If you come up with a fancy yellow and
+green, silk, expensive, print shirt,
+probably not a good pick for me. In movies, I like certain actors and
+actresses, I like certain genres. Hotels have attributes I can look at,
+I want wireless Internet, it would be nice to have pool,
+24-hour front desk. All of these are things that we
+could use to model my preferences in a way that would help
+me find products or services I'm interested in or
+help a system recommend them. So the key idea is to model items
+according to relevant attributes, model or somehow reveal user
+preferences by attribute, and then match those together and
+poof, we have a recommender. So in this module, you should
+learn to understand the range and value of content-based
+approaches to recommendation. That includes pure
+information filtering systems where we'll spend most of our time,
+but also a couple of variants. Case-based reasoning systems and
+knowledge-based navigation systems, which we'll introduce and bring in
+guests to talk about in more detail. You should be able to identify situations
+in which content-based filtering will or will not work well. You should be able to build vector
+models representing user preferences and item expression in terms of keywords,
+tags, or other content attributes. You should also be able to
+compute recommendations and predictions using
+a technique known as TF-IDF, we'll explain that a little later,
+and cosine similarity. You should be able to understand,
+explain, and apply data normalization in content-based
+filtering, be able to explain this TF-IDF algorithm, and in particular
+the problem that it’s intended to fix. And finally, if you’re taking
+the honors track, you should be able to complete a programming project using
+the LensKit toolkit, implementing and customizing tag-based
+content-based recommendations. And should be able to take
+away the skill to build other content-based recommendation systems. Okay, back to our concept. Said we're going to build a vector
+of attribute or keyword preferences. I'm going to go back to one of the
+earliest systems that did this on the web. This was a personalized newspaper,
+done by a group of students in 1994 and five to illustrate the power of the world wide
+web, it was called the Krakatoa Chronicle. You can see a picture of what the site
+looked like when it was running. And what you see is that it looks,
+well like a newspaper, but it looks like a newspaper with
+a couple of little customizations. One of them being that
+next to each article, there was a little gauge indicating how
+interesting you found that article to be. Not only that, the amount of space
+that was taken up by an article and the position of the article in
+the newspaper was based at least in part on how interesting you thought
+the article would be based on the keywords that you found
+interesting in previous articles. There was actually several pieces to this. There was also an editorial judgement
+of how important an article was and it would mix the two together in
+an attempt to give you important news slanted towards the news that you
+actually were interested in seeing. From that original paper, they gave a flow
+diagram of how all of this works and you don't need to understand
+all of the details here. But the basic idea is any time you got
+a user profile change it would update the personal weight for each article,
+how much it matched your keywords, and the community weight, how much
+it matched the editor's judgement, and rearrange the newspaper to match that. As you gave that a score and
+said this was a good article to read, it would give that positive
+reinforcement and add the key words descriptive of that article into
+your profile with higher weight. If you said this was a mistake, I didn't
+like this article, it would take that as negative reinforcement and reduce the
+weight of those keywords in your profile. And between all of this going together, you ended up with
+a personalized newspaper. Now in general, these profiles can
+be made a lot of different ways. Many of the very earliest systems asked
+users to build their own profiles by typing in the terms
+you're interested in and this has turned out to be quite awkward. But the idea of letting a user edit their
+profile that might be learned elsewhere can be very valuable. People are not very good at just dreaming
+up what are all the things you like, but if you show them what you think they like,
+they can correct you pretty well. So if my profile said, gee you like blue
+and yellow shirts made of cotton, I can come back and say, well no, I don't like
+yellow, but I do like blue and cotton. Even if I wouldn't have thought
+of my preferences in those terms. We can infer a profile from user actions. When they read an article,
+when they click on something, when they buy something, we can take
+that as a sign that they like it. We can also infer a profile
+from explicit user ratings. People tell us, hey this is
+a five on a five scale or a two. We can say, wow I'm going to use
+that to mark up your profile and add to or reduce the weight of
+the terms that are descriptive or the attributes that are descriptive
+of the item you just rated. And if fact, we can merge all of
+this together into the same model, so that we build a profile that reflects
+what you've told us, what you do, and even allows you to edit it along the way. So how do we build those preferences? We can start with some
+idea of a set of keywords. Terms that are just
+descriptive of our data set. There are a lot of techniques for
+doing that, we'll get into more detail. Sometimes these come with your domain. So if we're doing movies, we know we have
+certain things that people might like or dislike. They like particular actors or actresses. They dislike actors or
+actresses or directors. They may like particular genres. But we can also learn those
+keywords from the population. We could mine movie reviews for
+terms like artsy or dark, that turn out to be
+relevant descriptions. We could ask people to tag content. But mostly what we're looking for is a set of keywords that's
+descriptive of the items, that we can map to the items, and that
+seems related to people's preferences. And one of the operations we'll
+often do is to take out the keywords that don't work so well. So the.
+What's sometimes called a stop word. It appears in every review but
+it doesn't really mean anything. Then we could simply count
+the number of times the user chooses items with the keyword. Or is presented with them and
+doesn't choose them. And use that as a scale. Or we could get more sophisticated and
+we will as this module moves on. Once we have this vector
+of keyword preferences, we could just add up the likes and
+dislikes. Say, gee, you like seven of the attributes
+of this movie, you dislike four of them. Maybe that's relevant thing to do. But wouldn't it be nice if we could
+figure out which things are more or less relevant? Maybe I like seeing Tom Hanks, but I'm not
+really interested in a Woody Allen film. And it not being a Woody Allen
+film is worth six Tom Hanks'. Since there aren't six Tom Hanks',
+I probably don't want this movie. One way that we can do this, and this is
+what we'll be starting on in our next video, is a technique known as term
+frequency inverse document frequency. Give you a very brief preview, this looks
+at the question of how important or how frequent is this description
+in the current product? But also how often does it
+occur across our entire set? So it might be the case that when
+I'm looking at a blue cotton shirt, blue and cotton are pretty popular. They're pretty descriptive here. But if you added something that
+was much less distinctive, or sorry, much less frequent, so
+it came with a clerical collar. Well my opinion on a clerical
+collar might matter a lot more, simply because it's not
+a very common thing. And if it's very
+descriptive of this shirt, that's probably the salient feature. We'll talk more about that next time. Okay, how are we going to
+get through this module? You're going to have assignments built
+entirely on this keyword-based model. There will be spreadsheet exercises
+where you build a profile of content preferences and use it to predict
+preferences in a few cases for users. If you're in the honors track,
+you will have your programming exercise on building a content based
+recommender using Lenskit. And we'll have a module quiz
+to test your comprehension. But before we go into all that,
+I wanted to mention a couple of other approaches beyond
+these vector profiles. One of them is the idea of
+case-based recommendation. Conceptually, we have
+a database of examples. These are often specific products. We have a thousand cameras
+we could have you order. They have prices and zoom levels and
+pixels and all sorts of other attributes. And with this database of cases,
+we can query and navigate based on examples or
+based on attributes. And retrieve cases that are relevant. There's lots of interesting ways
+to do it it when we have this kind of a case library. So an example I'm going to show you
+is from a site that no longer exists. But it's a really neat site. It was called Ask Ida from
+a company called etown. And it uses an interview processes and a database of cases to elicit
+preferences over attributes. It uses those preferences
+to recommend products. And it uses the recommendations as
+a point to elicit further preferences, so that you could continue to iterate
+towards what you're really looking for. This is not intended as
+permanent preference modeling. This is transactional.
+You come in, you need help right now. Tomorrow you might be looking for
+something else. And in that way it differs a lot from
+the typical content-based filtering. So here's an example of the site. If you came into etown, the consumer
+electronics source, you could come in. And that first middle button says,
+hey, you want an expert advice? Ask Ida. You say, great, I'd like to ask Ida. And Ida comes in and says,
+hi, I'm here to help you. Tell me what you're interested in,
+home theater, audio, camcorders, digital cameras. Today I'm going to say I'm
+interested in digital cameras. Well great, picking out the right digital
+camera is a matter of finding the features and benefits that work best for you. Why don't you tell us what
+you're using the camera for? This involved some knowledge
+engineering as they came back and said there's a set of attribute
+values that match certain use types. Am I posting them to a website? Then I really only need the picture
+quality that's good enough on a screen. I don't have to print things. Am I emailing them to friends and family? Then I need a range, because people might print them but they
+also need to be able to do small pictures. Is my goal to make prints? Then I need higher resolution. Okay, I'll answer that and come back and
+say, how experienced a photographer am I? I know my way around a camera. I'd like some features that
+I can do interesting things. I'm not looking for point and shoot. But I'm not some sort of serious
+hobbyists to professional that needs to do everything manually. What do I want to pay? Well I might say as little as possible. But knowing the range,
+this is going to describe for me, gee, there is a number of choices if I go here. And I might be willing to go up to $600. This is old, cameras have gotten cheaper. In order to get a camera I want. And it comes back and it says,
+well thanks for all that information. Here are four cameras that
+you might want to start with. Okay, there's four cameras. The prices range from $299 to $599. It gives me a quick summary of
+the pros and cons about features. And then it comes back and says, I know
+that this might not be what you want. If you tell me more about what you need,
+I could help you. So I say, well I actually like
+this optical zoom thing and I'd really like the best possible zoom. What can you get me then? I get a new set of cameras. And I can keep going and
+look at a camera, and as I'm looking at a camera I can go
+back and look at comparisons of cameras. All of which were based on these
+feature attributes of the devices. So this rich case library
+provided a neat way to navigate. Another thing we can do if we have
+a library of examples is navigate from item to item without necessarily the
+engineering around all of these questions. An example of these was
+a system called Entree, which was built by a research prototype
+but actually deployed in Chicago for one of the political conventions
+to help people find restaurants. I'm just going to show you a couple
+of screenshots because the person who designed and
+built Entrée will be a guest for us in one of the sessions in this module. So the idea here was that these delegates
+might be coming from all over the country. So you could come in and say,
+here's some of my favorite restaurants, wherever they are. In this case, the person said,
+I liked Chinois On Main in Santa Monica. It says if you like that you'll
+probably like Yoshi's Cafe in Chicago. Why? Well, look at the attributes. It has extraordinary decor and
+service, near perfect food. They're not identical. Chinois is a little more hip. And Yoshi's has prefixed menus,
+but they're pretty similar and they're in the same price range. But it also let's me
+navigate in the bottom. I can ask for some place cheaper or nicer. Nicer often involves more expensive. I could ask for a different cuisine or
+places that are more traditional or more creative or livelier or quieter. And swim from there,
+if I said I want cheaper, well if I don't want to
+spend 30 to $50 I could get something somewhat similar
+below $15 at Lulu's. Now, one of the dimensions it did not
+have is how close it is to downtown. Lulu's is a bit of a distance out there. But it's Japanese food,
+excellent food, excellent service. The decor may only be good,
+but you get the idea. So, more generally,
+these case based approaches, knowledge, database, they're helpful for these
+ephemerally personalized experiences. The cases where I'm shopping,
+and I want to find items relevant to the ones I have,
+maybe copurchase or cobrowse. Cases where I want to navigate content and
+really explore some items in detail. And frankly case based recommendations
+are a lot easier to explain to a user. You can come back and say, here's
+what makes this different from that. Whereas, our content based filtering
+approaches are much more appropriate when you're talking about a longer-termed
+model of preferences over time, like getting news every day. And you still can't explain them
+with relation to the profile, for those profiles can
+get awfully complicated. The challenges with content-based
+techniques in general are that they depend on well-structured
+attributes that align with preferences. That works well in some domains. It works pretty well in restaurants or
+hotels. It's not always clear that
+it works in all domains. One of the early recommender applications
+was trying to recommend paintings. And people's taste in paintings is hard
+to reduce to a list of attributes, it's not impossible but
+it's not that I want a painting with more blue or a painting with more oil. I want a painting that makes
+me feel a certain way. And getting those attributes can be hard, though in many cases that has shown
+up through community tagging and folksonomies and other techniques for
+getting people to label content. Music was another one where finding
+attributes took quite a while. Though people have done analysis of music,
+and come up with attributes that seem
+to correlate with preferences. It depends on having a reasonable
+distribution of attributes across items. And items across attributes. It doesn't work if almost all the items
+are almost the same in terms of attributes. And content-based recommendation is less
+likely to find surprising connections. I happen to think chocolate goes well
+with chili peppers or with lemon, but if you say what's like chocolate, you are
+not going to get lemon or chili peppers. You need a little bit more sophisticated
+technique to make that connection. Finally, and this may be related
+to the chili peppers and chocolate, it is harder to find
+compliments than substitutes. Content is great when you're considering
+an alternative to what you're looking at now. It doesn't really understand, in most cases the notion of,
+I want something to go with this. Though more sophisticated techniques
+could try to create a basket around attributes that are complimentary in one
+way or another, it's still quite hard. If I have a hotel with a pool, does that mean I want
+a restaurant that's open later? I don't know how you make that connection. But you can certainly find some specific
+examples where people have tried to, in clothing and jewelry for instance. A few takeaway lessons, there are many
+ways to recommend based on content. Product attributes in particular. In the long-term, we can build
+profiles of content preferences, and we'll talk about that in
+our next couple of videos. For shorter term preferences we can
+look at databases of cases and ways of navigating them and we'll explore those in
+some of the guest interviews coming up. Content-based techniques work
+without a large set of users, but they need that set of item data. And sometimes a large set of users
+helps you get that item data. And they are particularly good
+at finding substitutes and helping navigate alternatives for
+a purchaser consumption. They have good explainability. So moving forward, the rest of this module
+has lectures going into the details of this TFIDF and
+content-based filtering technique. Talking about extensions to it, and interviews with experts on case-based and
+knowledge-based reasoning. We're going to talk a bit about the
+evolution from content-based filtering to vector-space approaches, an idea that's become much more
+popular in recent years of reducing the dimensionality of the content space
+to model preferences more efficiently. And for the Honor's Track, we'll be learning how to do programming
+content-based filtering on LensKit. Look forward to seeing you
+in the rest of this module.

@@ -1,0 +1,244 @@
+Welcome back. In the last two lectures, we talked about
+the kinds of data that recommender systems collect from their users in order to
+be able to predict preference and generate recommendations. We also discussed some of
+the things that we present to users as a result
+of these computations. Particularly predictions to tell them how
+much they're likely to like an item and help them estimate that. And recommendations which suggest items,
+that they might want to purchase or read or watch. This lecture will be
+tying those two together, talking about how to compute
+some of the predictions and recommendations we might want to
+use in a non-personalized context. And what exactly it is we are going
+to want to display to users. The objectives for this lecture are to
+understand several ways of computing and displaying predictions or
+in the non-personalized case, these really take the form
+of aggregate preferences. Understanding how to rank
+items in these systems, particularly when we have sparse data. Maybe not very many users
+have rated an item, or we have data where their relevance changes
+with respect to time or other concerns. And to understand a few points in
+the design space around prediction and recommendation and
+non personalized recommenders. And some of the tradeoffs
+involved in them. We'll first talk a bit about
+an example of a site that does non-personalized recommendation. That's really the core of its purpose and some of the specific
+components of that site. And then talk about how to compute and
+display aggregate preferences and how to rank items. So Reddit is a widely used
+news aggregator site. There are several sites like
+this including Digg, and Hacker News, where the purpose to
+provide non-personalized recommendations of news articles to read based on people
+voting up stories that they like. So when you go to the Reddit home page,
+you see a list of news stories. And this list is based on people's voting,
+combined with age. You also see the net up votes,
+for each story to help you gauge how popular the story is and
+as people vote and submit new links,
+the content of the page rotates. You come back and theoretically,
+the goal of the site is provide you with a fresh source of interesting
+news each time you come back. On individual news stories there's
+also the ability to write comments and those comments also get voted on and ranked so that the most interesting ones
+theoretically are displayed at the top. So how do we compute some of these
+things that we're going to need to do? The aggregate preferences we show,
+and the ranking that we use for items. We'll start by talking about how to
+compute and display aggregate preferences. A simple one is to show
+the average rating. So ten people have rated this item,
+they've rated it an average of four and a half stars, you just show that or
+to show the proportion of upvotes. You can also show the net upvotes,
+which is what Reddit does. The upvotes minus the down votes or in a system like Facebook where
+you just have the like button, you can show many likes
+a particular story has received. Conde Nast Traveller shows
+the percentage of people who have rated the destination at least four stars,
+so who've given it a positive rating. You can also show a full distribution
+with a histogram or something like that. To consider what one you might
+want to use in a particular site, it's useful to think about
+the goal of these displays. The purpose of a prediction or
+of showing aggregate preference is to help users decide whether they want to buy,
+read or view this item. So when Amazon shows you
+the average rating for a product, they're providing that as one piece
+of data along with the photo, and product description and
+the other things on the page to help you, the prospective customer, decide whether
+you want to buy that particular item. So a good principle for
+deciding how you display these things, is think about what will help the user,
+decide whether they want to click this link, whether they'll find
+this video interesting. So with that in mind,
+how do these simple approaches stack up? So the average rating or the up vote
+proportion answers the question, of the people who bothered to
+express an opinion about this item, do they like it, how much do they
+like it or how many of them like it? If it's just an up vote, down vote. On its own, it doesn't show popularity. It could be that you've got
+an average rating of five stars, but that's because one person
+really liked this item. So it could be something
+that maybe is very new, or it could only be appealing at all
+to people with very niche tastes. Net upvotes or number of likes
+show the popularity of an item. How many people like this or
+how many people voted yes. But what it doesn't show
+is any kind of controversy. Two things can have the same number of
+net upvotes when one has 5 upvotes and one has 5,000 upvotes and 4,995 downvotes
+which is a very different characteristic. The percent greater than or equal to four
+stars is very interesting from a decision support perspective because it has
+a very straightforward interpretation of the people who rated,
+how many liked it positively. And it also deals somewhat with the fact that different users will use
+the rating scale in different ways. Some people might tend to rate things
+high, while others tend to use lower parts of the scales, giving things
+they like a four and saving a five for things that are particularly good. And with this,
+it will capture the people who vote lower on the scale the things
+they really like, and for people who vote higher the things
+they at least rated positively. You can also just show the full
+distribution of ratings which can be kind of complicated for
+users to process. But gives them a feel of was this
+something people generally liked with a few outliers or are people very bipolar
+in their perception of this item? So Amazon shows the average rating, the filled in stars, so that this camera
+has an average rating of four stars. They also tell you how many
+people rated this camera. So that you have an idea of well, how many
+ratings were used to compute this average, how many people bought this camera? If you hover over the rating,
+it shows you the full distribution. So you can see that 78
+people gave this 5 stars. And it also shows some excerpted
+quotes from textual reviews, all to help you decide whether or not
+you want to buy this particular camera. Reddit has a simpler display, they just show the net upvotes
+next to each news item. And then they have them ranked in
+a way to help you see what might be more interesting and timely and things
+which we're going to talk about next. So with these scores. These predictions or these Aggregate
+Preferences that we show to the users. How do we pick what to put at the top? What do you put at the top of Reddit? Or what do you put at the top
+of the e-Bay search list? You don't necessarily have to
+rank by the same thing you show, the same prediction or
+aggregate preference that you show. Why might you not want to do that? One reason would be that
+you have too little data. If you have one rating for
+something and it's 5-stars and you have another product and
+500 people have rated it, 200 5-stars, 200 4-stars, 53 stars, and
+the other divided among lower ratings. Do you really want to show the one
+with an average of 5-stars or do you want to show the one
+that a lot of people bought and mostly liked, ahead of it? Also, if you're displaying histograms, well sorting by a multivariate display is
+not necessarily an intuitive thing to do. There might also be domain or business
+considerations, such as the item is old. Reddit's a news site, you don't
+want to come to the front page and see the most popular
+article from last year. Also for community reasons or
+business reasons, you might want to favor certain types of articles over others or
+certain types of items. So there are a few things that we want
+to consider in computing the rank. And these are just a few of them,
+one is confidence. How confident are we that an item is as
+good as underlying scores says it is? With the average computed from
+few items with one 5-star rating, you don't have near as much confidence
+as you do if you have a lot of ratings, producing an average of 4.5-stars. Also, risk tolerance and this is going
+to depend based on the application. Is the application one that benefits from
+high risk, high reward recommendations? There's a chance the user will really,
+really love this thing. But there's a pretty good probability
+they're not going to particularly like it. Or is it better for the application,
+better for the community, better for your business to be more
+conservative in recommendations and only recommend something if you're
+confident that it's going to be good. And then the domain and
+business considerations such as age, the type of community you're trying to
+foster on a news or discussion site, etc. So one way, specifically in the average context to deal with some of
+these issues is a damped mean. So when you have few ratings, it's difficult to be confident that
+the average rating is accurate. So one solution is to assume
+that without any evidence, without any ratings,
+we just assume that every item is average. And then each rating
+is a piece of evidence that this particular item is not average,
+either it's good or it's bad. And then in this formula, we can control
+the strength that the evidence required. So let's look at this on the projector. So we have our normal
+pieces of a mean here. So we sum to compute the score for
+an item, we sum over users, the users' ratings or the users' rating for that
+item, we divided by the number of ratings. But then we assume that
+each item has an additional k ratings at the global mean, the average
+of all ratings across the entire system. And k controls the strength
+of evidence required in order to overcome the global mean. So if we think of a number line,
+we've got 1, we've got 5, and
+we say the average rating is 3. Initially, the prediction will be at 3, but then suppose we get 5 ratings at 4 and 5 at 5. And we'll assume that k = 5. Now our average rating is going to be at
+4 and as we get more and more ratings, the k initial global mean ratings
+diminish in their relevance and with enough rating,
+it's basically irrelevant. But it damps the effect of having
+just a few extreme ratings early on. Another mechanism that you saw in
+the reading to go with this lecture is the statistical confidence intervals. So statistical inference provides means
+of computing confidence intervals, which is 95% confidence intervals, of how confident you are over
+a value of say the mean or the expected likelihood that someone's
+going to rate something positively. And this interval narrows as
+you get more and more evidence. Reddit uses the Wilson interval for binomial distributions to rank
+the comments on a news article. And if you use the lower bound, you get
+a very conservative recommendation. You need a lot of evidence
+to consider something good. And you recommend based on the lower bound
+of your estimate of how good something is. At the other extreme, if you use the upper
+bound, you get a recommender that is very, very willing to take risks on
+things that might be amazing, but you really don't have enough
+information yet to tell. So consider now one domain consideration,
+time. So as I mentioned earlier on Reddit, old stories aren't really interesting,
+at least for the front page. You want to come to a news
+site to get news or on eBay,
+items have really short lifetimes. So how can we deal with this
+concept of time playing a role? So let's start with the formula
+used by another site, Hacker News. They have a very clean, simple
+formula to score things based on time. They're a site very much like
+Reddit where people vote up and down news stories to show
+up on the front page. They've got a smaller and
+somewhat more focused community. So Hacker News scores things
+based on the net upvotes, polynomially decayed by age is
+the basic scoring function. So let's look at it again in more detail. There's a small polynomial
+decay factor on it, just to make the early votes have a little
+bit more influence than the later votes. As of the algorithm's description, public
+description a few years ago, this was 0.8. Then in the denominator,
+you have the age of the post. And it's polynomially
+decayed by a term they call the gravity with the age in hours,
+the gravity was 1.8. And the effect that has is that. Initially a post's rank drops quickly, and then as a post gets older,
+the effect of its age diminishes. So if you go back through the archives and you look at a page of results from a year
+ago, age doesn't have near as much impact. The curve is relatively flat. Things will be voted,
+we order based primarily on vote. Whereas the front page of today's
+news articles there will be a strong balance between vote and the age of the post so that things
+don't stand on the front page forever. There's also this penalty term which is
+used to implement some business rules. To influence the kind of community
+that the site owner wants to develop. So for example if a story is a poll. Polls are interesting, but the site owner
+doesn't want to encourage them too much. So, the score is penalized
+a little bit for a poll. And there's other algorithms that detects
+controversial posts and things like that. To adjust the weight to shape a little bit
+the kinds of things that comes to the top to exert some influence over
+the flavor that the side has. So Reddit's formula is
+a little bit different. So the Reddit formula
+treats the up votes and the time completely independently. It just add two terms based on them. So, for the votes,
+it has the net up votes and it just doesn't counts all negatively
+stories and that as one in this term. And then, it takes the log, this is
+a strong damping effect on later votes. So that votes 11 through 100 have
+the same impact as the first 10 votes. Then it adds a time decay term. Based on the time the post was posted,
+divided by a site specific constant. And it multiplies that by the sign of
+the net up votes, so the effect is things that have a net on net,
+have negative votes get completely buried. And you have to reverse sort
+the list in order to see them. Also this algorithm or this formula is only used to score
+news items not the comments. The comments are scored using the Wilson
+confidence intervals I mentioned earlier. And this is the algorithm
+as of about 2010, sites like this often have to tweak
+their algorithm, as time goes on. They find things that are or not working
+or the desires of the community or the owners of the site change. So to wrap-up, there are some
+theoretically grounded approaches such as confidence intervals and damping as well as putting in
+logarithms and exponential decay terms. To help deal with some
+of the complications in computing a relevant rank
+in the face of sparsity. There's also a number of
+ad-hoc methods that you put together to find something that
+works and experimented with it and see if the sight looks like what you
+wanted to look like particularly if you have a team that exerts a strong deal
+influence of what the site looks like. Also a letter formulas have constants such
+as the gravity term used on hacker news. The exact correct values for
+this constants will be highly dependent on the particular application and
+how you want that application to behave. [SOUND] There's also a lot of
+opportunity to manipulate for either good or evil, to manipulate
+to exert a lot of influence and control over exactly the kinds
+of things that show up. Or to more gently encourage
+certain behaviors or certain types of experiences on
+the site whether this is good or bad we're really depend on the reaction
+you get from the community. Some communities are going
+to go along more with the influence exerted by
+the site operator whereas others will be a lot more skeptical
+of overt manipulation. And the particular ranking
+function you want, influenced by the particular properties of
+the domain and the goals that you have for the site or the service or
+application you're trying to create. So, can you predict with these
+more sophisticated scores we develop some more sophisticated
+scores to rank sanely. Can you show them in predictions,
+and yes, you can. Theoretically it's a fine thing to do
+to use say a damp mean in order as the aggregate preference that you show. However, you have to be careful
+with how you present it. So, it's not to confuse users. If you say, this is the average rating and you also show individual
+ratings like Amazon does. And users looked at the individual
+ratings and the average rating, and see that they don't match that could
+influence their perception of the site, their trust in the site, and
+incidentally, or importantly, when the damping is most
+important you have few ratings. That's also the time when
+it's easiest to hand verify whether the average looks right. So you can do it, you just need to be
+careful in how you present the rating, so as not to create incorrect
+user expectations that might adversely affect how much
+they're willing to trust you. So in conclusion, sparsity,
+temporal concerns and inconsistency can make data messy. We haven't talked much about
+inconsistency in this lecture. We'll be revisiting it
+more in later lectures. Simple scoring also doesn't necessarily
+match the domain or business needs. And there we've looked various
+ways to deal with this. Decay, time, penalties, damping. We'll see more normalizations
+later with some of the algorithms. We look forward to seeing you next time.

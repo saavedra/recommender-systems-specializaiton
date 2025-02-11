@@ -1,0 +1,214 @@
+We're continuing lecture 1-4, with part B. As we delve in a little bit more detail
+into the recommender algorithms in our taxonomy. So as we ended the last part,
+we talked about four types. Let's look at these each in
+a little bit more detail. But first, let's take a look at a more,
+Concrete model of how a recommender works. And for that model, we have three basic
+concepts that every recommender needs. There's a notion of users. Users are the people in our system,
+the people who have preferences for items and who may be the source of data in the
+case of the collaborative recommendation. There are items, these are the things
+that we're choosing to recommend. And there are ratings, which are the things that
+express opinions in our system. And more broadly,
+when we take the users and the items together,
+we tend to think of having a community that expresses a space in which
+all of these opinions makes sense. Let's look at that a little
+bit more concretely. We think of this user item set. Each user may have the set
+of user attributes. If we're using demographics,
+a demographic would be a user attribute. And for each user, we may have some sort
+of a user model, such as their preference for a genre of movie or
+the types of books that they like to read. For each item, we may have a set
+of item attributes, properties. What actor was in that movie? Who was the author of that book? What color is that appliance? And where users meet items
+is in the space of ratings. Normally we think of
+a preference expressed as a user likes a particular item. Or a user gives an item a four on
+a scale from one to five, or a one. Or the user has purchased that item. But we will also see cases where the user expresses opinion over things
+that are not individual items. So, our first type of recommender
+are the non-personalized recommenders. These involve summary statistics and
+in some cases product associations. These use external data
+from the community, like this is a best seller, or
+the most popular, or it's trending hot. Things you might see in
+the Billboard music rankings. Or it may provide a summary
+of community ratings. How much does somebody like a restaurant,
+or how much does a population like a
+restaurant, and a Zagat restaurant rating, which we'll go into in more
+detail in our next module. Or a summary of community
+ratings that turns into a list, like what's the best hotel in town,
+as we saw in TripAdvisor. We also have examples
+in our summary ratings of more deeply analyzed
+summary ratings that go into specific product associations
+that have some form of context. So to use our framework for
+this specific example, I'm going to go back to our diagram. When we're talking about just,
+Summary stats, the simplest example we
+may have of this would be the summary stats in the ratings for
+a hotel site like TripAdvisor. Each item would be a hotel,
+each user is a visitor to the site. When a visitor to the site enters
+a rating for a hotel, that rating, Might be 4 stars out of 5. Actually TripAdvisor uses these fun
+bullets, but I find them harder to draw, so I'm going to stick with stars. Because this is just a summary of ratings,
+for this purpose, we don't need any attributes. We don't need any model. When somebody comes in and
+says, how good is this hotel? We go through the ratings for this hotel, pull out all the ratings that match
+this hotel and report the average. Maybe 3 stars, maybe 4 and half, and that's the simplest way to do it. This ratings table is a matrix
+where we have users and items. And throughout this, we may say, well, for a particular item,
+like the hotel I'm looking at. If I had a 4 and a 3 and a 4 and
+a 5 and a bunch of missing values, when somebody comes in and
+says, how good is this hotel? I'll average those together and I'll get a
+4 and I'll tell them it's a 4 star hotel. Very simple and
+something you'll be doing in this class. Let's go back and
+take a look at the next example. In content-based filtering,
+Users rate items and from that we build a model of user preferences against the item attributes. What does that mean? Let's take the example of content
+filtering in the domain of movies. If you come in and say ooh, I really like
+Star Wars, wasn't a big fan of Beaches, wow Terminator was pretty cool,
+really didn't like Love Story. Over time we could accumulate these and
+figure out that you had positive scores for
+genres like science fiction or fantasy or action and
+lower scores for romance. We might even find out that there were
+some actors that you liked or disliked. Maybe you're a big fan of anything
+with Bruce Willis in it, but not such a big fan of Bette Middler. And we learn all that because we can
+map the things you've rated against the attributes of those products,
+or in this case those movies. There are other ways to do
+content-based filtering. There are systems that are known
+as knowledge-based recommender systems that use the item attributes
+to form a model of an item space and users navigate interactively
+through that space. We'll talk more about those in our
+unit on content-based filtering. And there are lots of cases where these
+filters are the most effective type that you would like. Personalized news feeds,
+because news is coming out so quickly that you may not want to wait
+to hear what other people have to say. Most news systems are based on learning or explicitly being taught
+the topics you care about. I want to know what's going on
+with the Minnesota Vikings. And because I've read lots of
+articles about the Vikings, I'll get new articles about the Vikings. I might care a great deal
+about World Cup soccer or the World Bank and
+care less about celebrity news. Other people would feel differently. And that's how we personalize
+the news to each person's tastes. Music feeds around artist or genre are another example where you
+could build up a content-based profile about which artists that you like,
+which genres of music that you like. Let's again take a look at how
+that fits into our framework. In this case,
+let's again use the example of movies. And these movies will have some
+interesting properties, like genre, Actor/actress, And director. Now when I as a user submit a rating for a particular movie, so I say, Star Wars is five stars,
+that updates a model, where the model is not
+about which movies I like, but which properties of movies I like. And inside that model, there's going to be an interesting table, frequently referred to
+as a keyword vector or a taste vector,
+that will have things like, okay, action, sci-fi, Tom Hanks, And other properties of movies. And every time I rate a movie,
+it can update this model to say, well, this is 3.2 and this is -0.07. And of course, these are on different
+scales, in many systems they're scaled from minus one to one,
+others they're on different scales. And when the time comes
+to make a recommendation, when I look at a particular
+movie that comes in, maybe Forrest Gump,
+it will come in and it'll map, how much does Forrest Gump
+have each of these attributes? How much is it action? How much is it science fiction? How much is it Tom Hanks? And then the stronger it has
+the attribute, the more I look at whether that's something I like or dislike,
+and I map those two together. We'll go through the math
+of this in the unit, but I'm basically doing a vector
+dot product to figure out how much I might like a particular
+movie that I haven't seen before. And that's the basic idea
+behind content-based filtering, where I have a user model around
+some content dimensions, and my ratings and
+the item attributes that form that content are the way that I pull everything
+together to build a recommender. Let's move back and move to the next one. As we start looking at personalized
+collaborative filtering,using the opinions of other people rather
+than attribute data to predict and recommend, we build on the idea of a user model that is our set of ratings and an
+item model that is our set of ratings, and all of the attributes and
+models can drop off of our diagram. Instead, what we have left is a common
+core, a sparse matrix of ratings. And our goal is to either fill
+in those missing values or select promising cells that might
+be ones that we want to recommend. Let's go to our model first, and then we'll talk about some
+of the different techniques. So in collaborative filtering, we're back to this matrix
+that has lots of items, And lots of users. And it's filled in very sparsely. As you'll see, this is actually much
+denser than the matrix would normally be. If the matrix is close to full,
+we don't need a recommender system. We know everybody's
+opinions about everything. But in fact, in this case,
+we don't know everybody's opinions. For a given user,
+we might know 1%, one tenth of 1%. Think about the different
+applications out there. Our movie lend system has
+perhaps close to 20,000 movies. The average user has seen a couple
+of hundred, so they may have 1%. Amazon's book recommender has
+two to three million books. The average person may have expressed
+an opinion on a couple hundred of them. That's well under 1%. And our different approaches are ways
+of doing the two things we just said. If a particular user,
+I'm going to call that user Joe, wants to know what to think about
+a particular movie, let's call that movie Big, then I'm trying to estimate
+what goes in this cell. Or if another particular user,
+let's call that user John, is looking for a movie to see, then John
+may want to have picked out of this, what's one of these cells that's
+promising, that's likely to have a high value, or maybe even a list of
+ten possibly high-valued cells? Which may or may not require actually
+predicting what the number is in there, or just finding a way to sort things
+where the data is missing. So let's go back and
+take a look at the specific techniques. In user-user collaborative filtering, you select a neighborhood of people with
+similar taste and use their opinions. In item-item collaborative filtering, you establish relationships among
+items through the ratings and use those items and your ratings of
+them to triangulate recommendations. And in dimensionality reduction, you create a lower
+dimensionality matrix Through mathematical techniques that
+compress the matrix and then directly find
+a representation of taste. We'll go back to our matrices for these. With user user, if I'm Joe here,
+I would look for people who have a taste similarity to
+mine based on the things I've rated. And then say, well some of those people have expressed an opinion on this
+movie and I can pull those together. You've seen an example of this and
+we'll go through the math separately. But the intuition is, if there's
+other people who share my tastes, I want their opinions to
+be combined together. There is a variant of this called
+trust-based recommendation. When instead of picking people who share
+my tastes, I pick people who I know or trust. And one variant of that involves picking
+people close to me in my social network, which can work as long as those people have opinions like mine on
+the items I care about. In item-item recommendation, the way I would find out what I think
+about the movie, Big, for instance. Is to take a look at movies that
+I have an opinion on, these. And see how similar other
+people felt they were too big. Not worrying about whether those
+are people who share my taste but recognizing that my taste will
+get factored in when we say, look if big similar to a movie I disliked,
+then I am less likely to enjoy it. If it's similar to a movie I liked,
+I am more likely to enjoy it. This turns the matrix problem sideways. And as we'll see later in the course,
+this has some performance advantages, but also changes the nature
+of the recommendations. And finally, in dimensionality reduction, this whole matrix would get reduced
+into something much smaller. Where I would be expressing my
+opinion as a set of taste numbers. You know 3, 1, 5. And every movie, Would be represented
+as a set of taste numbers. Maybe 1, 1, 4 and I could match those. And the interesting thing here is that the
+math works out so that I don't know what those dimensions are, but
+they're optimal which can be pretty cool. And we'll talk about
+that later in the course. Let's go back to our notes. As we talk about these algorithms,
+it should be clear that, in order to decide which to use, we're going to
+have to have some way of evaluating them. And we're going to spend a significant
+amount of time, a two week module plus time in our other modules specifically
+on different types of evaluation. Because understanding what you're
+using a recommender for and how to evaluate it properly
+helps you pick the right one. So we'll be looking at
+many types of evaluation. The accuracy of predictions,
+the usefulness of recommendations whether they're
+correct whether they're non-obvious, whether you can deliver a diverse
+set of recommendations, computational performance, and
+many other metrics that relate to how people can use recommendations in
+the tasks that they're trying to perform. Many of these are being
+decision support tasks. Finally, while we won't go into
+great detail in any of them, there are other approaches to recommendation
+that will give you an overview of and some pointers on. And in a couple of cases, we'll bring in some experts to talk
+at least briefly about how they work. There's a whole class of
+interactive recommenders. That involved dialog and critiquing,
+where the recommender may say, what do you think about these items? And you can come back and say, you know
+those aren't bad but I was looking for something a little cheaper. And it can refine the recommendations. Or it may be that it asks you questions
+along the way and says, you know what? In order to understand your tastes,
+I'd like you to compare these two cameras. This one's a little heavier,
+a little more expensive, but it has a better flash and
+it has a greater zoom. This one is a little cheaper. It has good image quality, but it doesn't
+have that type of flash and zoom. Which one would you rather have? From that the recommender can update
+its model of you and perform better. And finally there are all sorts of
+hybrids of different techniques brought together, where content filtering
+and collaborative filtering, dialogue, and computation, all can be brought together
+to solve particular recommender problems. And we'll talk a little bit about the ways
+in which different recommenders can be combined to form one solid
+recommender recommended That has some of the best
+properties of multiples. So moving forward, our next lecture
+in this module is a tour of Amazon.com, organized around our taxonomy. We're going to look at a site that has,
+within it, all sorts of different recommendations and
+many features built around them. And armed with that experience,
+you will then be able to go out and analyze a recommender
+application of your own which is the first assignment
+of our next module. As the course structure goes forward,
+we'll be stepping through the recommendation algorithms
+with six major modules. The next module will be non-personalized. Followed by content filtering. User-user collaborative filtering. Then we're going to take a break and
+look at evaluation. And then come back to item-based
+collaborative filtering and dimensionality reduction before
+we end with a short module on different techniques
+not covered in depth. Through the course we will also mix
+in related topics on everything from evaluation and
+explanation to interfaces and how to use recommendations in a way that
+serves what users are trying to achieve and what the business deploying
+a recommender may be trying to achieve. I hope you're looking forward
+to this journey with us. And I'll see you again as we come back and
+explore Amazon.com. [SOUND]

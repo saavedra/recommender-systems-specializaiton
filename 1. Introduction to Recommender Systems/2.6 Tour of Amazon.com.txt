@@ -1,0 +1,187 @@
+Let's go shopping. This video is a tour of Amazon.com, and while I'm not actually
+going to buy anything. We are going to see a whole bunch of
+interesting recommenders along the way. So, our goals here are to explore
+the wide range of recommender systems in the context of a large
+professional retail site. And to understand how we can
+use the taxonomy that we have developed to understand those
+recommenders and reason about them. I'll remind you that we have these
+dimensions of analysis that we've already presented to you. And we will come back to this in
+the case of a couple of the Amazon recommenders to think through
+how Amazon did this work. So first things first. Let's go to Amazon. I have already logged into this site. So it is personalized to me, and
+we're going to start by just seeing how Amazon uses its homepage,
+and what it does with it. At the top is an advertisement for
+Amazon Dash, and there's some other ads we could
+presumably take a look at as well Prime Pantry and the new Amazon Tap. As far as I can tell,
+these are not highly personalized. Don't know to what extent their
+lightly personalized by status. Like whether you're a prime customer or
+not, but they're not heavily personalized. There are some offers they pop
+up below telling you about your gift card and some things to do,
+but I'd like to jump in the products. And you'll notice that they describe why
+these different recommendations are here. If we look at this
+particular line of products. I've only bought one of
+these products ever before, and honestly I don't remember
+if I bought it from Amazon. But I have bought shaving things and toothbrushes and other things on-line. And so, they have inspired those to
+present me with a set of products. I don't know how much these are products
+they are trying to promote. They may be paid to promote, how much they're simply recommendations
+that are linked to my history? I can't do that analysis on this example. The next set of recommendations
+are things from particular categories. And what I happen to know about
+groceries and gourmet food here is that most of these are actually
+items that I've purchased before. And repurchasing is a big deal. I have no idea why hand-crafted
+handbags are here. To the best of my knowledge,
+I've never bought one on Amazon. Nor do I have an iPhone. So not all of these things are perfect,
+but what I do have is a set of
+recommendations for me. And under the recommendations for
+me I get headphones, cables, looks like a power supply. These are all related to things
+that I've actually purchased. And are tied to the kinds
+of things that I buy. And in some cases, even buy frequently. Because cables seem to be needed over and
+over. There's also a list of
+recently viewed items. In case, I might want to buy them this
+time if I didn't before or buy them again. So, this hasn't gotten
+into great detail yet. But we're going to dive in a little
+bit by saying, let's get personal. If I come into what's
+labeled Joseph's Amazon.com. I start getting much more
+detailed recommendations for me, and they're broken into categories. Some of these are buy it again, and
+some of these are not buy it again. They are, let me scroll down for a second. Categories of things I might be interested
+in, like biographies and memoirs. Because I've bought some of them or
+personal care products. All the way through stationary and
+party supplies, and all the rest. We're going to come back here, but
+I want to go into one of these examples in a second after we take
+a look at our analysis. So, it just suggested to me four
+items I might want to buy again What do we know about this type of
+analysis for this type of recommendation? We know a few things. We know that the opinion
+is based entirely on. My implicit purchase data. I bought it, i might want to buy it again. We know that it's personalization level Is personalized. It's personalized because it's only the products I actually bought, but that it's very much focused
+on one product at a time. Now that's not completely true. We don't know why it picked
+the different categories that were here. And so the categories may be
+based on multiple products, but the rest of these are not. We know the purchase. The purchase is To get me to re-buy. We also know the context here. This is a context that
+is general browsing. I only see this because I said what
+might I be interested in right now. It didn't pop up in this context
+because of some other product or the middle of an action or anything else. We know that the interface
+here is clustered suggestions. We don't know everything about
+the recommendation algorithm. We don't know how they picked which
+items are here, but we could speculate. We could speculate that
+they might pick items that are commonly Depleted. Things you use up and get more of. They might be picking items
+that have profitability. If they're being smart about it. They might even look at my purchase cycle. We don't know if they do that. Couple of other things here. We know the domain here is products. And specifically,
+it's products already purchased. And when we get to privacy and
+trustworthiness. This is data we expect them to have. And it's not being shared with
+anyone else in this context. But it's not a very useful case
+in this particular example. So let's go into that and
+see what happens. Opens up and say well, I still have paper. I really don't need anymore tags but you
+can never have enough of my favorite pen. As I come in here we see some
+more features that are here. The first thing that we see
+is our predicted rating. We've looked at this already. Our predictive rating here Is four and
+a half stars. I want to understand why. I could see it's actually 4.7 and 78% of the people who've reviewed this and
+given scores like it. There's a lot of customer reviews,
+1,500 of them. This is pretty popular. They also have a non recommender
+feature of 84 answered questions, which is pretty cool. As I go through,
+there's a bunch of things that go on here. There's an advertisement. That was recommended by
+a recommender system. That's this advertisement right over here,
+school lists. Teachers publish a school supply list for
+a chance to win. It's seems to be inferring from
+something that I'm a teacher. Maybe it's the books,
+maybe it's the office supplies. The next recommender we get here
+is perhaps the one that made Amazon most famous. Customers who bought
+this item also bought. A field note handbook, these are notebooks
+to carry around, a clip to put on the pen. Refills, these are all pretty typical. We keep going. We're seeing mostly things
+that are not surprising that you would buy these to go with this. So a lot of pages out then if we go
+further out we might see something more interesting like a little flashlight,
+a bunch of flashlights key chains, a ruler. Really nothing all that surprising. And even as we get further out there just
+sort of things that people keep stuff in their pocket might like to have. Let's go back to our
+analysis framework and do the same thing for
+people who bought this. Our domain is product. Our purpose is add-on sales. Why add-on sales? Because this is people who bought this,
+also bought. This is something you
+might buy in addition. That doesn't mean some people
+might not substitute but the real goal here is to say, hey,
+if you're looking at this, get this too. Our context is shopping for a product. The opinion here is now other shoppers. Who bought this? Our personalization is now
+not about me specifically but it's an ephemeral personalization
+based only on the current product. It doesn't say of things you would like,
+here is what people would like. Anybody else could come to that
+same page and see the same things. We're not going to revisit privacy and
+trustworthiness, because they're usually
+more at the site level. The interface, here,
+is a set of recommendations. And the algorithm used for this is
+a product of association algorithm. Which is one of the families of algorithms
+that you're learning in this course. Okay, back to shopping. I can keep going here, and
+I can find sponsored products related. When it says what does that mean,
+it'll tell us what that means. These are advertisements for
+products sold by merchants on Amazon.com. And you get the sense that these
+may be things that Amazon has a benefit to promoting. Other things that come up as I go down,
+there's lots of information. More sponsored products,
+a lovely social Q&A feature, but buried now way at the bottom, customers
+who viewed this item also viewed. I won't go fill out the full taxonomy for
+this. But this is the same thing
+with a different purpose. These are likely your alternatives and
+in some cases you'll get on an Amazon page people will shop for
+these eventually bought and what the most popular thing
+that they actually bought was. This is now helping me find out well for people look at this,
+what are they things they tend to look at? And I also get my recently viewed and
+featured recommendations. We're going to do one more thing
+on this page before we go back. And that one more thing is to see
+what happens if I start to buy this Yep, we want to get ourselves
+all the way to the top. If I say add this to my cart, very quickly I'm already getting
+new recommendations. Well these things
+are commonly bought together. These things are bought
+by the same customers. There's a lot of overlap here, which
+is something that could be addressed. And immediately I'm getting a set of
+things I might want to buy with this. Well that's not what I'm
+interested in right now. So I'm going to go back
+to my Amazon.com and actually go to the next piece of
+this which is recommended for me. And you will notice a bunch of items
+including suddenly those memo notebooks, a book on poker,
+actually a couple of books on poker. I've bought several before. Tic Tacs, various things that somehow relate to what I've bought before. You might wonder, how do these come up? And there's this little text saying, these recommendations are based
+on Items you own and more. If I click there,
+here's my list of items I've purchased. And I can improve things,
+it's even under the category, Improve Your Recommendations. If I want to come in and rate the item I've purchased,
+these are actually quite good. It will use that information
+to come up with things. But there's other items, too. There's items that I didn't purchase,
+but that I told them I own. And there's items that I've rated, and items I've said that I'm not interested
+in, and items I've marked as gifts. And so we have here a classic
+collaborative filtering recommender that is based on some hybrid
+perhaps of collaborative and content around the items that
+I've owned and purchased. So what domain are we in here,
+we're again in the product domain. The purpose here is general
+recommendations to purchase. These are recommendations that
+are appearing as requested. If you ask for recommendations,
+they're based on, Other customers plus me. They're personalized to my full history,
+perhaps even more history than I want. But it lets me edit the history,
+which is really nice. I can mark something as a gift and
+it stops assuming I would like it. In this case again,
+we're getting basically a list of recs. And the algorithms here not disclosed,
+but if I were to guess, there's at least some
+form of collaborative and maybe content based filtering,
+possibly together. Amazon doesn't say So,
+let's get back to those recommendations. And, I can go through these items and
+say, gee, I I own it, I'm not interested, all of these things. But I can also understand why
+is it recommending each item. I'm going to blow this up a bit
+because it's hard to read this. But if you come down and say,
+why are you recommending each item? The first one says, well it's recommended because you put
+the bullet pen in your shopping cart. Or it's recommended, same thing for
+the other bullet pen. This is recommended because you purchased
+a different book that's related to it. But that may not actually
+be how it computed it. But it's a reasonable explanation. Unfortunately, it's producing
+way too much density because they're too closely
+related to the same things. Maybe if I get more results, I'll get
+things that get a little bit different. A little bit, I got some caramels. It's still focusing on poker right now,
+which is odd. I've read a lot of other books, too. Suddenly, because I bought
+nail clippers and things, it thinks I might want a trimmer. Nothing very exciting yet. And that's something we're going to
+discover is coming up with really good recommendations can be hard. Okay, just a couple things more here. If we go back to something,
+looking at my browsing history, we'll see that one of
+the things it says is look, if you like this, get more stuff like it. I enjoyed this charcoal,
+what is more like this charcoal? Well, other charcoal. Really? Not perfectly exciting. I was very interested in finding
+a 100 watt equivalent LED light bulb. And lo and behold, here are a bunch
+of 100 watt equivalent and some 75 watt equivalent light bulbs. So there's lots of different
+ways that I can browse and get all of these recommendations. So as we've gone through this we've
+seen a variety of different purposes. Add-on, possible substitute,
+just general sales. We've seen different contexts in the
+context of a product or a shopping cart, in the context of, you're asking for
+recommendations, you're just browsing. We've seen things that are entirely
+based on what you've done and things based on others who've
+shopped in this domain. And we've seen personalization ranging
+from apparently none through anchored to a current product, to things that are
+least nominally linked to a whole series of products, though it wasn't always
+that obvious how they were doing that. Mostly Amazon just presents
+a bunch of stuff out there that's common in a retail environment. And we don't fully understand
+the algorithms, but some of them we can deduce. And indeed are algorithms that
+we're teaching in this class. So I hope you've enjoyed this quick tour. I encourage you to go to sites
+that you find interesting. And do your own tour,
+take a look at the ways in which recommendations appear in real
+systems that you use every day. We'll see you soon.

@@ -1,0 +1,154 @@
+Welcome back. In this video, we have Dr. Sole Pera from
+Boise State University who's going to be talking with us about the relationship
+between search and recommendation. And how these can be tailored for the
+particular needs of different audiences. Sole, welcome to the class. >> Hello everybody, thank you for
+having me Michael here. >> So first question. We've talked a little bit in this class
+about the relationship with search and recommendation. And it's a question that comes up a lot
+when we try to teach recommender systems. What's your take on how
+these things relate? >> So I'm going to give you my
+personal take on it and mostly reason I work a little bit on search and
+I work the same amount on recommenders. So based on my point of view,
+I would say that both address a real information need of
+the user and they share a common step. Like understanding what the user needs,
+and then being able to find
+relevant resources. And relevance it's defined differently
+from the point-of-view of the search engine and
+the point-of-view of the recommender. But I think that the main difference
+is what triggers that information need. In search, the user knows what he wants. He has a real need and
+he will go and type a query. Whether that query is right or wrong,
+or the search engine can understand it, that's a whole different problem. But at least there is something
+that triggers that search. On the recommender,
+I think the recommender tries to kind of think ahead and say,
+what would this user need? And try to come up with resources or
+ideas or items or products that the user haven't thought of. So he wasn't going to be able to search
+for, because he doesn't know they exist. And I think that's the main difference. That with search,
+you are the one who triggers the task. And with the recommendation
+the recommender is the one that says, I have something here that you might need,
+or that you might enjoy. Or that it might make your life easier, or
+that it might help you decide better, or something. So that I would say my main point of
+view between third term recommendation. >> Okay thank you. To shift a little bit, a lot of your
+work is focused on various aspects of content based filtering using different
+kinds of content in the recommendation. And we've talked about a number of
+techniques already, about how to mine user provided meta-data, or
+mined item content itself. What do we do when that's not enough? What other kinds of data can we
+mine in order to get content to do content based recommendation? >> So I'm sure you talked
+about tags a lot by now. So I'm not going to expand
+my comments on tags. But one of the things that I
+would say are, well at least for my research there were most
+beneficial were reviews. There are tons available, and you have the
+ones that the same user that rated wrote. And then you have the reviews
+that other people wrote, and there’s a lot of information
+that you can find out. That is going to be completely
+different from just an overview, or the discretion item. It just gives you the personal opinion and
+the different points of view why someone likes or
+dislikes something might be different. We might both rate a movie with a five,
+and the discussion, or the brief description of
+the movie might be a five. It's a worthy use, ratings, or content, you will get the same type of
+recommendation, but if you dig deeper. We might like it for
+different reasons, and reviews are a great way of understanding
+why people like or dislike something. And I would say most friends are concerned
+just saying, what are you sentiments? Are they positive? Are they negative? We don't really care about
+a particular feature of an item, but you can even go deeper. And depending on the domain,
+find out more information. The ones that I am closest to are books. I've been working with giving
+book recommendations and beyond just description of the book,
+or the editorial overview of the book. You have, literally elements
+that can help you understand why someone might like the book. And there's no direct metadata on that. That you can just really say,
+I'm going to use this database and connect it to my data. But you can infer all that information
+from reviews if you try to understand what are the patterns that people use
+to describe that information. So I would say,
+reviews would be my top one after tags. Tags are good. They're great and
+they have different points of view. So I would pick tags first but
+then expand it with more information. >> And our students doing the programming
+assignment are going to be working quite a bit with tags in
+the course of this module. >> That's my first advice when I talk to
+my students who are just getting to know recommenders, that you need
+to make tags your friend. Yes, they have a lot of problems, that you
+need the noisy ones and the one that says, this book is at my grandma, and
+that's not going to really help you. But if you can really clean it up,
+and deal with belief and perspective user have,
+that is a great use of content. And there's a lot to learn from that. >> So, to shift topics a little bit again. I know a lot of your work
+has worked with children and doing recommendation and for children. How does that differ from recommending for the kinds of recommender problems
+that we usually will consider? >> So I find it, and I'm going to be very
+biased on the topic, but I found it very fascinating because I've been working for
+my PhD on doing recommendations for book and movies and
+scholarly publications. And then suddenly, we were just talking
+by chance with my advisor about his son's school and
+how they wanted to improve reading and they said well but
+how do you find the right reading? And I started talking to teachers and
+it came down to that. Well, there's not the same thing as
+the recommender like when you use Amazon. On Amazon,
+you are the one making the purchases. And so Amazon can figure it out,
+what are your purchasing patterns. And if you rely on a site where
+you can rate information, or you can give content or bookmark, then we
+can figure out what are your ratings and what are your preference. With get that's not available. There are rarely any sites that
+would give you that kind of ratings. And for privacy reasons, if they exist,
+you cannot even have them for research, or any other. You cannot use them to get to
+know more of the children. So, that was for
+me was one of the limitation. I said, well, what happens when all
+the tools that we're used to using for solving these recommendation problem,
+suddenly, you have a non-traditional user that you cannot take advantage of or
+cannot take advantage of the recommender. And so that was for me,
+what started my work on recommenders and search for children. How the non-traditional users
+could still take advantage of the great resources of recommenders or
+search engines, but benefiting them. And for me,
+the first thing we've focused on books. And one of the things was well, can you understand a book
+when you're the average user. We just want to see what you read,
+and find things that match the topic. Well, that's not enough
+when you're a child. We need to know that you can
+comprehend what you're reading. Because if I give you a book and
+then you cannot read it or you cannot understand,
+it might be perfect on paper. It matches your topic. It matches what you read in the past. But if you cannot understand it,
+that is a wasted recommendation. And so those are the types of challenges
+that you need to start looking at when the information that you have, or what you
+can know about the user becomes redundant. Because you need to explore it further and you need to explore different points of
+view to get to know the user better with perspective that you have been working
+on and readability has been one of them. >> Are there other particular groups or
+demographic populations of users that might benefit from
+particular consideration in how we design recommendation and
+information experiences for them? >> So I'm going to answer first
+from a personal perspective. That's what I originally wanted
+to do on my research and then I found kids, and
+then I kept working on that. I originally worked,
+how do you deal with people that, for example,
+speak English as a second language? That was me, and so suddenly you have
+these, what apparently is a traditional user that has the right age, or
+the average user that rate, that bookmark. But what happens when their comprehension
+level, you don't expect that. But it's effective because there's
+not a native on English or book smart thinks in English and Spanish. So how do you get to know these user more,
+and for me when I was young, I was starting to study English and
+I was, I don't know, 16, 17. And I was getting books about sports and
+princesses which believe me they were fun. But they weren't particular
+to my interests. And any chance that they match my reading
+ability or my comprehension of English, but they didn't match my
+topics of interest at all. And that I think are the type of users. How do you tailor a recommendation for
+someone that has different needs, that it looks like
+it might not but it actually will. So people that speak English as a second
+language would be the first ones I would say need tailoring. Another one, I was thinking
+the other day about medical domain. It's not enough that contents match. If somebody says, I have these three. Somebody came and
+said these are the symptoms that I have. Well we cannot just match symptoms
+with other people's symptoms. And say these people we
+were treating this way. You can kill someone, and so we want to
+be sure that we want to be responsible. So now there's a whole other layer. What do we need to know about the domain? That needs to be part of
+the recommendation process. It cannot be just content, or it cannot
+just be what other people have done. You need to have that
+expert knowledge behind it. So instead of people,
+I would say the medical domain, or English as a second language. And one of the ones that I've been more
+interested in lately is the dance. I think for me it just changed the entire point
+of view that I had from recommenders. With recommenders now I have content,
+with events you don't have ratings for the future. You don't know what other people rated or what other people said about
+events that haven't happened. And once they've passed,
+you cannot recommend them again. So it just changes the way you
+need to think about the task. And it changes the way you need to think
+about what type of data do you need or what type of data can you use. And how can you take advantage of it? If you have content, can you use it the same way that
+you use it for a real recommender? If you have ratings or if you have
+classified, like topical classifiers. Can you use it the same way? And for
+some data points that will be true but for some it won't depending on
+the group that you're dealing with. >> Thank you, is there anything else
+that you might tell our students? >> No, I think I said,
+summary of what you taught very well. What you told them very
+well kind of what I do. I'm working with children and
+I'm working with this non traditional, but I think recommenders is a field
+that has a lot of areas and a lot of future trends that
+continued to be explored. So, I'm excited about students
+taking your courses, and then bringing more to know to the field. So, thank you for having me and
+hope you find this useful in any way. >> Thank you very much for being with us.

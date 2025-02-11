@@ -1,0 +1,68 @@
+So this is the movielens homepage at
+movielens.org, where you can sign up or sign in. I will sign in. And since I've already signed in,
+it takes me straight to the main page, where I can see a few different things. Right away, we can see that
+I have some recommendations. Top picks. And these movies are movies that Movielens
+thinks that I'm going to like to watch. It also shows me for
+each one a predicted rating. How much it thinks that I'm going
+to like that movie on a scale from one to five stars. I can also then go, and
+I can rate a movie. Just by clicking on the number
+of stars that I want to rate it. So, and it will save the rating and
+use that in my future recommendations. We also see a few other recommendation lines here such as recent releases which
+is just what's been come out currently. A list of movies that it
+thinks would be useful for me to rate in order to
+improve my recommendations. As well as favorites from the last year, which is movies from the past year that
+Movielens users have rated highly. And then finally my wish list which
+is movies that I've marked that I would like to see some day. So, there's various different lines,
+some of which are intended for recommendations, some of
+which are intended for the user's own reference as they
+interact with their movies. All of the recommendations are produced
+based on these five star ratings with some additional data, such as popularity,
+how many people have rated the movie, etc. Movielens also allows you to exercise some
+control over the recommendations you get. Up here I can see some basic
+statistics about my ratings such as I have rated 322 movies. And it also allows me to pick
+which recommender I want to use. Right now I'm using
+a recommender called The Wizard. I can also pick The Warrior. In which case it tells me that
+I'm changing recommenders, and shows me a different
+set of recommendations. Very different set. I can also pick non personalized
+recommender called the peasant, that does not take my past
+preferences into account. And there's additional
+recommendation options as well. So, In addition to picking
+the recommender that I want to use, I can configure the recommender to
+tweak aspects of its recommendation. Particularly, I can say, well, okay, these
+recommendations are basically good, but I want less popular movies. And so it reorders my recommendations to
+take out some of the popular movies and add in more movies that
+aren't quite as popular. And as we can see it changes which
+movies are picked up at the top picks. So Movielens allows us to use
+different kinds of customization. So that the user can have a fair amount
+of control over the recommendation. Also, when we go into
+a movie's details page, we can see again the predicted raring Displayed both numerically and as stars. And we can see more detailed average
+statistics, the average rating, and then, the number of ratings that
+that average is computed from. As well as information about the movie,
+such as its run time, its rating, and its synopsis, etc. Movielens users also tag movies so
+that to describe them with various characteristics
+such as dark humor or anti-hero. And then using tags we
+can see similar movies. So, these are movies that are similar
+as far as how users have tagged them, the words that have been
+used to describe them. We can browse by these similar movies and
+then we can refine our browsing by saying maybe I want
+like Deadpool but less violence. And it will show me a variety of
+typical superhero blockbusters. And I can add in more things,
+like okay, less violence, but more stylized, and it will continue to
+refine the kinds of browsing I can do. And it winds up saying
+The Incredibles is like Deadpool, but less violence and more stylized,
+which seems somewhat reasonable to me. So, those are a lot of the features
+that we have available in Movie Lens. The recommender is integrated throughout. So, if I search for Batman, it's going
+to show me a number of Batman movies but it shows me in here,
+it continues to show me, everywhere, what I've rated it in orange or
+my predicted rating in blue. It also allows me to change how I sort
+the search results by recommendation, number of ratings, when it was released,
+when it was added to MovieLens etc. So, MovieLens allows users to
+find movies that they want. They provide ratings, it also serves as a log of the movies
+they've seen and how much they liked them. They can go back and they can review
+statistics about the ratings that they've seen to see whether they like common movies or or rarer movies. The distribution of their ratings. As well as draws the history of
+the ratings they give and the movies that they're rating,
+the genres they like, etc. To advise users with a way to do
+fairly detailed exploration of movies, to track their movie watching and
+get recommendations and also contribute to science since
+it's an ongoing research platform. With that, thank you and
+we hope you enjoy the rest of this class.

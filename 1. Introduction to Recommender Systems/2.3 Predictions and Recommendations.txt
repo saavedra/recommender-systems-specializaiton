@@ -1,0 +1,164 @@
+Welcome back. In this lecture, we're going to talk
+about predictions and recommendations or more specifically about the output
+of a recommender system. So our learning objectives are to
+understand different ways on which recommenders produce output and
+that output can be used. To look specifically at the distinction
+between prediction and recommendation. And the distinction between explicit and organic presentation of those
+predictions and recommendations. And we're going to do all of this by
+reviewing examples that may help us understand which presentation makes
+sense in a different situation or different application. So, the idea of a prediction
+is a simple one. In many recommender systems, what's being computed is an estimate
+of how much you will like an item? Or how likely you're to buy an item or some other numeric score that's supposed
+to correlate with your opinion of an item. These are frequently scaled to
+match your rating scale, so if you're rating from one to five,
+you may get back one to five stars. And they're often tied to search or
+browsing for specific products. So to give you some examples
+of this In the Zagat guide, we looked at a couple of lectures ago, the place this shows up
+is in the numeric scores. If you come over here,
+you're getting the food, decor, service, and cost predictions. These are not on the same scale. When it says decor twenty-seven,
+it's really saying, we predict you're going to be closer
+to three than you are to two. Even if you look at Coursera, you'll see in this area
+a set of indicators that are accumulating measures of how much the system thinks you
+might like this course. In a very non-personalized generic way, 3.6 thousand people on
+Facebook liked this course or 202 people plus oned it on Google Plus. Or 536 people have tweeted this course,
+that's an indication of how much you might like it and
+again it's a form of prediction. In this case, not reduced at
+all to a scale In MovieLens, which you'll remember from our
+introduction, the prediction is given in the star scale right over here. So The Burbs is giving
+a prediction of three stars, whereas Apollo 13 is getting four and
+a half stars. What you may notice is this was
+actually linked to a particular search. The search I did at this point was
+find me movies starring Tom Hanks. And then, I asked it to order
+those movies alphabetically and I could then browse through them and
+see which movies I might want to see, if I were looking to
+see a Tom Hanks movie. And if I believe these predictions, then I probably should go see Apollo 13 or
+Band of Brothers, rather than seeing The Burbs or
+Bonfire of the Vanities. Recommendations don't make the bold
+statement that predictions make. With the prediction as you saw,
+came back and said look on a five point scale Band
+of Brothers is a four and a half. There is a risk,
+that if I look at that and say, you've got to be
+kidding I hated that movie. I may distrust this recommender because
+it made that prediction in an angered and in a way that I now lose trust. Much as we talked about people feeling
+like, if Zagat gives a 23 to their favorite restaurant,
+they don't believe the guide anymore. With a recommendation, we're making
+a suggestion of things you might like. Things that fit. What you're doing right now. These are often presented
+in a form of a top-n list. Top ten, top five, sometimes
+they're just placed in from of you. So if you search Google Images for me, these are the things it thinks
+I might be interested in. I'm delighted that the first one is me. The next two are my uncle. There are a few other Konstans
+that I'm not related to. There's some there maybe I'd like
+to be related to, I don't know. But It didn't come out here and
+say, this has a 93% chance of being what you're looking for,
+and this one has a 90% chance. It just gave me the items. If I go back to MovieLens and say, look, what I'd really like
+are science fiction movies, and don't show me the predictions because
+I don't want to be swayed by them. Just show me science
+fiction movies from 1974. And I also selected let's
+do those in English. So that you can see I've said, Sci-Fi, in English 1970 to 2013, and don't show predictions. Then it will give me back,
+effectively, a recommendation set, because we think you'd like
+Minority Report, Spider-Man, and Inception, and V for Vendetta. And there's no prediction to be seen,
+now this is purely a recommendation. Or there's lots of other places if you
+go to the electronics store Newegg, you can see top selling smartphones or the top unlocked budget phones,
+or the newest unlocked phones. Again, recommendation lists tied to
+a particular interest, or activity. Doesn't say,
+we think you're going to like this. Just says, hey, if you're interested in
+unlocked budget phone, these are top ones. And in this case,
+it doesn't even say what top means. Top reviewed, top selling. We make the top profit
+something like that. We don't have to know
+because we're browsing and we might choose to explore them. Now predictions and
+recommendations often do come together. What we need to understand is that
+there are pros and cons to each. The nice thing about a prediction
+is it helps quantify, it gives you a very clear
+understanding on some scale. How good is this? How much do you think I will like it? In the Zagat world,
+if that restaurant says, 28, 39, this is saying, hey, this is worth a special trip,
+it says 25, 26, 27. This is a great restaurant,
+you won't necessarily travel for it. It says 13 might be a utilitarian
+place to go to but nothing special. In movie land it becomes back and
+says four and a half, five stars this is a rare things that
+it says you're going to like a lot. It comes back with three and a half,
+well, you probably won't dislike it. You might like it but it's not special. The con with predictions,
+the real downside is that it gives you something that can be wrong to use
+the scientific term they're falsifiable. As soon as somebody sees hey
+you said this was four and half stars and then they look at it and
+say but its not. You're wrong. And in many cases, particularly when we're
+talking about selling people things or trying to getting them
+to consume information. It's better to not give them
+a chance to say your wrong, that's why many search
+engines just give you a list. Many of the retail sides also
+just put out a list of items. Recommendations the pro
+is it gives you a set of goof choices It's a set
+of things to give you. The con is, if it's perceived as a top-n,
+if it's perceived as a weighed list of recommendations
+ranked from best to worst. As soon as someone starts seeing ones
+that are bad they may stop exploring. In a search engines, this is known as
+the if it doesn't fall on the first page, it's lost phenomenon. People look a few down, and then when they
+start to get less relevant, they're done. And this can happen in lots
+of different domains, so if you'll take the example here
+of looking at an ice maker. This is an example that we have from Amazon's email to me of
+a recommended set of products. As I look at this thing and I say, well,
+that first one looks sort of potentially interesting and the second one looks okay. I may not go very far down
+the list before I stop and that could be a reason that I
+don't want to go much farther because this has been presented
+as some interesting items. But I may have interpreted as
+these are the best fits for you. Another example, that you'll see where
+things are not really ordered in any particular way is Zappos. Where it's just simply coming out and
+saying, here are some products. Here are some shoes, take a look. These are shoes that happen to fit a size
+But they're not best, they're not worst. And that leads us to the last dimension
+we're going to consider today. How explicit is the recommendation? We use the terms explicit versus organic
+this is not a term of art in the field, this is attempting to be descriptive. And this comes back from
+back a long time ago. You go back to the mid 90s when
+recommender systems were just becoming popular commercially. Companies spent a lot of money
+to buy recommender system to personalize their commerce offerings and
+their content offerings. In our work with Net Perceptions, we
+were working with lots of companies that were spending tens of
+thousands of dollars and more. To implement a recommendation
+that would pick a product for you whether that was a piece of art,
+music, books or anything else that they
+might be trying to sell. After making that investment, many of these companies didn't want
+their costumers to fail to notice. That they had improved their site
+this were competitive times and so the sites would come back and say,
+here something we picked just for you. That's an explicit recommendation
+sometimes they'd even put a score out there and say,
+we picked this just for you. It's 4.5 on the scale of 5,
+that's an explicit prediction. Now, explicit has its benefits, it did call attention to
+the recommendation or prediction. It also had its drawbacks. Customers often felt they were
+being pushed towards something. They were being manipulated. They didn't always trust the recommender
+and a softer presentation might have been a little bit better
+some of you have had this experience. If you go into a store and a salesman or saleswoman gets right in your face saying,
+well I have the right one for you. Before learning very much about you. No, this is the right television,
+I know you want our new 60 inch LED. You have a natural reaction to push
+back and say that's not what I wanted. You don't know me that well. All I said was, I'm looking for a TV, you
+must be trying to push that for a reason. On the other hand,
+an organic presentation putting the TVs out on the shelf, and
+putting the ones that are ones who think are likely to be attractive on
+the end cap, or on a prominent position. That might use the very same recommender,
+but its a softer sell. In book stores, you see this when
+some books are facing forward so, you see the whole cover of the book. And other books you only see the spine, that's not accidental that
+somebody making a recommendation. Somebody saying, hey, this is a book I
+think you're going to be looking for, so we're going to make it easy to find, or this is a book I think you
+might be interested in buying. So we're going to put it here where it
+can remind you that it's available for purchase. So when you look today, you'll see that
+sites that are out there strike a balance. There is definitely explicit
+prediction going on in many sites but it's pitched not so much as we
+think this is what you'll think. But we think you'll find it useful to know
+that other people gave this four stars. We think you'd find it useful to know that
+this is the best seller in the category or number three in the category and we're seeing that balanced with some
+coarser granularity recommendations. All over the page,
+as we saw with our Amazon tour, are things that are just placed there with
+little more than you might like this. As a way of trying to put that
+recommendation in a more subtle organic presentation. And that balance between
+these are the best and the softer presentation,
+here are some things that'll be interesting is the balance
+that we try to strike. So you should now understand
+the difference between prediction and recommendation. The difference between showing
+somebody a predicted score and giving somebody an item or a set of items that might be useful
+without trying to predict that score. You should also understand the range
+of presentations that are out there that you can give a prediction
+that's very hard and explicit. You'll think this is four and
+a half stars. You can give a prediction
+that's been soften a bit to say hey other people think
+this is four and a half stars. Just so you'll know,
+you can have recommendations that say hey, this is the top five, and you can have recommendations that
+just put five products on a page. And that balance between organic and explicit is one that you have to
+strike as you design an application. And you should understand that there
+are advantages at every point along that spectrum. There isn't a single correct that
+has to fit your application.

@@ -1,0 +1,156 @@
+Welcome back. In this video, we're going to develop some
+mathematical notation that we're going to use throughout the remainder
+of these courses to help tie together some of the various concepts. We've talked about the prediction and
+the recommendation tasks. So the score and the recommend
+tasks that recommend or performs. And we've talked about different ways
+of computing some of these scores. So what we're going to do here is we're
+going to describe a general mathematical notation that we're going to use to
+represent scores and then recommendations. We're also going to talk some about how
+recommendation interacts with search and with context-aware computing. A question that we commonly get when
+we're teaching recommender systems is how does it relate to search? And while the exact answer you get on this
+question might depend a fair amount on who you ask,
+we're going to provide one answer. One perspective on the way
+they integrate and one way to think about how
+they connect to each other. So as I mentioned, we've looked at two
+key tasks for a recommender system. In the predict task or more generally score, we try to predict
+how much a user is going to like an item. This might look like trying to predict
+their rating or it might look like estimating a probability of how
+likely they are to buy the item. And then there's the recommend task
+where we try to produce a list of items that a user might like to purchase or
+consume. Often, we do recommendation by just
+recommending the top predicted items or the items the user's most likely
+to purchase, but not always. And the notation we develop is
+going to be able to account for both of these situations. So mathematically, we can think of
+prediction as a scoring function. s(i semicolon u),
+sometimes we're going to write this as s(u,i) that produces a score for a particular item with
+respect to some user. The difference between the semicolon and the comma is not
+mathematically meaningful. We're just using it for convenience to group different kinds
+of parameters of this function. What this function does is it computes
+the score of an item i for a user u and this kind of scoring function's at
+the heart of many recommenders. Even recommenders that don't just
+recommend the top scored items often start by scoring items and
+then doing some kind of a modification or manipulation on top of those scores. So, so far our score depends on the item
+and the user, but what about if the user is searching for something or
+they have some particular context? They're at a theater where maybe
+they want recommendations for the movies that are currently
+showing at the theater. Or it's 11:30 AM on the street corner, so the restaurants they're most interested in
+are lunch within a half a dozen blocks. So how we can integrate these? How can we treat these in our general
+way of talking about scoring and recommendation? And one way we can do that is by expanding
+the definition of our scoring function. So we can talk about a score for an item
+that takes into account, not only the user who's going to receive the score but a
+query, if the user has some search terms. Maybe they're looking for Asian food. And then you would limit
+the recommendations to restaurants that have Chinese or
+Thai or Indian cuisine. And then some kind of a context,
+which we'll represent by x. Different systems are going to
+use different variables. A traditional recommender that just tries
+to suggest what item is a particular user want to buy or
+read is going to just depend on the user. It scores items for a particular user and
+estimates that you are going to enjoy watching The Iron Giant 4.5 stars. A traditional search engine doesn't
+use the user or the context, but simply scores items based on how
+relevant they are to some kind of query. For example, Java date formatting and
+all you care about is whether the item is relevant to
+the query of Java date formatting. A personalized search takes into
+account a query and the user's history. So if you're searching for Python and
+you do a lot of programming queries, then the personalized search
+engine can know about that and can give you results related to
+programming in the Python language. But if you're a herpetologist,
+who issues a lot of queries related to various snakes, then the
+personalized search knows that it should favor results having to do with
+tropical snakes instead of programming. And context-aware recommendation
+takes into account the user and some context attribute,
+such as currently at the theater, so recommend that are on
+one of the 12 screens. And finally, some systems take
+into account all of these. Context-aware personalized search,
+which is what you get a fault using many major search engines
+today such as Google or Bing, takes into account
+the users history. The search query they
+entered as well as context, contextual variables
+such as their location. So that when you search for
+a restaurant, you search for lunch, It will prefer restaurants
+that are near you and are consistent with your previously
+expressed preferences and behavior. So a lot of what we are going
+to do throughout the course and some of what we've already done and
+some of the things we've already discussed is provide different ways of
+computing this scoring function, and then different ways of using it. And content-based filtering, we've seen
+how to compute the scores from a users taste profile, expressed in terms of
+content attributes such as movie tags or restaurant descriptions. Demographic recommendation
+looks at user demographics and then segmented preferences, such as what books are commonly read by people with the
+users particular demographic information. Association rules provide us with a way to
+compute scores in a context of a currently displayed item. And then the collaborative filtering
+techniques that we'll be talking about in the next course will compute the scores
+based on users preferences and the preferences of other
+users in their community. >> But
+this isn't a course in scoring systems, we're talking about recommender systems. So we do have to make that leap
+from scoring to recommendation. So we are interested in scores and
+we can use those or scales those to become predictions. But then we want to define an ordering
+function that taken a set of items gives us back the order in which we
+should present them to a set of users. So if you consider examples that
+we've looked at in our introduction, if we're recommending movies, what are the first ten movies
+that should appear on the screen? And for this, we can take that same type
+of formalization, using an o for order. Take a set of items that
+we're recommending from and that may be the universe
+of all possible items or it may be in an application that
+we're already within a category. Or what we're within a set of items
+that we're considering because these are the ones we're trying to promote this
+month, because we have excess inventory. And score them, again,
+with relation to a user u, a query if there's a query present,
+and a context x. So, when we think of traditional top-N recommendation, the way that systems do
+it if we don't do anything more creative. We start by computing our scores for every item in our set of items
+I we compute the score s. We then sort the items in
+decreasing order of score. the thing with the highest score
+if they're on a 0-to-1 scale, the one closest to 1 becomes the first. The lowest score becomes the last and
+if we want to recommend n items, we give you back the first n
+of the items as our ordering. But that's not all we can do. So we might tweak our top-N
+recommendations to match different objectives. For instance, it might not be a whole lot
+of fun if you showed up to a recommender, let's use one for books as an example, and
+you're a great fan of the the writings of JRR Tolkien and
+you really enjoyed The Hobbit. You enjoyed the Lord of the Rings series. And it comes back and says, hey,
+I've got ten great books for you. I've got The Hobbit in paperback. And I have The Hobbit in hardcover and I have the Fellowship of the Ring
+in paperback or hardcover. How about the Lord of the Rings
+Three-Volume series in paperback or maybe in hard cover? Or you see where I'm going, you might
+decide there's too much similarity if those were the first ten
+items that were recommended and impose upon your ordering
+a diversity parameter. Say I don't want my top-N items
+to be too much like each other. I'm not changing the scoring. All of these are the most likely
+items that the person would purchase, the most likely items
+the person would read. But they're not the best items
+to present at this moment. There's other reasons I
+might prioritize my top-N. I might have a very good scoring
+function that computes the likelihood that you're going to buy,
+let's say a set of groceries. I've got ketchup,
+I've got anchovies, Tabasco sauce, you name it, maybe even Sriracha. But inside my system,
+I might realized, wait a minute, I'm not recommending specifically to
+figure out what you going to purchase. I'm recommending try to make money. So I might also have behind the scenes
+a little bit of data on which items are likely to be high value. My order function might take those scores,
+which are how likely you are to enjoy this item and purchase
+it, and re-weigh them a little bit. So that I realize I don't make
+that much money on ketchup, but I make a lot of money on anchovies. I might nudge anchovies up
+a bit in my ordering function. So the top-N is not necessarily
+the N highest scores. We also may think of this as as extended
+example of recommendation where n is a specific parameter to our ordering. This happens a lot of you're thinking
+about the layout of things on the screen. Now you can have recommenders
+that would look at this for different Ns across the board,
+Then if you ask for the top-five items,
+they're not the first five of the top ten. That could be the diversity example,
+but there's other examples. But there's also some very special cases
+here, like the order when n equals 1. I've got one shot to get
+a recommendation to you. I may have a lot of things
+that go into that one shot, such that it may not be the top item
+that I would've put in a ten-item list. So we can extend our recommendations
+by including that parameter N as a parameter of the order to recognize the
+fact that the order might be different, depending on what's in the destination. Is this a ten item-list,
+a five-item list or maybe even a single-item coupon,
+that I'm printing at the register? >> So hopefully,
+you've seen here that recommendation can conceptually integrate with search and
+context awareness. Throughout the remainder of these courses,
+we're going to be using this notation. So when we're talking about a way to score
+items, we're going to write an S function. When we're talking about ordering,
+we're going to write an O function. And a lot of the things we talked about are going to be more ways of
+computing these functions. Individual algorithms, we're going to
+talk about collaborative filters and various machine learning techniques for
+computing scores and computing orderings. Also we're going to talk about
+hybrid algorithms that compose s or O from subsidiary scoring and ordering
+functions mixed together in some fashion. So this notation is going to
+be reappearing throughout and it's going to serve as the general
+notational framework from which we hang a lot of the rest of
+the material in this set of courses. >> Thank you.

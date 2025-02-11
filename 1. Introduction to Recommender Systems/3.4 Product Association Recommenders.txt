@@ -1,0 +1,214 @@
+Welcome back, in an earlier lecture,
+we talked about the fact that non-personalized
+recommendations lack context. You may remember
+the example of recommending ketchup to go with an ice cream sundae. As we look today at product
+association recommenders, we're looking at the very specific context
+of a product or small set of products. That a customer is currently looking at or consuming as our example of a way
+to constrain what's recommended. So you've probably all seen these
+examples in commerce sites. I'm going to give you an example from
+Amazon.com which made the whole idea of people who shopped for this or
+people who bought this rather famous. So here I am shopping on their site,
+looking at an LED light bulb. And if I scroll down a bit, it's going to start offering me a bunch
+of product association recommendations. The ones at the bottom of the screen say, customers who bought
+this item also bought. And one way of recognizing that
+those are likely items to suggest here would be to simply go through
+all of Amazon's transactions. And look and see what people who
+bought the light bulb I'm looking at also bought in the same sales transaction. You also see above
+frequently bought together, this is creating a custom bundle. Perhaps constrained, you'll notice
+they all come from the same brand. There are other examples of this that
+can be used with different versions of people who bought,
+people who shopped for and so forth. This is an example of a femoral,
+contextual personalization. It's ephemeral meaning it's not
+long-lasting, it's for the moment. And it's contextual, meaning it's
+tied to what I'm doing right now. So it is personalized, but not personalized to me as an individual
+with long term tastes and preferences. Rather personalized to me, as a person
+who chooses to look at this light bulb. And in fact, if somebody else looks at
+the light bulb, they'll likely see exactly the same suggestions of things people
+who look at this light bulb also like. Another example, once you're doing
+something like this, is that you can take those recommendations and turn
+them into more value added comparisons. So something you'll see that
+Amazon does here is say, gee we know you're shopping for
+100 watt equivalent to LED bulbs. We can find some similar items that
+people buy as alternatives and show you features of them to help
+you make your decision right. If you look here, you'll see I'm
+looking at an individual bulb, two other or two packages of bulbs
+from another brand, Phillips. And then another stand along bulb,
+all with different prices, and other features that might be different as
+well as certain ones that are the same. Useful feature if I'm trying
+to find the right light bulb. So our next question is
+how might we compute this? The first way this was
+done was all manually. Marketers would create cross-sell tables,
+and in fact, in many businesses still do to guide their sales staff in what
+products to suggest to somebody. Who is about to buy something or
+asking about somebody or asking about some product. If you go into an electronic shop and
+start looking in a television, it's quite possible that the person selling you
+that television will suggest another TV. That's a little more expensive and has a few features that make it
+perhaps a more attractive option. Very likely that was generated manually based on the idea that we could up
+sell you from one item to another. Similarly, if you go in and buy that TV,
+they're probably going to offer you a high quality,
+perhaps overly premium cable, to connect that TV to your satellite or
+cable box. That's a cross-sale, and that cross-sale
+is often a source of great profit, and it's not that hard to say, gee
+you're buying a TV that's HDMI capable. And we happen to have a $30
+HDMI cable sitting around. Wouldn't it be convenient
+to take that home with you? But what we're interested in
+is making this automated and in fact this automated work predates
+modern recommenders systems. Has people started analyzing transactions
+data and mining it for associations. The challenge here is what
+do we want to look for? Are we looking for things that are most
+likely to be bought in this context? Are we looking to offer things that
+are most extra likely to be bought in this context? Let me illustrate what I mean here. If we start simple and say look, we've got buyers who
+are buying product X already, what percentage of people who buy
+product X also buy product Y? So we can count the number
+of people who buy X and Y, our numerator, divide it by
+the number of people who buy X. And if, say, 80% of people buy X and Y, then Y is a likely thing to add
+if you're already buying X. It's likely, but is it useful? Let's consider an example. Let's say that Y is bananas,
+and X is anchovy paste. Not very many people go shopping for
+anchovy paste. But most of the people who buy
+anchovy paste also buy bananas. Is that useful information, or
+is it just the reflection of the fact, that well actually, most people who don't
+buy anchovy paste also buy bananas. Lots of people buy bananas. It may not be linked to
+anchovy paste at all. And so it might be that we're trying to
+find things that are more uniquely linked. Maybe anchovy paste is linked to buying
+garlic because people are mixing them together to create Caesar salad or
+Caesar dressing. If that's the case, we might want
+something that's more controlled so that we don't let the popularity
+of Y overwhelm it. If this sounds familiar if
+you've had much statistics, you've probably heard of Bayes' Law. Simply stated, the probability of some event A given that B also occurred
+can be computed in a number of ways. We can compute it using Bayes' Law
+as the probability that B occurs given A times the probability
+of A to begin with and divide by the overall probability of B. That inspiration can get us
+into a direction were we look a bit more at how much
+more likely some product Y is to be purchased than it was before X
+was purchased as the triggering event. So one of the computations we're going to
+use is the probability of Y given X, how likely am I to buy those
+bananas given that I just bought the anchovy paste versus
+the probability of why alone. How likely am I just buying bananas if that ratio comes close to one,
+then X didn't change anything. On the other hand, if I'm three
+times more likely to buy garlic, after I've bought anchovy paste,
+then I am to buy garlic without. Then suddenly I've come
+up with something where there's a greater probability that it's
+relevant in this particular context. And that might be a better
+recommendation in some cases than just trying to sell bananas. The approach of association rule mining
+which is a technique that comes from even before recommender
+systems gave us a lift metric. Where the lift associated with
+a pair of products being together is the probability that
+somebody would buy or consume both of them divided by the
+product of their individual probabilities. This is a non directional association. It's not whether X makes Y more likely or
+Y makes X more likely, but looks at how they make
+each other more likely. And we can see this probably
+more clearly with an example. Let's assume for the moment that X
+is ketchup and Y is ground beef. If the probability of buying ketchup
+in a trip to the supermarket is 10%, and the probability of buying ground
+beef in the supermarket is 20%. Then if we don't know anything else,
+and they were independent, the probability of the two,
+the product on the bottom, would be 2%. One-tenth times one-fifth. But it turns out people put
+ketchup on hamburgers a lot and so it may be that we find out
+the probability that both happen together is higher than that,
+maybe it's 8%. Most of the time that somebody's buying
+ketchup they're also getting beef. And much of the time that they're getting
+beef they're also getting ketchup. If that were the case,
+that lift the 8% over 2%, a factor of four lift, says that these
+are products are four times more likely. To be purchased together than if they
+had no relationship to each other and were totally independent. More generally association rule mining
+looks at entire baskets of products, and in fact recommenders can use
+baskets of products as well. We're not going into that in this course, because we're focusing on
+more personalized techniques. But, if you go into any of the techniques
+on association rule mining, you can find ways to look at
+whether an entire product basket suggests a particular product,
+that should be recommended. As you bring association
+rules into practice, there's a whole lot of
+interesting stories. Some of them are even true. Starting with the famous beer and diaper story, which the best evidence
+out there suggests is barely true. That an association was found that
+on a particular time on the weekend, young men in their 20s, typically, were more likely to
+buy beer and diapers together. Than the individual
+probabilities of buying beer and diapers individually suggested. The best data I've seen on this
+suggests that yes, indeed, somebody in a supermarket chain
+did find this association once. But the rumors got much bigger. There's wonderful stories about one
+breaking down why it is that beer and diapers are purchased together. Is it that young men,
+who have little children at home just can't handle the load and
+need a beer to escape? Is it that young men,
+who drink a lot of beer and party on the weekends are more
+likely to become fathers? None of these seem to be grounded
+in data but the speculation is fun. They were also wonderful stories about
+how supermarkets around the nation, maybe around the world started
+stocking beer next to the diapers. So that young men who forgot to get
+that beer wouldn't have a problem of their lost beer. As far as I can tell, there is no
+evidence of this but it's a nice story. In practice, there are some
+other good stories that perhaps, have a little more truth behind them. Last year, at the ACM Recommenders
+System Conference, I saw a wonderful study that looked not at product
+associations but link associations. Specifically saying for people who came
+to the same article on a news site, where they came from was a good
+predictor of what else to show them. Were they referred from a Facebook link,
+or did they find it on Google. People who were searching for
+themselves were looking for different things than people who were
+getting the information from a friend. That was sort of interesting and people are looking at the question of,
+can I see how someone came to my site. As a useful way to predict associations. For what I might recommend, what I don't know anything about
+them including who they are. There is also the old story about the
+directionality of these recommendations. And the old story was, if somebody comes in to buy an expensive
+sports car, it's easy to sell them. The fancy leather driving
+gloves that go with it. After all, if you're spending tens
+of thousands of dollars on a car, what's a couple hundred dollars on gloves? But the story was that obviously,
+if somebody comes into your department store to buy gloves, you don't turn
+around and try to sell them a sports car. The interesting thing
+about this obvious story is in a number of cases
+it's been proven wrong. As recommender systems were deployed in
+practice, one of the things that happened is that people didn't program
+in some of that common sense. And so, there were test cases where
+the product being recommended as an add-on was ten times more expensive than
+the thing the person called in to buy. And lo and behold, somebody could call
+in to buy a piece of clothing and be suggested, how about a living room set? And buy it, this is part of
+the power of a recommender system. If it's well designed, it's not
+matching the sports car to the gloves. It might be matching the sports
+car to the individual. And if the gloves are a tipoff that
+this is somebody who's interested in the sports car. Maybe offering to take them straight from
+the glove department to the show room isn't such a bad idea. But in fact not all
+recommendations are worth making. And something we'll see over and
+over as we go forward is that with product associations just like
+any other recommendation. Businesses tend to apply rules to filter
+what they're willing to recommend. If you're in a case where you're Amazon. What you might say is, I don't want to recommend any
+product that I have out of stock. Why tell somebody who's about to buy
+something, here's a nice alternative. Oops, sorry, we don't have it. And have them run off to another vendor. I don't know that Amazon does this, but it would make common sense to not
+recommend things you don't have. In other circumstances,
+people don't recommend products that are currently heavily discounted
+as a way to get people in the shop. You know,
+why would you recommend the cheap thing if you could make a bigger sale? It's not that common that you go
+to an electronics retailer and as you're buying a $1,000 television
+set have them suggest a $2.99 cable. Even if the $2.99 cable is just
+as good as the $30.00 cable. Somehow, that gold plating isn't
+only a nice thing to sell you but it adds up to lots of nice profit for
+the retailer. So not every recommendation
+will make sense. There are examples of recommendations that
+would be considered offensive to some if you have products
+that are unduly personal system may not want to
+recommend personal hygiene. It may not want to recommend things
+that you may find offensive. And all of that can be programmed
+in with these business rules. So, some take-away lessons on
+product association recommenders. First, they fundamentally use your
+present context to provide more relevant recommendations so that knowing
+that you have ice cream in front of you. I don't recommend ketchup,
+I recommend caramel or chocolate sauce. That could be a current product, it could be a path,
+it could be a basket of products. It could even be the link that got you
+here, or the search that got you here, but it's some element of your context that is
+connected to what people have done before. We can compute these product associations
+from prior transaction history. Most of the earlier ones simply looked at
+single transactions, though many today also look at the entire inventory of
+products purchased by individuals. So when I know that people who bought
+this light bulb also bought that one, they may not have bought
+it at the same time. It's still a useful suggestion that you
+might be interested in this product. As we're computing that we
+have to strike a balance between things that are high probability,
+simply because they're popular and things that have increased probability. There's no correct measure here, this is a business decision as
+you design your recommender. If what you need is to
+sell something right away, you might place something popular. Even if you had very increased
+probability, tenfold increase, if that increased probability went from
+one in a thousand people buy this. To one in a hundred you might decide
+its not worth using up the space. But somewhere in that balance
+you're going to find something that's a useful recommendation and
+still valuable as a way to provide something to your customer and
+for your business. Finally, the recommendations that
+you're doing from product associations might be targeted as additional purchases,
+or as replacements. And what data you use might affect that. If you're looking at well, people who looked at this eventually
+bought that, that might be a replacement. If you're looking at people who
+bought this also bought that, it might be an add on. Both can be valuable, and both can be a way of providing
+valuable customer service, thank you.

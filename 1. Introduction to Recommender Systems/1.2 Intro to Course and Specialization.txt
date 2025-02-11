@@ -1,0 +1,164 @@
+Welcome back! This video is an introduction to our
+specialization on recommender systems and the first course in that specialization. Let's start by introducing ourselves. I'm Joe Konstan, I direct the Group
+Lens Research Lab at the University of Minnesota, where I'm a Professor of
+Computer Science and Engineering. I've been working in the field of
+recommender systems since 1995 and among other things I oversee and
+run the movie lens recommender system. I'm delighted to be here with
+Michael Ekstrand teaching this material, as we try to bring what we do in the lab,
+and what we've done with people in industry, out into
+greater use in the world, Michael? >> I'm Michael Ekstrand, an Assistant
+Professor of Computer Science at Boise State University, where I've
+been there since the Fall of 2016. I've been doing recommender
+systems things since about 2009, the second or
+third year of my PhD studies. And my research generally works on
+how recommender systems interact with the needs and the experiences
+of the users that engage with them. This course and specialization is
+dedicated in memory of John Riedl, who, as you may remember from
+the previous video, was a pioneer in some of the early
+recommendation systems work. And worked very hard over 20
+years to build up recommender systems as a field both of academic
+research and of industrial application. And he worked closely with
+many people in the field. He was my primary adviser for
+several years of my PhD studies and was the founder of the Group Lens Research
+Lab at the University of Minnesota. >> Yeah, I worked closely with John for
+many years, he was a wonderful colleague. He and
+I started the ideas behind this course. And when he was unable to continue,
+I was really honored that Michael, as one of his senior
+PhD students, stepped in and worked to complete this course and
+bring it to fruition in its first form. And we're just delighted to be
+able to do that in his memory. So, let's start with an overview
+of this specialization as a whole. It has four courses. This first course is on non-personalized
+and content-based recommenders. The second course looks at
+nearest-neighbor collaborative filtering techniques. The third course focuses on evaluation and metrics, looking both at data centered and
+user centered evaluation. And the fourth course looks at
+matrix factorization techniques, and other advanced techniques and topics. To complete this specialization,
+learners will complete a Capstone Project, that is a case study analysis of
+designing the best recommender for a particular business use case, using the material covered in
+all four of these courses. The courses are designed to build
+upon each other sequentially. If you don't know anything
+about recommender systems, we strongly encourage
+taking them in order. Of course if you have a background
+in recommender systems, but are trying to pick up a little bit from
+a topic that you may not be familiar with, we welcome you to take
+any course individually. But we do ask you to remember that because
+the material in the courses is designed sequentially, some of the activities and
+exercises as you go forward may depend on deep knowledge of the things
+that were covered in previous courses. In particular, the programming
+assignments in the Honors Track, which we'll talk about in a moment, are
+dependent as you go through sequentially. And it would be difficult for
+somebody to take the third or fourth course without having
+taken the first and second first. So we have two tracks here. The Standard Track does not
+require programming and does not have programming
+activities in it. We have found from previous instances
+of this material in online learning that students with a business background,
+students with basics statistics, students who want to apply this
+from a marketing perspective, or who simply want to learn the material
+without the amount of time and effort that's involved in building it into
+programs, can learn the algorithms and how they apply equally well by going
+through a set of other exercises. And we will have algorithms implemented
+primarily in spreadsheets and quizzes, and
+other exercises to help you master and demonstrate your mastery
+of recommender systems. >> The Honors Track of this course is for those of you who would like to extend your
+knowledge by actually implementing and working with implementations
+of the algorithms yourself. And in this track there are additional programming assignments where
+you'll be implementing or experimenting with different recommender
+algorithms using the LensKit toolkit. And LensKit is an open-source
+recommendation toolkit in Java. And to anticipate a question that will
+likely arise in the forums, yes, if you're doing the programming assignment, you
+do need to do them in LensKit, in Java, or it maybe possible to complete some
+of them in another JVM based language. But doing this has two major benefits. One, LensKit does a lot
+of heaving lifting, so we don't have to ask you
+to write as much code. And two, having everything in
+a standardized environment makes it possible for us to grade them
+in a fashion that allows us to deliver these kinds of assignments
+over the open Internet. The Honors Track includes all
+the material in the Standard Track plus an additional one to two
+programming assignments per course. Also, if you're on the Honors Track,
+the capstone is going to have a program evaluation component to go with
+the rest of the capstone experience. These courses are going to focus on core
+algorithms and metrics in recommender systems, with examples both from academic
+research and industrial applications. Then we're going to have a number
+of assignments where you learn more about the algorithms by
+actually implementing them, either in a spreadsheet or
+as a computer program. And then, by course three, evaluating the performance of the
+different algorithms that you implement. We're also going to include broad
+coverage of related topics. As we mentioned in the introductory video, algorithms are just one piece of
+the whole recommender package. We have the user experience, the user
+psychology, we've got the data processing and we're going to include material on all
+of these subjects throughout the courses. We also have interviews with a number
+of leaders both from industry and academia in the filed
+of recommender systems, to give you a broad array
+of additional perspectives. For the background that you need
+to succeed in these courses, we will be doing a fair amount with
+statistics, some with matrices, etc. So having a college level
+algebra background is useful. Basic computing concepts and skills to
+understand the ideas of algorithms, mathematical formulas,
+spreadsheet computations. For those of you in the Standards Track
+we don't expect you to have programming experience, but you should be able to find
+your way around Excel or Google sheets. If you're taking the Honors Track, it is
+best to have some experience doing Java programming with algorithms and
+data structures. If you've taken the Introduction
+to Computer Science and Data Structures Classes in the Computer
+Science Program, that's about the level of experience that we think you need to have
+in order to succeed well in this class. >> For those of you who maybe new
+to online courses like these, we should say a word about interaction. We're not able to take questions
+individually or directly. All questions must be submitted
+through the class forums. And then there's a mechanism in
+place to vote up the questions that you feel are most important or
+most relevant. We'll be watching the forums and
+particularly watching the high vote getting questions to provide posts and
+answers to things that your peers are unable to answer and
+that you say really need responses. We also jump quickly through
+the course structure and workload. Each course is designed to take about four
+weeks, five is pretty reasonable as well. Every course has two or
+three assignments in the Standard Track. There's a quiz for
+every major topic as a way of testing and demonstrating your mastery. In the Honors Track, there's an additional
+one to two assignments per course. And we break the course and
+schedule it into weeks to help guide you. But we want to point out right here
+that in many cases a topic is spread over two weeks with the assignments listed
+as due at the end of the second week. If you're to succeed with these
+assignments, you'll start them early. We typically put the lecture material up
+front, but you will succeed more rapidly if you're reading the assignment around
+the beginning of any given topic, and start working on it as soon as
+you learn enough material to do so. That's a particular issue with the Honors
+Track where getting yourself up and going and
+programming sometimes takes a few days. We also want to mention
+academic standards. This is an academic course. It's designed to build your skills, but
+it's also a representation of your work. Coursera has an honor code online,
+we expect people to adhere to it. Assignments and
+exams are expected to be your own work. You are, of course, free to and encouraged
+to work together with others to study. But when it becomes time to work on an
+assignment problem, or to take a quiz or exam, we expect you to do that alone. >> We're continually learning
+about how to run these courses. And we'll be studying how
+this course book goes. Both to make adjustments as the course
+proceeds, where we can, and also to shape future
+courses that we may offer. Part of this might be surveys and
+other opportunities to provide feedback. And we encourage you to participate
+in those when they're available. And we often partner with educational
+researchers to analyze data, and learn from the experience of offering
+the course, from the experience of our students, from the kinds of difficulties
+and challenges that they encounter. If you're interested in seeing
+some of what we've learned so far, we have a paper in the April 2015
+issue of ACM Transactions on Computer-Human Interaction. That reports on our experience running the
+first version of this course, both online and teaching a version of it in the
+classroom at the University of Minnesota. The paper is also available from the URL
+in the slides accompanying this lecture. So this first course is
+about non-personalized and content-based recommendation. So here you'll learn how to
+recommend items, products, etc., based on overall preference,
+popularity, such as restaurants that get the highest star ratings, or
+products that people buy the most often. How to segment some of those statistics
+by demographic characteristics to do stereotyped recommendation, that recommend
+things that are popular with users who share demographic characteristics
+with the user visiting your site. As well as,
+how to use the content of items and surrounding items in order to build a
+content based filtering recommenders that are personalized using the terms
+in the descriptions of the items, the movies, or
+whatever it is that you're recommending. And to conclude, we're very glad
+you've chosen to take this class and this set of classes. We do encourage you to own your
+experience with these classes. We want you to feel no stigma
+with just viewing the lectures. If that's what you
+want to get out of them, view the videos, learn some things,
+that's completely fine. Commit enough time to get value,
+to get what you're looking for from these classes. But we want them to be available
+to help you get what you need, not just to follow the program
+that we've set up.

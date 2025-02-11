@@ -1,0 +1,207 @@
+Welcome back. In the last lecture, we introduced
+non personalized recommender systems. Systems that provide basic recommendations
+of things to buy or look at or watch, that don't take into
+account at all who the user is. In this lecture, we're going to talk
+about where the data to drive both those systems and the personalized systems
+we'll be discussing later in the course, comes from and how it's collected. In order to do recommendation of any form, you need to have data about what
+items user sure likely to like, or what items go together for the cross
+selling rules that we discussed last time. This data is collected from
+someone somehow and though there are some exceptions, many systems
+collect this data from their users. In today's lecture, we'll be talking
+about what data gets collected, how, and what this data means. The objectives of this lecture to
+understand what data recommenders can use to learn what users like. To identify the types of data that
+can be collected from users and when different types are available and
+when they might be appropriate to use. And finally, to be able look at a system
+and identify the types of data that it's likely using to provide
+its recommendation. To start talking about this data though, it's important to understand what
+it is we're trying to learn. Very broadly,
+we're trying to learn preference. We want to learn what users like and
+we use the term preference very broadly. This can be the personalized,
+this user likes action movies or it can be users think that these
+two items often go together. In later lectures, we'll discuss a lot of the psychological
+things that go into what preference is. The way it, psychologists think that
+it's represented in the human brain, and the way that different
+algorithms try to model it. For today's purposes though,
+we're just concerned with, what do users do that might tell us
+something about their preference? Users do many things that are motivated. At least impart by their preference for
+different items. They rate them and review them, they buy
+them, they click on them and read them. All sorts of actions that are visible to
+the system that have some connection, some greater, some less, to what
+the user wants to buy or read or watch. Broadly, these pieces of data and
+actions divide into two categories. First, there are explicit Rating actions, where the user is taking an action for the
+purpose of telling either the system or other users of the system what they
+think about a particular item. They might rate the item four stars to
+say that it was a pretty good movie. They might write a Review about how
+the product meets their needs and what its weaknesses are. They might Vote the item up as
+something they want to see more of. Users also perform many actions that we
+call Implicit with respect to Preference. The user is not performing the action
+in order to communicate Preference but we can still learn something
+about their preferences by looking at enough of these actions. This actions include
+clicking on news stories, purchasing items from a shopping site,
+following somebody on a social network. Well, first, we'll talk in more
+detail about Explicit ratings. The basic idea of Explicit Ratings, is
+if you want to know what the user thinks about an item,
+whether they like the movie. Just ask them, and
+have them tell you whether it's good or bad and what they think of it. One of the most common interfaces for
+doing this is Star Ratings. You can see here the,
+a picture of the Netflix rating interface, where you rate the movie on a one to five
+star scale to say how much you liked it. There are several design decisions
+with star interfaces, you use 5 stars, 7 stars, 10 stars. Do you restrict users to
+rating with whole stars? Or do you let them rate the movie four and
+a half? Do you provide any kind of calibration to help them decide what
+the different stars levels mean? And the answers these questions
+are not necessarily obvious. If you have a five star scale
+you might think that, well, if we add Half-stars then users will
+be able to tell us more information. And in principle, they can and research on these has found that users
+like that kind of expressiveness better. But when we try to use the additional
+granularity to do recommendation, it doesn't seem to gain
+us any actual benefit. So, more information is not
+necessarily better if users can't use it reliably, but it can still
+make them happier with the site and feel like they're able to
+better express their opinions. Many sites use five stars with or without
+Half-stars for their grading scale. It's very common across
+a wide variety of sites. We have just a few more examples here,
+GoodReads, Amazon, MovieLens. They all use five star scales with or
+without Half-stars. And they provide, GoodReads and
+MovieLens both also provide calibration. When you hover over a star in GoodReads
+they give you a tool tip that says a guide for
+what that star rating might mean. And MovieLens also has a calibration guide
+that shows up in the corner of every page. In addition to ratings,
+it's common to use up and downvotes to get Preference
+information from users. Pandora lets you vote songs up or
+down as you're listening to them. Q&A sites like StackOverflow, let you vote up questions that
+are interesting and well written. Many services also just
+have a unary scale. You don't get to downvote anything,
+you can anything. You can just like it or give it a +1. And that votes it up, or
+you can leave it alone. These up and downvotes are very common with ephemeral
+items that don't have a long life span. Movies are fairly durable,
+you still watch movies two, five, ten years later,
+depending on the movie and its quality. Whereas a link on a site like Reddit is going to be interesting immediately,
+and might have long term value. But the site is designed is designed
+to favor a higher a rate of churn. And up and
+downvotes provide a very low cost to rate. The user just has to decide,
+do I like this? Enough to click the up arrow
+rather than processing, do I like this four stars,
+five, five and a half? One very common non personalized
+recommender is built entirely on up and downvotes. Reddit, on Reddit users vote
+articles up and down to, and high voted articles along with
+a time decay that will talk about in a later lecture,
+decide what appears on the home page. There are other interfaces that are used
+occasionally to collect preference data. Continuous scales,
+constrain users very little. They can rate anywhere on
+a fairly wide ranging scale. Some interfaces ask users to
+judge whether they like one item better than another, rather than
+just rate one item on an absolute scale. There are also hybrid interfaces such
+as a music player a number of years back had a 1 to 100 scale, in addition
+to a never play this again button. And Pandora has a 30 day suspend
+feature which isn't really a downvote, it just says, I'm tired of this song
+don't play it again for 30 days, and then they'll bring it
+back into the rotation. In addition to the scale, when we're
+collecting rating data from users there's also the question of
+when the ratings are provided. Particularly, when they're
+provided in relation to when the user consumed the item. When they watched the movie,
+read the book, etc. Consumption ratings are provided during or
+immediately after experiencing an item. When you watch a YouTube video and then
+you click the thumbs up button at the end of the video, that's a consumption rating. The movie, the video is fresh in your
+mind and you rate it right at the time. It provides a very close
+to the experience way of getting user Preference that
+doesn't suffer from memory effects. As users, as time passes from when
+a user watched a move of read a book, their perception of it may change. Memory ratings are provided some time
+after the user consumed the item. Maybe they watched the movie earlier
+in the week or last year and they're rating it based on their
+memory of how much they liked it. And then, expectation ratings
+the user is not consumed the item. This is often the only kind of
+rating that's really possible for high cost low volume items such
+as houses or apartments or cars. Relatively, few users are going
+to have owned many houses or many cars provide a lot
+of Preference data. So, in order to get
+a large amount of data, you need to,
+if you want to get their Preference, all you can go by is what they expect to
+get based on the description of the item. And this also depends on the item
+description being accurate if you want to accurately gauge
+user's likely preference. And finally, there are ratings
+that are sometimes provided that don't have any connection
+to consumption at all. These aren't terribly common, but if you build this site with ratings
+that gets sufficient popularity. Users will use your ratings for all kinds of things that aren't
+communicating their Preference, such as, this Amazon rating listing for a pair
+of speaker cables that cost $13,000. Many viewers find this rather absurd,
+and so they write reviews and ratings about how these speakers
+have invaded their house, or how they have allowed them
+to solve world hunger. And you find this for many items,
+sometimes absurd items, sometimes items of cultural significance such as
+the pair of shoes Wendy Davis wore. So, rating Ratings can be a very good way
+to find out what users think about items. But they're not without their problems. First, can users reliably and accurately express their
+Preference on a rating scale? And a lot of research suggests
+that sort of but not really. If you ask users to rate movies again,
+after some time has elapsed since the last rating,
+many of the ratings will shift a bit. So there's noise in the process in the psychological process
+of generating Ratings. Also, user preferences can change. Maybe two years ago,
+they said this is a five star movie, but now that's changed and
+your data hasn't been updated. There's also questions
+of what a rating means. Does the user, when you ask the user
+to rate on this five star scale, they have to conflate a lot of dimensions
+into a single rating, and also, different users can use the rating
+system to signify different thinks. So, now, let's talk a bit about
+Implicit data that we can collect. Preference we can refer from the user's
+actions as they interact with the system. But they aren't necessarily intending to
+communicate how much they like something. So, Implicit Data, sometimes this is discussed under the
+topic of implicit feedback recommenders, is data that is collected from user's
+actions as they interact with a service. As they read the Yahoo news page, it tracks what articles they've clicked
+and feeds that into the recommender to determine what articles to show
+on the home page for them. Or Amazon knowing what you purchased. The key difference between this and
+Explicit ratings is as in Explicit ratings, the user is intending to
+say how much they like something. In implicit data, the user is just
+doing something that's based on their preference but they're not doing
+it to say what they prefer. Their actions can say a lot and
+they have a lot of actions. You're going to get many more page
+views from a user than you are rating. Simply, they have to view the page. If they want to read the article but
+they may or may not be bothered to provide
+any actual feedback on it. Some early work in Implicit feedback
+was in measuring how long a user spent reading an article. And found that that correlated reasonably
+well with their rating of the article, so you can use how long the user
+spends reading as a proxy for how much there likely to like the article? There other services that they can
+get data about the users listening or watching. The intelligent music management
+system is a plug in for audio players that tracks your listening. And if you listen through
+a song all the way, it records that and if you skip a song,
+it records that against it to tune the player's shuffle to
+preferred songs that you like more. And Video services can track
+what you start watching and don't finish and things like that. There are also binary actions,
+such as clicking on a link or an add or a search result that says, well,
+I at least expect, based on the synopsis, that this is something I like, or
+this is something that meets my needs. There's also data that can be inferred for
+non action. If you present a list of search results
+and the user clicks on link three, they didn't click on links one or two and their
+eyes at least may had to skim, may had had to skim over them to get to the third
+link, you can infer some signal from that. There's also purchases and purchase it just user probably expects to like the
+item or at least know someone who would. Although unless you
+coupled this with returns, you don't know that they don't
+hate the item once they get it. And then, social network's and other
+systems like that, they have a concept to follow one or you could follow a person or
+you can follow a topic. Those actions provide a signal about
+what a user is interested in seeing. There are a number of Subtleties in
+dealing with this data, of course. If a user purchases something,
+they might still hate it. If they don't click, they might
+expect that it's going to be bad or it's not going to meet their needs,
+or they might not have seen it. Even if it's higher on the page
+than something they did click, their eyes could have skipped around. There's also how to scale and
+represent actions. Oftentimes, when we're dealing with
+one kind of data, such as clicks or purchases, it's represented as a one if
+they clicked, and a 0 if they didn't. Or, the number of times they clicked on or
+viewed an item but when you are combining multiple types
+of actions, how you represent them and combine them in order to come up with
+the recommendations becomes important. We'll talk about some of these issues. It also is something that has to be tuned
+and adapted on a site by site basis. There's also Lots of
+opportunity to be creepy. To do things that users don't expect, to do things that they might not
+want being done with their data. And sometimes, the users don't
+really know that what can be done. Education can help. If you provide some explanation about
+how the user's data is being used, then it's not as much of a surprise when
+you give them a recommendation that shows something that they didn't
+know you could figure out. In conclusion,
+recommenders mind both what users say and what they do in order to learn their
+preferences and provide recommendations. Ratings provide explicit
+expressions of preference. The user says, I like this item,
+I don't like that item. And that can be used to learn and
+predict what they like or what the populace as a whole will like. About other items. Implicit data is not have this Explicit,
+I like this signal. But a lot more if it's available and
+that volume can make it a very valuable source of data for
+learning what users like.

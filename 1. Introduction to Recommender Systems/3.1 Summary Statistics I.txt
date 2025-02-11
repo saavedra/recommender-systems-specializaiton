@@ -1,0 +1,173 @@
+Welcome back, in this lecture we're going to
+take a look at Summary Statistics. The first of our techniques for
+non-personalized recommendations. So let's start with the story of Zagat. Tim and Nina Zagat, a couple in New York had a bunch of friends and they all
+went out to New York restaurants and shared tips as to which restaurants
+they particularly liked. Over time, they organized that
+into a little survey sheet, that they sent around to their friends and
+would compile into a small booklet of
+restaurants worth going to. With a little summary of what
+people said and the scores. Well, that was many years ago,
+Zagat became a large restaurant review and rating empire
+with books all over the world. All based on the idea of taking
+contributions from lots of people and aggregating those together to tell you
+which restaurants are really the ones that are special and you should go to. If you look at a typical
+entry in a Zagat guide, this one being a list of top
+restaurants from across the US. You'll see the name of a restaurant,
+perhaps a few symbols representing details of the restaurant,
+scores for food, decor, and service,
+these range form 0 to 30. And a score of 29 as Gary Danko received
+in this particular year's guide is a phenomenal score. And then an estimated cost sometimes
+going off the scale at very expensive. There's also a set of edited little phrases that come from the people
+who filled out reviews. How did this get here? All sorts of people, mostly readers
+of the guide, fill out their surveys, asked to do so only for
+restaurants they've been through, or been to in the past year and
+say what they think and the Zagat Guide team puts those
+together to create this guide. So if you're going to compute a score,
+what should it mean? Do we want the highest score to
+be the most popular restaurant? Do we want it to be the restaurant that
+the people who go to like the most? Should it be the probability that
+I like that restaurant more and what does that mean? Popularity would be challenging. If you had a Zagat guide for
+popularity and you found out that the only
+30 in it was McDonald's because more people went to McDonald's
+than any other restaurant in the country. Is that really what you want? But average rating could
+have its own problems. For many of us,
+eating at home is really wonderful. We have a mother, or a wife, or
+a husband, or somebody else who cooks great food, but there's only two or
+three of us who ever eat that food. We're not going to call
+that a top restaurant. We also have this problem with
+neighborhood hot spots that most people don't like at all, but
+the few people who frequent really love. Is that what should get the top rating? If we're thinking about
+the probability that I would like it, how do I compute that? Do I look at the frequency of
+getting scores, the average or more complicated things? Well, I can reveal the secret formula for
+the Zagat Guide. They ask people to rate these
+restaurants on a scale from 0 to 3. Where 3 is a special place and
+2 is a very good restaurant. They then multiply the average
+of those ratings by 10. To get something from 0 to 30 and
+they round it. Okay, it's not a very secret system but
+it works if your goal is to find out what does the average
+person who fills out the guide think. They don't look simply at popularity and they don't include ratings for
+McDonald's and other places where popularity might be the
+dominant factor in their normal guides. Let's look at a different example. This slide shows cruise reviews
+from Conde Nast Traveler magazine. You can see that this particular
+cruise line got a score of 94.2 and breakdown scores for
+itineraries, excursions and other categories that,
+again people wrote into review. The mechanism here, however,
+is quite different from what Zagat uses. They didn't try to average together
+different people's scores, but rather they asked every person who filled
+out their survey to rate the hotel, cruiseline, airline, or
+other service as poor, fair, good, very good, or excellent. They then tally the percentage who
+say it's very good or excellent and use that as the score. Both techniques have merit. If somebody gives a really bad score, do we want the score we report for
+the whole to go down or do we want to only recognize that some
+people are upset and don't like it. But how passionately they
+feel between good but not very good and this is awful, really
+doesn't make that much of a difference as we try to rate these things and rank them. Well, you can see that there's
+other approaches as well. Amazon when it looks at a customer
+reviews show us the average. But it also shows us a distribution. It says, this 4 star item is 4 stars not
+because everybody agreed it's 4 stars, in fact, more than half the people
+thought it was 5 stars, but 22% of the people
+thought it was only 1 star. Now when you look at that you might say,
+wow, 22%. But you want to be careful and
+notice that next to the stars up there, it has a little 9. That says only 9 people evaluated
+this product in the first place. So those 22% represent 2 people
+who don't like the product, we have 5 people who really love it and then 2 people who have more in-between
+opinions, the 3 star and 4 star ratings. So let's break this down. Popularity is an important metric. And there are many cases where
+what you care about is popularity. Averages can be misleading. You could adjust by summing up the
+percentage of people who like something to avoid the challenges of how intensely
+people express their dislike. You could also adjust by
+normalizing user ratings. Normalization which is
+a process of matching scales. Typically that's done by
+setting the mean to zero and then maybe adjusting the standard
+deviation to make it the same, is a technique that would recognize
+that if, I rated four restaurants and I gave two fours, a three, and a five, and you rated four restaurants and
+you gave two twos, a one, and a three. That your two is sort of like my four. Now that works if the reason you gave
+those low scores and the reason I gave my high scores is because, well,
+I'm just a generally positive person and you have such high standards that it's
+hard to live up to your expectations. It wouldn't work if
+the reason I have 4 stars and you have 2 stars is because
+I'm a positive person, but I went to some really good restaurants,
+and you're a positive person, but you just happened to go to some
+restaurants that weren't very good at all. So normalizing might work if we
+have enough data to understand that we really have a good
+representation of what people think. You may also want to consider
+the credibility of individual raters, their history of ratings. Some of the review sites that
+are out there like a TripAdvisor or a Yelp, have to deal with the problem of,
+what happens when somebody wants to put in an impostor review or
+create an account just for the sake of promoting their own business
+or disparaging somebody else's. Now, in general,
+displaying more data to people is better until you get to the point
+where you overwhelm them. So giving a count of ratings,
+an average, a distribution maybe the most useful way to do it when that
+fits in the display that you're providing. So what's missing here? Popularity as I said can be useful. If I'm looking for popular new songs,
+I might look at the top 10 chart or the top 100 chart. On the other hand that chart might
+be dominated by songs popular among high schools girls. And I don't know how well you
+can see me in these videos but I'm not a 15-year-old girl. Those songs might be dominated
+by people in China where there's a lot more people listening
+to music than there is in the US. That would be great if
+I love Chinese music, it may not be as great if I'm looking for
+songs that are popular around me. So there's nothing in
+these non-personalized recommendations that
+recognizes anything about me. And in an upcoming video we'll be
+talking about how we might think about popularity and averages in the context
+of demographics where I live, age, sex, other traits. The other thing that's
+missing here is my context. So let's say I'm out there
+ordering an ice-cream sundae, I go into a restaurant, I say,
+I want an ice-cream sundae. They say, great, what sauce do you want? And I say, well, I don't know. Tell me what sauce is most popular here. They turn around and say, well you know the thing we got that more
+people use more than anything is ketchup. Ketchup? Yeah, we sell a lot of hamburgers and
+French fries, so people use ketchup. It's our most popular sauce. And I'm thinking no, I wanted a popular
+sauce for an ice-cream sundae. They turn around and say,
+well you didn't teach us how to make recommendations based on the context
+of what you're trying to use them for. In fact, I didn't. So if you stay tuned later in this module, we'll talk about how do we link those
+recommendations to the context, as well as how we would link
+the recommendations to who you are. So as we pull this together, I'll just
+point out that many of these things you can find in lots of popular sites online. So I happen to like the site TripAdvisor
+because it helps me find restaurants, both at home and on the road. And you'll notice that that
+same notion appears there. Where I can see that the St. Paul Grill,
+a restaurant not far from my home, not only has 416 reviews
+distributed with most of them at 5 and 4 stars and
+very few that are low. It also then gives me a ranking and says this is the number one
+restaurant in St. Paul. You can take that away as an exercise to look through a site like
+TripAdvisor that has these rankings. And you will discover that the ranking is
+not strictly the average of the reviews. They apply other data as well including
+information about how many people reviewed it. To try to come up with a ranking that they
+think will reflect what is the most liked, most popular restaurant or hotel, or other
+service in a particular geographic area. So let's finish where we started,
+with Zagat. A number of early Zagat fans argue that the guide has been getting
+worse over the years. They argue this is true for two reasons. One, too many mediocre
+restaurants get good scores. And two,
+too many excellent get mediocre scores. Now it turns out what
+they mean by this is, that we're seeing some sort of
+compression in the ratings. That a restaurant that should have
+been 29 or 28, is coming in at 26. And a restaurant that they think
+should have be 22 is coming in at 25. They're wondering what's going on. And actually if we look at the way the
+system works we can tell what's going on. We have self-selection bias. People only rate
+the restaurants they go to. If you didn't like the restaurant last
+year, you probably don't go this year and so you don't put your negative rating
+in this year, the score goes up. We also have an increased
+diversity of raters. Well that increased diversity means
+people have different tastes. Back when Zagat was mostly about Tim and
+Nina's friends, they probably all understood there were
+certain things they were looking for. It didn't bother them that the waiter
+tried to sell them bottled water, but they really expected that they would have
+a separate chilled fork for their salad or whatever their tastes are. Well as you have a broader set raters they
+have different values and some of them feel like they want their restaurant
+to be more environmentally sensitive. Some want it to be more health conscious, some want it to be
+responsive to special diets. And as you have that diversity
+the averages wash together. And that's why we'll be
+studying personalization. A couple of takeaway lessons. First, non-personalized
+popularity statistics or averages can be effective
+in the right application. We need to understand the relationship
+between that popularity count, or the average, and the user need, how much
+do people agree on what things are good or bad in a particular domain,
+and we need to make sure we pick the right kind of average for
+the way people rate in that domain. In many cases, it's actually best
+to show multiple statistics, a popularity statistics like count or
+number of sales, an average rating and
+maybe even the distribution all together. For ranking, one useful alternative
+is to average the percentage of items, a percentage of ratings
+that score above a threshold. How many people like this or love this? Or, if you're risk adverse, scored by the
+number of people that hate something and avoid the ones that have lots
+of people who rate it poor. But perhaps most of all what we're
+going to see is that personalization can address many of the limitations of these
+non-personalized summary statistics. So as we are moving forward, we are going to add little bits
+of a familiar personalization. And then as we move forward from that, we'll look at longer term
+persistent personalization. Thank you.

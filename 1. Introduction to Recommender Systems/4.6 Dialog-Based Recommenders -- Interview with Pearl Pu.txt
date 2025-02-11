@@ -1,0 +1,202 @@
+Welcome back. Today I have the pleasure to bring
+you an interview with Dr. Pearl Pu. She heads the HCI group at EPFL, the Ecole
+Polytechnique Fede rale de Lausanne or the Swiss Federal Technological University
+in Lausanne, Switzerland. She's also a longtime leader in
+the Recommender Systems community, who chaired the second Recommender Systems
+Conference, is the program co-chair for the Recommender Systems Conference
+this year in Hong Kong. And, perhaps more importantly,
+has done a huge amount of work in the area of eliciting more sophisticated
+models of user preference. And particularly, in the area
+that she's going to talk with us, today about, which is critiquing based,
+recommender systems. So welcome, Pearl. We'll really glad to have you. Thank you, John. I'm pleased to be here. So as the students in our class know,
+already this year, they've had a chance to hear a little
+bit about case space recommendation. They have heard from a couple of
+people who've worked on that area, Barry Smith and Robin Burke,
+about specific things in case space recommendation and
+the on-tray and find-me systems. But I thought it was going to be
+really interesting to bring up your critiquing-based recommender because they
+have a level of depth in looking at and exploring user preferences that go
+beyond the other areas that we've talked about in this course. So perhaps you could just
+start us at the beginning with an introduction to what critiquing-based
+recommender system are. Okay Joe, so in critiquing-based
+recommender systems, users are welcome to provide feedback, which we call them
+critiques, on the recommended items. And this dialog style is in
+contrast to the traditional motto where users receive
+recommendation in one interaction. And there are two types of
+critiques that people can provide. One is called user initiated, so an example would be, I like this laptop,
+but I want something cheaper. Systems can also provide
+critiques as an example, this item might be also interesting for
+you. This laptop satisfied your requirement,
+it gives even better battery life and
+more memory size. But it's slightly more expensive. So behind this critiquing interface
+lies a very crucial preference model and the users are welcome to develop with
+the system through this critiquing feedback to make this model more and
+more precise. So where are systems like these,
+critiquing-based recommenders most useful? Are there particular domains where we
+would be most likely to see them in practice? Yes, so there are two areas
+where this critique-based recommender systems can be really useful. So let me first provide a major difference of critiquing based
+recommend systems and rating based. So in rating based recommended systems,
+user perhaps preferences are represented often as a score,
+like one to five. But sometimes in areas we want
+to express our preferences over the features of a product. So like in a laptop,
+I want a particular brand, I want a particular memory size, I want a very light weight laptop. So in those domains it's quite
+natural to elicit users' preferences in terms of all
+these individual features. In another context,
+which we call high stake domains, by that we mean products that
+carry a lot of financial risk, like a laptop, a digital camera,
+a car and selecting an apartment. In those domains, people are not likely to be convinced if you just tell
+them people bought this also bought. Because they wanted to really
+pay attention to the details especially those preferences that they
+care a lot about, like the price. For me a laptop has to satisfy certain
+weight criteria, because I travel a lot. So in those features,
+I really want to be involved in explicitly expressing my preferences. So in those scenarios, critiquing based
+recommended systems can be very useful. So before we go into how these work,
+perhaps it would be useful, it sounds to me like
+the real difference here, is that critiquing-based
+recommenders are likely to be more valuable in cases where somebody's
+investing a bunch of effort but possibly for a short-term decision. Typically when we think of a traditional
+collaborative filtering recommender, the hope is over the course of years
+it learns your music preference or your movie preferences better. Are most of these critiquing-based
+applications single shot high stakes decision that today you
+want 8 gigabytes and Apple. But if you came back next year,
+that 8 gigabytes might not be useful at all because by next
+year you want 32 gigabytes. So what you're talking about is whether
+user's preferences change over time. And it turns out we do. According to behavioral psychologists and
+for more detail, I refer you to the book
+written by John Payne. It's called The Adaptive Decision, and he basically says we change and
+more precisely we change our preferences based on
+the available options shown to us. So yes, critiquing-based recommender
+system is very useful for capturing the kind of preferences I have. Given today's context,
+or given today's market, today's price of laptops and
+the kind of features I can have. So they're most likely to be useful
+in domains where that available set of choices may change frequently,
+like it would be with laptops. Whereas, if what you like are old movies, the same old movies are mostly available
+this year, as they were last year. So people's preferences
+do develop over time, and become very stable, some of them. For example, when I travel,
+I always want aisle seats. Mm-hm. But in cases where you just come to understand the domain, your preferences tend to be very adaptive and very short lived. Okay. But it doesn't mean that you
+don't develop over time, and it doesn't mean that
+critiquing-based recommender systems cannot capture these stable and
+long term preferences. Sure, so would you rather go first and tell us a little bit about how these work
+on the inside, or would you like to show us, I know you have a demonstration of
+such a critiquing recommender system. Yeah, I do have a demo to show you. So this demo is called Critique Shop. The idea behind it is we set up
+an experimental environment simulating a e-commerce website using
+critiquing-based recommender systems. And this demo was jointly
+developed by EPFL and University College Dublin,
+with Professor Barry Smith's group. Now, this was developed a while ago. So the product catalog is
+a little bit outdated. But the critiquing features
+are still very current. And so, let me start with from
+the beginning, so now assume a user who's looking for a laptop but
+she is not so familiar with all of the features available or
+all of the items available on the market. But say that she has heard
+about HP laptops and she thinks this is something she wants. And then, she said, well,
+I like to have a lot of memory, and let's say the weight of requirement is somewhat
+important to me but the memory and
+the brand are really very important to me. This preference is what
+we call at a priority. And so, once she enters those preferences, the system shows her
+a recommended item as shown here, the HP Compact Mobile Workstation 80440. And this is very often case,
+the user entered all those things, but she has no idea what
+the price is going to be. And indeed, when she sees this she says,
+wow, this is really expensive. So this is the moment where
+the critiquing comes to play. And looking at this, she's going to say,
+let me see if there's something cheaper. Well, a couple hundred dollars cheaper. But let's say maybe even
+more inexpensive device. And notice that the memory
+has decreased a lot. And it has changed the processor. At the same time the price decreases. And sometimes the user gets impatient because she really wants to change several of the features at the same time. This is when the compound
+critiquing comes handy. And they are located on
+the right-hand side of the screen. And that's on this side. So this compound critiquing interface,
+proactively suggests, to the user,
+that there are other options to consider. The first one being a computer
+that has faster CPU, larger screen, more memory. But it also warns the user that
+it has a different type of CPU, heavier, shorter battery life,
+slightly more expensive. And in fact all the others
+compound critiquings are in the same kind of style
+which is called the trade off. So if the user is happy with the advantages she's able to
+get from the suggestions. And she's ready to make the sacrifices or
+make the trade offs. She would just select this one that
+matches all those multiple criteria. And then, she can continue with
+this kind of feedback loop, until she's completely
+happy with her decision. So from this demo it's clear
+there's a lot of information here that goes into these recommendations. How do you represent all these different
+preferences and how do you use that information to actually screen and
+select products to recommend? So indeed the user preference
+models we talked about earlier is really the crucial element of
+critiquing-based recommender systems. And there are number of ways
+to represent preference model. The details is probably too much
+to go over in this interview, but I'm going to elaborate one
+method that we use which is called the multi attribute
+utility theory or MAT for short. So how does multi attribute
+utility theory is used to represent the user model and
+produce the recommendation? So let's go back to the demo
+model that I had talked about, to illustrate how MAT works. So essentially when the user enters
+this initial preferences, say the brand, memory size and weight,
+most basically takes those pieces of information and examine all
+of the products in that database. And it assigns a utility score on each
+attribute and then does it waited some. So for example,
+if a product matches the brand completely, it's going to give it a maximum score. On the other hand,
+if the weight of a computer is say 1 pound too heavy,
+with the use of a penalty function is going to give a much
+smaller score on that attribute. So by weighted sum, it means that
+the system can also represent how important it is,
+a preference to the user. Great.
+So just to elaborate for our students,
+this means we have a linear combination weighted by the importance of each
+attribute of the different attributes. And that means for any given attribute,
+the direction actually matters. In some cases you want something right
+on target, but for something like price, we normally assume if we're spending less
+than the desired amount that's good but more is bad or heavier for
+a laptop is bad but lighter is good. And that's all done in
+the modeling beforehand. Stop me if there's anything I say
+here that isn't the way you do it. No, that's absolutely right. And this is,
+we call it the direction of utility. So there is a common sense of
+this type of utility directions. The lighter it is, the better it is. More memory it is, the better it is. And price, the less expensive the better. Right. But for discrete variables,
+like brands, it's very personal. And this is where we're going to really
+involve the users to state their preferences and tell us how important
+it is a brand like HP is to her. Or is she maybe willing
+to accept other brands? Sure and in different models you can capture things that
+are sometimes hard here. Like you could have a function that
+says I will give a score to each brand. And HP might be 100% but
+Apple would be 80 and Dell would be 70. But that all gets back to
+the details of the model. The one thing our students should be
+aware of is the major strength of multi attribute utility theory is that it's very
+easy to compute once you have the data. One of the weaknesses is that it assumes
+independence of the different attributes. And so, if you say well,
+I want a 12 inch screen, but the only reason I wanted a 12 inch screen
+was to get a light laptop, so a 12 inch screen is bad if the laptop gets heavy,
+then you need a different kind of model. But fortunately for
+a lot of practical purposes, MAUT has seem to work really well. So one more question about this. I just wanted to also add
+that you absolutely right. So there are two things going on. MAUT is a linear algorithm so
+it's very easy to compute. You can compute it for
+a very large database. And you can compute those scores on the
+spot practically and you can rank them. And you're also right that it assumes
+that these preferences are independent of each other and in reality they are not. That's why we need this compound critiquing which can
+ensure that there's always a product that satisfies some of
+the features and not the others. Sure and of course it's also
+the reason you need some knowledge engineering upfront. To use the apartment example you had,
+that might be a case where if I say I want to live within 500 meters of a train
+station, closer might be worse because there's too much noise and further might
+be worse because it's too long a walk. But 500 meters might be ideal and that's all something you build
+into your functions up front. You could certainly say that further or
+closer are both penalized, if you get far away from the target. So, since you're talking about this,
+users not only change, but they don't always express consistent
+critiques or consistent information. That somebody may come in at first and
+say well, I want something that's under $1,000. And then they come in and
+suddenly start saying well, but for this thing I really want
+it to be faster and have more memory which they can see
+means it's going to cost $2,000. How do you deal with all of this it's
+either contradictory information or rapidly changing preference information? So, Joe, you're absolutely right. And, we see this in our users
+in a lot of our user studies, especially the new ones. Or the users who come to this domain for
+the first time. They want everything and more. This is the phenomenon, you know. We see that, and in the laptop case,
+they would want the best brand, largest memory size, longest battery. And then they say well,
+I don't like the price tag. So, again,
+thanks to the compound critiquing engine it can generate solutions or
+it can suggest items that satisfy some of the preferences and
+make compromises on the others. So, it's like we call it a reality check. And it's really [CROSSTALK] And it kind of educates the user about
+the available options, yeah. So over time, they would learn. That was just the term I was going to use,
+you're giving people a tool to help them navigate, and
+to help them learn what the space is, so that they can come to a choice
+that they're happy with. Well, thank you for
+introducing us to this. Is there anything you didn't have
+a chance to say that you'd like to make sure we include in this interview? I don't think that we left anything
+major out of the interview, but if you have questions
+I'll be happy to answer. I think this really was valuable. It's nice to see different approaches
+that we can expose people to that take in this case a very
+navigational interactive approach to the whole process of recommendation. So thank you so much for joining us. Well, thank you Joe for inviting me.

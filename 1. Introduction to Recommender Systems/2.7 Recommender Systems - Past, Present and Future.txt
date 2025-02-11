@@ -1,0 +1,179 @@
+Welcome back. As we've been introducing recommender
+system it's seems like it would be useful to give a little bit of
+a historical perspective on recommender systems looking
+at where they have come from. What some of the stages of
+the field have been and just briefly it where they maybe going. And since I've had the privilege
+of being there for most of this history,
+I'm going to add in a little bit of the personal anecdotes where
+I was part of this story. So, let's start before the term
+recommenders systems was imagined before people talked
+about collaborative filtering. Much of what we're doing in this field derives from things that were
+already being done long before. Personalization is not
+new with technology. Personalization is something that people
+have done manually for a long time. If you go to a high-end department store,
+you can engage a personal shopper, who will look at the wardrobe you have and
+help you find clothing to go with it. If you are looking for
+other forms of personalization, you can hire agents who
+will help you find things. A travel agent who knows that you're
+interested in a safari will keep his or her eyes out for the type of trip you would like, not just
+something that anybody would want do do. And so the idea of manual
+personalization is not new and in fact technology platforms had already been
+develop for some of these specific cases. Personal shoppers had some simple
+databases where they could run people's profiles through when new
+products came in and getting an idea of who they might want to consider that would
+be a good candidate for a new product. The idea of cross-sales and early product associations also
+long pre-dates recommender systems. The simple notion that
+either a marketer or a marketer assisted by
+some basic statistics or early data mining would
+figure out that gee, if we're putting on a sale on hamburgers,
+it might be nice to have ketchup nearby. Or perhaps if we're in Belgium and we're frying potatoes will
+have mayonnaise nearby. These ideas are things
+that go back a long time. They started as intuition and experience,
+and they grew into things that were supported by data, but
+the idea of cross sales is not new. Product search while not strictly
+what we think of as recommender systems was already getting into the idea
+of customer ephemeral interests. And search engines of
+various sorts were routine in libraries,
+in collections of documents and products before recommender
+systems came into place. So in that environment,
+you get the early days. The inspiration and the rapid growth period in
+today's recommender systems, particularly the automated collaborative
+filtering systems, was the early 90s. The GroupLens group which I joined in '95,
+was inspired back in '92 by a notion of an information economy and
+in 1994 demonstrated and published a system of collaborative
+filtering for Usenet news. The MIT group led by Patty Moz
+developed the Ringo, also known in different
+versions as Homer System for recommending music artists at
+MIT published that work in 95. The video recommender by Willhill
+others at Bellcore also 95, and so there was a very early recognition
+in that period that wow this idea of nearest neighbor collaborative filtering
+is something that has potential. Industry was doing this at the same time. The earliest companies that were trying
+to sell on the web were realizing that they didn't have the ability
+to have people browse the shelves. Amazon very quickly committed to
+the idea of recommendation and of doing data-driven discovery of what products to
+present to people in different contexts. If you look at some of
+the early patents that show up, I've looked at them primarily in the US,
+patents on recommender technology from all sorts of companies that were
+standalone companies in the space. Trying to sell this as a service or that
+were companies in the high tech sector or the retail sector were
+actively flying around in the early to mid 90s with
+attempts to use technology to figure out personalization
+to select items from a catalog. And this was the time where many of the
+research projects became commercialized. Agents, Inc., later Firefly Networks
+came out of the MIT group, they were actively out there and
+getting customers 95-96. Net Perceptions was the company that we
+founded out of the GroupLens group in mid 96, we had already had
+customers like Amazon and later CDNow in late 96 and
+into 97 lots more customers, and there was a mix at that time
+between the excitement of business. And some altruistic dreams
+of primarily researchers and independent inventors who thought
+that maybe this exciting recommender technology might not just be used
+to sell things to people but to give people a better way
+to explore all the options available to them about information or
+products for their own purposes. Well, the next stage of this was
+the Tech Bubble and then the Tech Burst. And during the Tech Bubble, recommendation
+companies became amazingly popular, highly valued and recommendation technology was seen as a key technology
+if people were going to compete. The idea was that attention
+is highest value that there's all these competing firms that are looking
+for you eyeballs and if you can put the right thing on the screen at the right
+time, you're going to make lots of money. And then when the tech bubble burst,
+people realized that wait a minute. This is just one part of a larger puzzle. Recommendation was put back into context
+saying, well yeah, recommenders are nice, but customer relationship
+management is important. Pricing is important,
+all of these other things were important. And so there was this rapid ascent, and
+this sort of rapid cooling off that came together, and
+that period of recommenders growing. But growing slowly and
+in integration with other techniques for managing customers continued
+on during the early period of the 2000s, up until around
+the announcement of the Netflix prize. Now, the Netflix prize emerged
+as this behemoth in the field. For two reasons,
+one was it's a million dollars, and two was if they're offering a million dollars
+this must be really, really important. And the Netflix prize did
+some interesting things. We're going to talk much more about it
+over the course of this specialization. But the one thing that's undeniable
+is that it attracted lots and lots of people, some from academia,
+some from industries, some independent to start
+working on the challenge of how am I going to do a better job, identifying
+the items that people will like. The people who might have been focused
+on data mining or machine learning and other disciplines,
+many of them veered over and said, why don't we give this a shot,
+there's a big dataset. And there's an incentive, and
+the field just blossomed quickly. When we held the first
+recommenders systems conference, it had about 130 people. A couple years later was 300, a few years after that it was close to 500. And a lot of that was fueled by
+the excitement of people coming in, who are energized by
+the Netflix competition. New algorithms emerged. This idea that the best way to find
+a good algorithm might just be to run every algorithm that had
+any merit and stock them together. And take the best of each, turned into a pretty disciplined technique
+for creating really clever hybrids. We'll be talking about that
+later in the specialization. New, more efficient matrix
+factorization techniques were emerging. As people who had worked with
+matrix factorization realized, hey, I could apply it here,
+that would be pretty cool. A whole bunch of neat stuff was going on. And there were also some
+mature realizations that emerged after the sort of
+immediate excitement, and maybe the hangover of Netflix,
+ending the competition. They had some concerns
+about the fact that people were re-identifying their
+anonymized dataset. And people started realizing that, well, maybe these prediction and basic top end
+focused algorithms were a little limited. That there were some challenges. Maybe we were hitting the point
+where people themselves are too inconsistent and we need to work
+on getting people to be better. What was called the magic barrier. That you can't recommend more accurately
+than people are capable of rating. And so maybe we need to figure out
+how to help people rate better. The idea of the value
+of recommendations and understanding, well, to what extent is
+this recommendation helping a person versus just telling them to do
+what they would've done anyway. And a lot of work looking at their
+context of a recommendation, where, when and with whom,
+reintegrating content, which at various times people threw content
+away saying, we don't need this. Ratings tell us everything we need. Now, they turned around and
+re-embraced it and realized, we never have
+everything we need. Content might be a great way
+to understand what's going on. So, as you ride this into the field today, we're talking about 2016. We now have lots of well known
+algorithms in recommender systems, we'll be teaching those to you, and you'll be learning how to use them and
+how to implement them. But effective recommendation
+is still very much a craft. It's not that people can't pick
+up the algorithm and use it. It's that understanding the data and understanding the usage cases and
+the value proposition and what you're trying to get out of a
+recommendation are much harder than simply throwing your data into an engine and
+seeing what comes out. Understanding how you're going to balance, things like the diversity of what
+gets recommended, how popular, do you want to recommend popular items,
+do you want to avoid them, do you want to re-recommend things people consumed
+before, do you want to avoid those? All of that still is very much a craft that people learn as they
+work in recommenders. And recommenders are still largely,
+not exclusively, but largely focused on business applications. I don't mean the business as
+the domain but commercial providers, people that are trying to sell you
+content, sell you products and services. Or at least trade your attention for
+advertising or other forms of revenue. Whether that's music or videos or
+just selling in news and products. There's a lot of creativity out there,
+but this dream of recommenders for the sake of the consumer alone has
+not really been realized except in a few stand-alone prototypes that
+never really got wide adoption. So as we look forward, the wonderful thing about this field is
+that there's a lot we still don't know. There are hard problems that are unsolved. The problem of temporal recommendation. How do I key my recommendations
+not only to things like season which people have worked on for
+a while but to sequence, what did you consume next given
+that you've consumed this already. Recommendation for education which is one
+of the areas were temporal matters a lot. There's already a lot of exploration
+in high tech learning companies around the question of can I figure out
+what lesson I might want you to take next based on what you've done before. And maybe what version of the lesson will
+be most effective at helping you learn it based on not only you but other people
+who've gone through those lessons. There's some hard problems in low
+frequency, high-stakes recommendation. Can we really help you find a house,
+or a surgeon, or other things that you don't
+have a lot of ratings for? In a way that's better than
+simple search and aggregation. And looking forward, recommenders is also
+a recognized specialty now that brings together the benefits of machine learning
+and data mining, business and marketing. Some of human computer interaction and
+particularly understanding consumers to try to develop systems that
+actually make a difference. So as we go forward, context remains
+a huge and promising direction. We'll talk more about that. Sequences of all types,
+sequences whether music. What songs go together well or
+lessons in education. And all of the issues that come
+around consumer lifetime value are promising directions. And when we think about lifetime value,
+one of the early questions but still not solved is when do we exploit what we know about you
+to give you something valuable. And when do we explore by giving you
+something that we're going to learn more about you so
+what we can serve you better later? How much of recommendation is
+about cashing in and how much of recommendation is about investing in
+your future as a lifetime customer? All of these are problems I
+hope you will stick around, explore with us and
+perhaps explore after us as you make your own roads into this exciting
+field of recommender systems.

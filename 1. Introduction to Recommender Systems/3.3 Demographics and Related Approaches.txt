@@ -1,0 +1,142 @@
+Welcome back. We've looked at how to do
+non-personalized summary statistics as a way to
+generate recommendations. But when we looked at that we realized
+that the lack of personalization is something that can be a challenge. As the first step towards personalization,
+we're going to talk about demographics. And related approaches to loosely
+personalize if not to the individual then to some attributes of the individual. So what do we mean by demographics and
+why? As I said,
+popularity may not represent my tastes. Last time, we talked about why I might
+not be interested in popular music, because popular music is dominated by
+younger people with different tastes. But I might be interested in music
+that is popular with my cohort. What type of cohort
+would we be thinking of? I could have a cohort by age. Maybe people who were born
+around the same time I am would like the same music because it
+was popular when we were teenagers. We could have cohorts by gender. If there's certain products that
+people are more interested in or less interested in if they're male or
+female. You could have cohorts by race and
+ethnicity, socioeconomic status, level of education, income, location. And various nondemographic
+data that may be available and predictive of what people prefer. So that's our idea, if I can label
+people with some of these attributes, can I do a better job making
+recommendations as to the items that they would like by identifying what's
+popular in their demographic. So, how do we do this? The first thing we end up doing is
+identifying what demographics or correlates we have. Many of these can't be used
+very easily directly and end up being processor bucketed. So age may be interesting but we probably don't end up saying
+we're going to look at exact age. We may put it into convenient buckets,
+15 to 18, 19 to 21, 22 to 29, whatever the right groups are that seem to
+represent Spans of tastes. Postal codes,
+zip codes in the US hold all sorts of interesting information about not only
+geography but, socioeconomic status. There's income and
+education variations by residence. Urban and rural status which can relate
+to tastes for certain types of products. Dominant ethnicities. In some cases, there is one. In some cases particular zip codes,
+are highly diverse. Any of these may require
+transforming the data to say, I'm not going to look at postal codes,
+specifically. But I have seven levels of urban-ness and
+I'll see if those are relevant. Once you have these demographics,
+it's time to start exploring, so what most people do at this
+stage is one of two approaches. They either simply go out there and
+say let's plot things and see what they look like,
+looking at scatterplots. Or they have hypotheses about particular
+demographic attributes that should relate, and they run statistical correlations. If you're interested in scatterplots,
+this is actually a sample of scatter plots that was obtained by going to Google
+and asking for images of scatter plots. The point here is not to
+analyze any one in particular, but to show you a pattern
+that's particularly useful. When a scatter plot looks like the one
+that's in the middle of the screen where it's a big cloud, there is a sort of
+relationship but it's pretty diffuse. If a scatter plot looks like a tight line,
+like the ones in the upper center of the screen, there's probably
+a very close relationship. And so here you can plot different things
+about the popularity of particular products,about the popularity of
+particular product categories. And plot them against age,
+plot them against income, demographic categories, race,
+gender, and other things. And see is there anything where
+it looks like you have some interesting potential to do
+a better job personalizing. Okay, lets assume you did find that, so
+you've got some relevant demographics. The next step is to break down your
+summary statistics by demographic. So, for
+instance if you're running a web site that happens to know whether the person
+showing up is male or female. You're selling things, and it turns
+out that the most popular products for women are different from the most
+popular products for men. Break down those summary statistics, and display the relevant products on
+your page when a man or woman arrives. Some cases, you might even have
+a factorial design where you say, I know we have popularity by male and
+female. We also have popularity by age group and in fact,
+within the age group by male and female. And so,
+if you know that I'm a man age 45 to 60. You can try to sell me something different than you would sell
+a woman aged 18 to 25 or a man aged 61 to 75. If you have multiple demographics
+that are interesting here, another step you can take is to
+build a multiple regression model. This would be a model that predicts
+item preference or item sales. Some measure of popularity based
+on these demographic statistics. You tend to need a lot of data for this. But they give you nice predictive models [COUGH]. >> Water? >> Not yet, I'll get it after this video. >> Okay. >> If you are building a regression model, you need to have that model fit
+the type of data that you have. If you have multi-valued, linear,
+multi-valued data, like ratings or perhaps some measures of popularity that
+go beyond purchased and didn't purchase. You might want to use linear regression to
+build a linear combination of demographics that predicts those multiple values. If your data is primarily 0/1 data,
+like purchase data, then you probably want a logistic
+regression that attempts to predict the probability of something being
+a one given the input demographic data. Now a couple of important things, you do need to deal with the possibility
+of unknown demographics. There really is no data set where
+you have perfect demographics and you can model unknown demographics
+in a number of different ways, you can simply use overall preferences. You might have expected demographics for
+people where you don't know anything. It maybe that the costumers you had for a
+long time are people you know things about and so a new comer tends to fit a batch
+of whoever the reason new comers were. Demographics don't only
+have to be personal data, they might be data about how long
+the person's been using your site. And in some cases, it makes sense to
+model unknown demographics as their own category, that the unknown folks just
+behave differently from the people where you know things about them. Because they're the people who aren't yet
+committed enough to tell you about themselves, maybe you don't have
+any transaction data from them yet. If demographics are useful,
+one of your key steps is getting data on users, so there's lots
+of sources of demographic data. Advertising networks often
+have demographic data. Loyalty clubs will often request
+demographic data as part of the signup, so that you can use it later. Surveys can request demographics. All of these are ways of getting more
+data on your visitors or customers. And in some cases, people have successfully
+predicted demographics from data. There's some wonderful examples of that,
+that Facebook data has been used for, because of the amount of public disclosure
+that occurs in Facebook postings. It's relatively easy to predict certain
+things from that Facebook data. Not only traditional demographics,
+which are sometimes publicly visible, but also in many cases,
+what's called psychographic data. Data about people's psyche including
+personality and behaviors. Now, demographics often do work. There are some wonderful examples of this. And part of the reason they work
+is that many times products or content is created with
+a particular audience in mind. I remember, a long time ago at a workshop
+back at the dawn of recommender systems, this was a workshop that was being
+held back in 1996, I believe. There were researchers from
+Microsoft Research who were showing off a television program recommender. It had some interesting behind
+the scenes machine learning, it was based on Bayesian belief networks. But it worked way too well to believe that the machine learning could simply
+learn your preferences in many cases. With six or seven preferences, it nailed
+people's television watching behaviors. And as they explored this, part of what they explained was,
+this is not an accident. Television programs,
+even more than, but even true, today, are targeted towards
+particular demographics. If you watched back then 60 Minutes and Murder She Wrote,
+you were probably a senior citizen. If you watch certain sports programs, you
+have a 70% or 80% chance of being male. If you watch certain soap operas, you
+had a 70% or 80% chance of being female. And perhaps, even within certain
+demographics below female. And the reason that content
+was created to reach audiences was because advertisers were
+trying to reach audiences. And the history of mass media was
+advertisers driving content so that, that content could be used
+to pitch advertisements for products and generate sales. So a lot of this is not accidental. You see the same in magazine articles and
+advertisements. If a magazine article's
+appearing in Us Weekly magazine, it's targeted at women
+of a particular age. If it appears in Sports Illustrated
+it’s targeted at a different group, and the same products, even when
+they’re advertised to both groups, are often advertised differently. And of course, personal products are often
+segmented, there’s probably nothing very chemically different between a deodorant
+or a scent for male and female customers. But the market expects them to be
+different, and so we have segmentation. So demographics can work,
+not only on gender, but on age, on socioeconomic status, geography,
+race, lots of different categories. On the other hand, demographics fail
+miserably in a number of cases. They fail miserably in cases where
+the products really are cross-cutting. Some products need to appeal very broadly,
+and appeal to individuals
+across all demographics. It's not clear that you
+can say well what age or gender or race is going to be attracted
+to a particular pad of paper or pen. But demographics also fail miserably for people whose taste don't
+match their demographics. All of us know folks like this, and
+in fact in any given category most of us have had some experience being the person
+who doesn't listen to the music our peers listen to or doesn't watch
+the movies they tend to watch. So demographics are never
+going to be a perfect solution, even if they can sometimes
+be a valuable solution. So, that's our summary of demographics and
+related approaches. See you next time.

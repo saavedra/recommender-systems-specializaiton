@@ -1,0 +1,251 @@
+Welcome back. When we introduced content based
+filtering, I gave you a quick preview of a magical waiting formula called TFIDF, or
+Term Frequency Inverse Document Frequency. And this lecture is
+really focusing TFIDF and the related family of weighting functions
+that are used not just for content based filtering, but actually starting in
+document retrieval and search engines. So we're also going to talk a bit
+about the relationship to search and search engines. The learning objectives for this lecture are to understand the problem
+that requires these weighting functions. Why you can't just go and
+find the terms that you're interested in. To understand TFIDF weighting in
+sufficient detail to implement it, to get a feel for
+the range of variations and alternatives to TFIDF, and
+to appreciate the similarities and differences between content filtering and
+search. As we go along we'll hear a little
+bit about search engines. But remember that's not really
+the focus of this course. And so we're not going to go into the
+depth that you might if you take one of the many classes that are out there that
+really focus on information retrieval or building a search engine. So, the motivation behind TFIDF
+came from the problem of searching. And it came from the primitive simple
+idea of how you would search for a document pretty much fails. What would a primitive search engine do? Well the obvious thing is to go and say, if you have a set of search terms,
+you know, like the Civil War. Let's return all documents that
+have the words the, civil or war in them, and
+that would be the result of the search. Well, one of the problems is
+that's a lot of documents. And so you would evolve that and say, well maybe I want documents
+that have all of those or maybe I want documents with those words
+occur more often to be ranked higher. But at a minimum, you need to consider
+two factors and probably others. We'll come back to the others later. But the two that you need to consider
+are how often does the term occur in the document you're thinking about? So if you happen to have a document
+that mentions the Civil War once, maybe it's a document about something
+else and it starts by saying you know, precision agriculture has
+its roots back before the Civil War. Well that's probably not
+what you're looking for the day you want to read
+about the Civil War. Whereas a document that keeps talking
+about the Civil War might be more relevant. But the second thing you need to recognize
+is not all terms are equally relevant. Now the word the appears in an amazingly
+large number of English language documents, and so if you had
+the choice between a document that had the word the 200 times and
+civil once and war once, and a document that had the word the once and
+civil and war 50 times each. You wouldn't say well
+200 is better than 101. You'd say Civil War more
+important than the. And in fact,
+civil is more important than war perhaps. If you're coming down to individual terms. We'll formalize that with
+the concept of TFIDF weighting. This is a strategy of waiting that comes
+from the field of information retrieval. The most frequently cited source is in
+this include Salton, who was one of the real pioneers in information retrieval
+generally and as we've said before, this stands for Term Frequency
+times Inverse Document Frequency. And it's probably easier to
+just take those two separately. Term Frequency, intuitive here, how often does the term you are talking
+about appear in the document? How relevant is it to the document? A simple way of doing that for words would be to say if it's actually
+a document, how many times does it occur? But I want to give you a second example
+that doesn't involve documents with words in them. We're going to use the example we used for
+our assignments, movies. Now we're not going to take a transcript
+of every movie to figure out what words are spoken in the movie instead we're
+going to use keywords and or tags. Keywords are pieces of metadata that might
+be actor's names and actress's names. Tags are individual words or
+phrases that are applied by the community. And a tag might be something
+like mystery or suspense or New York or explosions, car crashes. And just like words that
+appear in a document, tags can applied to a document by many different
+users and therefore appear multiple times. So when we talk about Term Frequency,
+we could mean, how often does the phrase
+civil appear on the document? But we also could mean, how often does the
+tag car crash get applied to this movie. Inverse Document Frequency, intuitively refers to how rare it is for a document to have this term or for
+a tag to be applied to the to or for this movie to, or for
+any movie to have this tag. So the way we compute that is by taking
+what would be Document Frequency. How many documents have this term in it, divided by the total number of documents,
+but inverting that. Now we go the other way and we say that
+the higher the number of documents has this term, the lower the IDF value is. Which means we don't care as much
+about a term if it appears everywhere. And conversely we care a lot
+about a term if it's rare. You'll notice that we do this with a
+logarithm because the number of documents tends to be very large in getting
+this into a useful scale a logarithm seems to be the most
+effective way to do that. We'll tall about applying
+logs in other places as well. Before we talk about how we used this, let me just recap these two parts
+that we going to multiply together. We're going to take the Term Frequency. It's simplest form. How many times does this word
+appear in this document or how many times this tag
+applied to this movie? We're going to multiply it by
+the Inverse Document Frequency. A measure of, how rare is it for this word to appear in documents
+across our entire collection? Or, how rare is it for this tag to be applied to movies
+across our entire collection? We multiply this two together and
+we get a weight. And that weight is assigned to
+the particular search term or tag that we're talking about. And the bigger the wave is
+the more we factor that in when were deciding wether we have a match. We apply this again to the Civil War. The may appear very
+frequently in our document. But the appears in every document. Since it appears in every document, we're going to end up with log of 1,
+approximately. And we're going to have no weight. War might appear depending
+on the collection. If it's historical documents maybe it
+appears in a quarter of the documents. And so even if it appears frequently
+in our document it's only going to have moderate weight. Civil may only appear
+in 1 in 100 documents. In which case,
+its occurrence will have greater weight. But the greatest depending on how
+often it occurs in the document. So let's talk about how this is used. What TFIDF does when you apply it is
+automatically demote common terms. And it attempts to promote core
+terms over incidental ones. A term is core by this definition if
+it appears frequently in your document. But we should recognize that
+that doesn't always work. There are documents that
+are about something that don't say the something that
+they're about very often. A classic example of
+this is legal contracts. If you sign a contract the odds
+are very good that your name appears in the contract once or
+twice. Somewhere at the top of the contract
+it'll say something like, Joe Constan, referred to henceforth
+as the party of the first part. And then the whole contract will say well,
+the party of the first part did this, and the party of the first
+part agrees to do that. And it will never mention my name again except maybe on a signature
+line at the bottom. TFIDF, or frankly most search strategies, are going to do a lousy job
+retrieving contracts based on that. Because there's no good way to identify
+that that's a significant term. They'll do fine on the substance of
+the contract but not the participants. The other place where TFIDF is going to
+fail, is if people just ask for bad terms. But nothing really solves the search by doing weighting if
+people put in poor terms. If what you're really interested in
+is understanding something about the Battle of Antietam and
+you type in as your search, civil. Not even civil war, but civil. It shouldn't surprise you that
+you get civil litigation and civil marriage right
+alongside the Civil War. And you haven't given the engine
+enough to do anything with. And there's other techniques,
+like search completion, query completion, that can help people get
+through that problem. But they're not going to be as
+relevant for us in filtering. So how does this TFIDF weight
+apply to content based filtering? Fundamentally, remember what
+our goal is with filtering. For content filtering, we want to build
+a profile of user content preferences. And we want to build that profile most
+of the time by taking their ratings, implicit or explicit,
+of a set of objects, movies, documents, web pages And processing those
+objects to build this profile. What TFIDF does as a concept is create a profile of a document that says. Hey, here's an indicator for each keyword, tag or
+term in the document of how important this term is as a descriptive term for
+this document. This book you just said that you like,
+well it's very much about the Civil War, and
+a little bit about romance, and a lot about General Grant, and
+a little bit about Robert E Lee. And by having that profile of
+what this content is about, we then have a weighted vector
+that we can fold in to the user profile when we find out that the user
+likes or dislikes this particular book. To use the movie example,
+if somebody comes in and says, ooh, I really liked Titanic,
+the movie. We can look at the tags or
+keywords or both and say ooh, plus for Titanic. Well, that's going to give us
+something for Leonardo DiCaprio, who appeared a lot in Titanic and
+by the way doesn't appear in most movies. It's also going to give us a plus for
+romance, maybe sinking ships, various other
+things that are associated with Titanic. We're going to model that as a vector and that vector will be folded
+into the user's profile. Which is what we'll talk
+about in the next lecture. How do you fold that into the profile and then match that profile
+against future documents. Before that I want to mention a few
+variants and alternatives because TFIDF, while I called it a magic formula,
+it's not sacred. There all sorts of tweaks that are done to
+make it work better in different domains. In certain areas,
+the term frequency is mostly ignored. It's turned into a boolean. Either the term appears above
+a threshold or it doesn't. Often that threshold is zero, the term
+appears or it doesn't and that's enough. And then we only worry about terms are
+valuable to the extent that they're rare. Effectively, we have inverse
+document frequency times occurrence. In cases where term frequencies are big,
+they often get logarithmically adjusted. In cases where the particular
+collections of objects or metadata are very widely varying in size, you'll often find term
+frequency normalized. But it doesn't make sense to say
+that Civil War appears eight times in this book and it appears only four
+times in this little one page article. Therefore the book is much more about the
+Civil War because it appeared eight times. Eight times in a book feels like it's
+less than four times in one page. And so frequently you'll see term
+frequency divided by document length. In fact one particular weighting system,
+or ranking function, called BM25 which was used
+in the Okapi search engine. You'll sometimes see it
+referred to as Okapi BM25. Actually brought a lot of that stuff
+together and included frequency, not only in the document, but
+how often the term appears in the query. Because their queries could have
+weighted or multiply occurring terms and included things like document
+length as part of it. And this has become a fairly
+popular variant on this theme. BM25 itself has a bunch of
+tweaking constants in it. And depending on how you set them,
+they ignore or amplify different factors. And that's led to a whole family of
+BM variants, BM11, BM15, and others. We're not going to get
+into the details of those. Again, this is not a course
+on search engines. For the case that we do in
+content-based filtering, we'll be happy with basic TFIDF. So, last point is,
+this concept in search, but you're going to find also
+true in content filtering, can be much harder than simple
+processing of vectors of terms. You get just a few of these that
+we'll mention, but many more. You have phrases and what are sometimes
+referred to as n-grams, bigrams, trigrams, and beyond,
+sequences of words that happen together. Looking for the phrase computer science is different from looking for
+a document that has computer and science. There are lots of articles that talk about
+how the science of biology can no longer be accomplished without a computer, and
+they're not about computer science. And so understanding the ways
+to bring those things together, that's how you also get away from
+the fact that an article that talks about the political war that erupted over
+the idea of civil union isn't a civil war, at least it's not the Civil War. Adjacency is one factor that's often used
+as a way of dealing with search terms, to say, if they're close
+to each other in the query, maybe it would be nice if they're
+close to each other in the document. We're not going to get
+into that in detail. The occurrence of different terms,
+whether tags or words in a document, may have different significance
+depending on where or how it's applied. In a structured document, a term in
+the title might have more weight, or a term in a heading might have more
+weight, than a term out in paragraph 35. And it certainly might have more
+weight than a term that's in the reference list somewhere,
+that might be in somebody else's title. We might actually feel
+that way about tags, too. If we build up a set of tags and metadata
+about movies, we might say knowing for certain that Leonardo DiCaprio is in
+a movie because it's in an attribute field of tested metadata,
+is worth more than the fact that somebody tagged the movie Leonardo DiCaprio, which
+might or might not have been confirmed. We might even feel that tags from
+some users who have a good reputation are worth more than tags from other users. So significance and weighting may come up. A third example is
+the general authority or value of some document,
+or the general rating or prediction score for a movie or
+other piece of content. In search engines like Google, there are complex strategies to try to
+figure out which documents are good ones. Many of you have probably heard of
+the page rank algorithm that's computed, whether a document was authoritative
+based on whether other authoritative documents linked to it. There's other approaches as well, that include whether people follow links
+to it, whether they rate it highly. One could imagine applying
+the same strategy in a recommender system based on content filtering,
+if you also had, for instance,
+non-personalized summary data. When somebody says they're looking for
+a movie about a boat sinking, or when somebody's profile says
+they like boats that sink, maybe we should be more likely to
+return Titanic, which has four and a half stars on average,
+than Gilligan's Island the remake, which may be just as much about a boat sinking,
+but perhaps only had two and a half stars. So we could think about general
+authority or general quality. And finally,
+there's the idea of implied content. This can often be the hardest thing. What if the document never
+mentions the thing it's about? Imagine that you want to
+find the schedule for the New York Yankees, who they're playing. Now, I've looked at their schedule and
+maybe it's not surprising that the New York Yankees have the words
+New York Yankees on everything. They don't just say, well,
+we're playing Tampa Bay at home and then we're playing Chicago on the road. They say, the New York Yankees
+are playing Tampa Bay at home. The New York Yankees are going to Chicago. But imagine that they didn't,
+and that the schedule just said, May 3rd, 4th, 5th at Chicago,
+May 7th, 8th, 9th, host Tampa Bay, and
+the words New York Yankees never appeared. How could you find out
+that that's relevant? Well, one way might be to look
+at the links and the usage. Could it be that the links to this page all say New York Yankees in the link,
+New York Yankees schedule. Could it be that the links are all
+from pages about the New York Yankees? Could it be that people who come here
+come from New York Yankee pages? There's other ways to understand
+content besides what's actually there. And you could do the same
+thing in a recommender system. When we talked about co-purchasing, that's
+an alternative to direct attributes. So if we know that
+somebody tends to see or rent two movies together, we might inherit
+some of the attributes of one movie and say, even though nobody told us, there's
+something about this second movie that's relevant to the attributes of the first. It seems weird, but every time
+somebody rents this Woody Allen movie, they also rent this non-Woody Allen movie. Maybe this is a non-Woody Allen movie that
+appeals to people who like Woody Allen movies. And so you can have concepts of
+implied tags or implied content. These more sophisticated challenges
+are ones we're not going to get into in the work you do in this course. This is not a content processing class,
+and content-based filtering is only
+two weeks out of a long course. But you should be aware
+that they're out there. And if you do feel that this is
+a direction you need to go into, going to a more advanced course that
+focuses on either content filtering or search will help you get more
+information in these directions. So from today, I hope you now come away
+with a basic understanding of TFIDF and why it's needed,
+understand its limitations, and have some broad awareness
+of the issues around it. And next lecture, we will move into
+how we use this approach to build and then apply content profiles for
+content-based filtering. See you then.
+[SOUND]

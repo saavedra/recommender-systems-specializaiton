@@ -1,0 +1,322 @@
+[SOUND] Hello, I'm Michael Ekstrand,
+and I'd like to welcome you to the Recommender Systems course and
+specialization. Our objective in this video is to provide
+you with some background to understand what a recommender system is, some of the
+history and background of these systems. We're not going to be getting
+into details in this video about the structure of the course or
+of the specialization. Those will be in the next video. Here, we want to set the stage for what it
+is that we're going to be talking with you about over the course of these courses. >> And I'm Joe Konstan. Welcome to Recommender Systems and let me take you back first
+a few hundred thousand years to the emergence of recommender systems as
+ants crawled around the face of the Earth. Well, this is isn't a history course, but we are going to spend a moment on
+the history of recommendation. But first we need a little bit of
+a definition as to what recommender systems are. They're systems that help people find
+things when the process of finding the information you need to make choices
+might be a little bit challenging, because there's too many choices,
+too many alternatives. We think of these in the modern day
+system by going to Amazon.com and having it recommend a book or
+going to Netflix and having it recommend a movie, but
+the ideas go much further back. If you've ever had ants in your home, you know that ants first spread
+out individually looking for food. But as soon as one of them finds food,
+it makes its way back to the nest, leaving behind the scent trail
+that the other ants soon follow. And then you have a stream of ants
+heading straight to your food and through your home. Those ants are exhibiting
+social navigation, a type of recommendation system where
+each of the ants goes out and explores a different part of the space, literally
+space, and when they find something that they think the community would like,
+they let everyone know about it. That's not limited to ants. Even before we had
+concepts like language and writing, cavemen almost certainly
+went through the same process. In fact, it wouldn't surprise me if
+there were some smart cave women, who, recognizing a new plant growing
+outside their cave, would say gee, I wonder if this one is good to eat,
+or if it's deadly and poisonous. Now, if you're starving,
+you have little choice. You grab it, you eat it,
+and you see what happens. But if you're wise and if you understand
+the lessons of recommender systems, you might wait a little while until
+somebody else hungrier than you, or maybe just dumber than you, goes and
+grabs that fruit and tries it. That person grabs the fruit, and if they
+start looking happy and it's delicious, this is wonderful, grab some for yourself. On the other hand,
+if they look sick or drop down, writhing in pain, you won a great,
+hard earned lesson, earned at the expense of someone who
+recommended to you not to eat that plant. Well, we can go much further than this. The concept of critics goes
+back thousands of years, people who would tell us what they
+thought we should see or not see, who are the great story tellers or
+poets, or artists, or actors. And of course, critics are there to
+help us make decisions without having to go through the long process of
+seeing everything that they saw. But let's jump forward a bit further
+into the more present age and look at concepts of information
+retrieval and information filtering. Information retrieval evolved
+in response to the need to be able to ask questions about
+a large collection of documents. Now much of the computing here was
+actually done because of large lawsuits that were being handled in the computer
+industry companies like IBM, but the same technology applies to
+libraries and their card catalogs or even to companies that are building
+indexes of the world wide web. The principles are the same. You have a static content base,
+or mostly static. We don't publish new books that often,
+compared to how often we read them. Or we don't publish new webpages as
+often as people navigate to them. But we have a dynamic information need. That information need is what
+we sometimes call a query and a femoral interest that
+we want an answer to. Because of this balance,
+we spend our time and invest it in indexing everything
+we can about that content base. We build up catalogs of the library. In the old days, we would have
+three different card catalogs, one by author,
+one by subject, one by title. If a book had multiple authors, we'd
+put multiple cards in that catalog, so that when you came in saying, I'm looking
+for a book by so-and-so, someone could quickly look it up, give you the answer,
+and then move on to the next query. There's lots of approaches to this,
+we're going to learn one of them that we use in our content filtering
+later in this course. It's one that's called TFIDF, which ranks the documents that we might
+be looking at, the books, the articles, the web pages, by how much they're
+about what we're looking for. But at the same time,
+ranks the terms by how good they are at discriminating among
+the different documents or alternatives. Now this information filtering
+is still used today, but as time moved on, we gained a new problem. We gained a problem of streams of
+information that were rapidly changing. Now you may get some of these streams,
+your email is coming in with, in my case, perhaps half a dozen or a dozen
+different messages coming in in an hour. You're trying to follow the news wire, and
+it seems that there's a new article posted every minute, but you don't care
+about all of the articles posted. You just want the ones that
+are most relevant to you. Information filtering saw that
+the assumptions of information retrieval were reversed. The information need here
+is pretty much static. I have a profile of what I'm looking for, I'm looking for
+articles on recommender systems. Maybe I'm looking for
+articles that mention my name. But the content base is dynamic,
+each article flies in quickly, and I want to know about it
+as quickly as possible. So in information filtering,
+I switch my effort. I invest my effort in
+modelling the user need. What is it that I'm interested in? Maybe by creating a profile by hand or
+learning it from my preferences. But sometimes,
+just looking at relevance is not enough. Collaborative filtering emerged
+as a reaction to the problem that sometimes there's so much content that
+you don't just want what's on topic, you want the ones that
+are really good on that topic. The first efforts of collaborative
+filtering were manual efforts based on the premise that key
+words were just insufficient. These systems based their filtering
+on a community of like minded users. System called Tapestry allowed people
+to mark up documents in a database saying
+>> Who do you think might like this document or what's good about it? Another system that was called Active
+Collaborative Filtering by Maltz and Ehrlich looked at the idea of helping
+people form distribution groups to get the good content out to the right people. Today, we have lots of distribution groups
+and some of them are use very effectively to get content to the right people and
+others you wish you can unsubscribed too. But perhaps you have relative
+you defend if you said, I just don't like your humor as postings
+anymore, but the idea is very simple. It's gee,
+if somebody could look at this for me, then maybe I don't have to screen
+through it myself first and that lead to the idea of
+Automated Collaborative Filtering. Automated Collaborative Filtering,
+which is the first system that became known as a recommender system
+started with the GroupLens Project. This work done in the early 1990s did Automated Collaborative Filtering for
+Usenet News. These are discussion lists filled with
+postings, which even back then and indeed still today. People felt were mostly not very
+good even if they were on topic, but buried in there where lots of gems
+that you wish you could get to without having to redraw all
+the stuff that wasn't good. The premise of GroupLens done
+by Paul Resnick, John Riddle and their students was that users
+who are reading news articles through GroupLens would rate
+the articles as they read them. They just put in a quick number for
+a one through five and users would be matched to each other to
+find other people who had similar tastes. When you came to the newsgroup
+to decide what articles to read, you would get a personalized prediction
+of which articles you would like or dislike and how much using
+a nearest neighbor approach where combined together the ratings
+of other people like you. This is what that looked like. This is a screenshot from one of
+the earlier GroupLens Usenet news readers. This is one called XRN and
+it's a screenshot from 1995. On the top right,
+there's a set of bars made out of characters that are the system's
+prediction of how much this particular reader would
+like each of the articles. This is showing a recipe newsgroup,
+rec.food.recipes and it's showing that this particular
+reader is told you'd probably be happier with Swedish
+flatbread than with minestrone. Why? Because other people who've
+agreed with you in the past have already looked at these recipes and
+they've told us what you think. By the way, when you're done reading this
+recipe, click a button on the bottom to tell us if it's a one through five or
+hit the keyboard one through five and we'll pass that information
+on to the next person. So, does it work? It sure does. In a trial of about 200 users using
+the group line systems for Usenet news, the ratings that people gave articles and
+the predictions that the system did or would have shown them
+were highly correlated. And more important, they were more highly
+correlated in the personalized case. The benefits of collaborative filtering
+were biggest in areas with the biggest noise like rec.humor, news group that's supposed to be filled
+with funny things, but too often wasn't. But there are still big benefits in groups
+like recipes where there was a particular benefit to personalization, because all
+the recipes were reasonable recipes, but they might not match your taste. So this was more accurate than predicting
+the average, more accurate than predicting the most common and particularly more
+accurate if you broke people down by news group and found their neighbors
+in the topic they were looking for. It also worked well in a way
+that meant something to users. People were significantly more likely to
+read the articles that the system said, they were going to like twice as
+likely and people like the system. Even after the test are over,
+they spend another year using the system just because they thought it was something
+that it was valuable and worth using, so that takes us to the commercial
+error of recommender systems. By the time we're in the mid and late 90s, companies were
+springing up left and right. GroupLens wasn't a loan months afterward,
+there was a system called Ringo and Homer from the MIT Media Lab
+that became Firefly Networks. The GroupLens system became
+the company Net Perceptions, Firefly became Agents Inc. Work was being done left and
+right, and folks went out, and got these things into commercial practice. This is a screenshot from Amazon with just
+one example of the literally dozens and then hundreds and
+then thousands of uses commercially, of recommender technology starting in
+the mid-90s and moving forward to today. You can't go to a retail site that's
+successful without them trying to guide you to the products
+that seem most relevant for you. But even if you're talking about catalog
+sales by telephone or any other place where there's a possibility of
+personalization and even in stores where we might group things together if not
+personalized for the customers in general, we're seeing the technology of recommender
+systems deployed pretty much everywhere. >> So, we like to spend a little bit
+of time walking through how some of these algorithms work. We're going to cover them in a lot more
+detail in subsequent videos in this in the next course. But to give you a taste, I'm going to
+describe how classic user-based collaborative filtering works using
+the example of recommending movies. So in this system,
+we have users and movies and the users assign ratings
+to various movies. These ratings are collected and stored
+by the system in its ratings database. The system then mines this database
+in order to find correlation between users and look for how much do different
+users agree on the movie that they like, and then sits, and waits for a user to
+come in, and request recommendations. When the user requests recommendations,
+the system uses its correlations to find a neighborhood of users who agree
+with this user on what movies are good. It then uses those neighbors's opinions
+to provide recommendations for this user. The idea being that if you agree on
+a lot of the things you've seen already, then the things seen by this
+person who agrees with you might be a good recommendation among
+the things that you haven't seen. So if it makes more sense to you
+to see this in a table rather than just a big blob of users,
+let's look at this set of ratings and say, I'm trying to decide whether I want
+to watch Blimp or Rocky XV tonight. So we're going to look for users that
+agree with me in our past ratings and we see that Ben, and I agree relatively
+well on a couple of movies that we've seen, and Nathan, and I also
+agree swapping out one of the movies. And we'll find out that Joe and
+I disagree quite strongly, but we also disagree fairly consistently. Maybe I might like something
+that he doesn't like. So then Pat and I agree, but
+Pat hasn't seen either Rocky XV or Blimp. So even though we agree,
+his opinions aren't that useful for figuring out what I should watch next. So now, we look at what do these
+users think about the movies. And we see that Nathan, who agrees with
+me likes Blimp, Joe doesn't, okay? Well, Joe disagrees with me a lot,
+maybe it's still worth watching. And for Rocky XV, Ben and I agree,
+and Ben really didn't like Rocky. So, it looks like tonight,
+I'll be watching Blimp. Now, these algorithms are not all
+there is to recommend our systems. They sit in a much bigger picture, so, we have some data store in
+the collaborative filtering case. It's a bunch of ratings or
+purchase behavior, of records of the way users
+have interacted with items. It can be the repository of content,
+it can be a database of movie reviews. There's many different kinds of data but we have some kind of data that we're
+using to produce the recommendations. The algorithms crunch these data and
+compute recommendations which are suitable for the current
+user and the current context etc. These recommendations are then presented
+to the users through some kind of the user experience. For example, on Amazon you've got recommendations of
+things you, related to the current item, things that might go with things
+in your shopping basket, etcetera. The way these are presented and then
+the way the feedback is collected from the user are all part
+of the user experience. And then we have the user themselves. So, the user receives
+these recommendations and acts on them in some way. This is determined by
+the way they think about, the way the process the recommendations. Psychology is working on studying this. Their input through the user
+experience is fed back into the database to help
+with future recommendations. And what we're going to talk a lot
+about algorithms in these courses. We're also going to be touching
+on some of these other issues, how the user experience works? Psychological aspects of how users
+perceive recommendations and what it means when they
+provide some of the feedback. So that you understand how these
+algorithms fit into the broader picture of what it takes to make a compelling
+recommendation experience. >> So when we think about recommenders? We could define them as tools to help
+identify worthwhile stuff for people. And we can break them down in
+one sense along the interface. Filtering interfaces take
+a stream of content like email or news articles and
+identify the ones that you want. I happen to use filtering
+interfaces all the time in my email because I get email
+messages from my department head. And if I spent all my time reading them, I might not have time left to realize
+that the former finance minister of some African Nation wants to help me
+transfer $6 million to my account. And I'd hate to miss that opportunity
+just because I was getting work done. So, I use email filtering interfaces, but
+we also have recommendation interfaces. These can be suggestion lists or
+top ten lists but more commonly they are placements. I go to a website like Amazon and
+a bunch of products are showing up there. They've been recommended. If I use my set top box for cable, Comcast shows me a few movies or shows
+that it thinks I might want to watch. Or if I go into a store,
+I may get a coupon printed out. That's a recommendation for
+a product that they think and perhaps hope I will purchase. Finally, we have prediction interfaces. This is what we saw in the use net example
+but there are a number of cases where what you want is some sort of a score
+like a predicted rating. If I'm looking at travel reviews, I might
+expect a site like TripAdvisor to tell me, this is a four and a half star, or in
+their case, four and a half circle hotel. It's a place we think you
+are really going to like. >> So
+as we go throughout these courses and we discuss more about recommender
+systems and their algorithms. It will help to have some vocabulary that we're going to use to
+talk about the systems. And a rating,
+we're going to use this term a lot and it's an expression of preference. These ratings come in two forms, there's an explicit rating which
+is something the user articulates. The user says, I like the Iron Giant
+four and a half stars. That is the user's explicit expression of
+how much they like that particular movie. But there's also implicit ratings
+that are inferred from user activity. If I'm watching Netflix and
+I start watching a movie and five minutes into it, I stop watching it,
+and I never come back. It's reasonable to infer from that, that I probably didn't like
+what I saw in that movie. There's many cases when we can infer
+from the user's behavior how much they likely like a particular product. A prediction is an estimate
+of this preference. So the user's preference, the rating is the preference information
+that we collect from the user. The prediction is the estimate of how
+much we think they're going to like items usually items that they
+haven't seen in the past. The recommendation is one or
+more selected items for the user. So the prediction says, we think that you're going to
+like to watch Frozen, four stars. A recommendation says we think
+Frozen would be a good movie for you to watch tonight, and maybe here
+are a couple of other suggestions. Content is attributes or
+text either in or about an item. So for a book or for a news article, the text in the article itself is content,
+so is its headline. For a movie, we can mine some things
+directly out of the content, but we also have a synopsis. We have who was in it. We have its title. We maybe have some user supplied tags,
+or the text of reviews about it. All of these things are content
+related to the item. And then when we talk about collaborative
+recommendation, what we're doing is rather than looking at the attributes,
+the content of the item itself, what we're looking at is the way
+that users interact with the item. Who likes this item? What else do people who buy this item buy. Those kinds of questions
+are collaborative questions because they look at what the community
+of users together do or don't do and the patterns in their
+behavior that emerge in that context. >> So along with this we have a variety
+of recommendation approaches. There are non personalized recommendations
+this is something that is just popular or everyone who's tries this likes
+it even if it's not popular yet. And stereotyped where we may say, gee this is popular if you happen
+to be a 15 to 18 year old female. Or if you happen to be a 35
+to 44 year old Korean male. So both of those don't deal with direct
+personalization to the individual. But rather to the group or
+the population as a whole. We have product associations and
+this is the classic example of, gee people who liked this or
+bought this also like or buy that. You know if you enjoyed buying
+our Toyota Prius Wagon then we think you might also
+enjoy this solar charger, because it seems that other
+people have done so as well. These product associations are not
+personalized again to the individual. But they are connected to the context
+of a particular product that you are presumably looking at at that moment
+or that may be in your shopping basket. Content-based approaches start by learning what individuals like and
+building a profile. This is what we refer to
+as content filtering, or information filtering when
+it's about information. And then go out and figure out how
+the items that are available, or the products that are available,
+match up to that profile. And collaborative approaches learn what
+each person likes from the individual, and then use the experiences of
+everyone else in a community to make recommendations for
+other things that that person would like. >> There are several steps to
+designing and deploying a recommender. One is to collect the relevant data
+in order to inform a recommendation. A data on user's opinions,
+consumer's purchasing behavior, their experience with the item, a bit about the items themselves if we're
+doing content-based recommendation. You'd find the relevant data for
+particular purpose, if the user comes in and we define the data that's
+going to help recommend what they're going to like in the collaborative
+filtering example we saw that would be the other users' opinions that are similar
+to this user's previous opinions. Then we're going to compute
+the recommendations from this data, and finally, we have to present the data
+in a useful way that helps the user be aware of their options and evaluate
+the candidates that are being suggested. >> One final thought, tecommenders are a wonderful example
+of the techniques of Big Data. Recommenders are heavily
+about analysis and evaluation starting with this
+Big Data set of product opinions and perhaps product data,
+maybe even user demographics and other pieces of information
+we can pull together. We use that data to figure out
+the best recommendation approach. We then establish metrics that
+we're trying to optimize to and tune our algorithms to optimize
+performance against those metrics. And if we do everything right, those
+metrics are designed to maximize either some business goal, or
+user experience, or both. As we'll learn as we go forward in this
+topic, recommender systems are continually adopting new machine learning
+techniques to squeeze ever more bits of power out of the data that we have
+to provide better user experience. So as we draw this introduction to a
+close, we have to admit we don't know very much about you yet, but we're going to to
+guess that if you've made it this far, we highly recommend that you
+complete this course and this specialization on
+recommender systems. We look forward to seeing
+you in the future lectures.
