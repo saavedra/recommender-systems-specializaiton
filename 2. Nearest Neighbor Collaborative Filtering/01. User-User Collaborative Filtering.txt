@@ -1,0 +1,230 @@
+Welcome back. As promised, today, we're going to launch
+into user-user collaborative filtering. Now, you got the introduction to
+user-user collaborative filtering in our introduction to the topic,
+where we showed you the architecture and a matrix of ratings for movies,
+and the basic idea behind it. So, in today's video, we're going
+to go through sort of the details of how that's derived mathematically and
+algorithmically. And then, start working through
+some of the basic optimizations and we'll work through more of them in
+the subsequent videos in this module. We're using as a reference for
+this the 1999 paper by Herlocker, et al., which is an algorithmic
+framework for collaborative filtering. And it serves as a useful way to
+understand the basics of the algorithm and the variations that are in it. It has far more than we're covering here. Most of which is useful only if you're
+going to actually implement user-user collaborative filtering in
+the system it need to tune in. So, let's starts with a clean slate and start with the idea that if I
+wanted to do non-personalized collaborative filtering,
+I could model that in a very simple way. I could come in here and
+say, I can compute the score for a user of an item,
+let's just label that. This is our user, this is our item, and this is our predicted score. And one way to do that might be to say,
+why don't we take the sum over all of the other
+users in our set of users, so, v is another user and
+u is our set of other users, of the rating that that
+user gave this item? And then, because we've summed
+up a whole bunch of these, we're going to have to divide that
+by the total number of users. So, this is the number of users,
+this is all users, and this is a rating. And if we do that, we get the average
+rating given to this item. Well, we didn't need to go
+this far just to get that. So, we're going to do one big
+step to try this move towards user-user collaborative filtering. So, we're still interested in
+the score that we predict for user and an item and
+we're still interested in the idea that we might want to sum over
+the other users in our system. But we're now going to take the rating and multiply it times some sort of a weight. We'll come back to that
+weight in a second. And in order to do that right,
+we're going to need to sum the weights. So, let me read this more clearly. In this case, our prediction score S (u, i) is equal to the sum of the ratings
+that each user gave to that item, times some weight of how much
+this user is similar to or should be contributing to
+the predictions for this other user. It's a weight specifically
+between users u and v. If this number is high,
+this user counts a lot. If this number were zero,
+this user wouldn't count at all, and in fact,
+in the denominator wouldn't count at all. So, we could call this score similarity. We might even be looking for
+something like predictiveness. Okay, that's our first step, but
+there's a problem with this first step. And that problem starts with
+the fact that people rate often on very different scales. We've talked about this before. I maybe a positive and optimistic
+person if I think something's good. It's seven out of seven or
+five out of five. If it didn't live up to my expectations,
+I'll give it a four out of five. Well, somebody else, maybe,
+Michael, might be less optimistic. He might have high standards and
+say, well, if it's great, I might give it a four,
+but more likely, if it's good, I'll give it a three, and
+most things get a two. His two is my four. How do we account for that? Well, if we were in this
+non-personalized setting, we could actually make
+this algorithm much better If we normalized it in some way
+to the user's rating scale. And one way to do that is to say, we're going to compute S (u,
+i) that score as The average rating that user u gives to each item plus some deviation. And that deviation is going to be how much
+this item is better or worse than average. And we can, again,
+sum overall of the users, the rating that user gives the item
+minus that user's average rating. Let me read through this, our score for user u item i is,
+let's do the right part first. We're going to sum up how
+far off from each user v's own average rating they
+rated this item divide that by the number of users
+we're summing together. And then, add that to
+the average score for this user. So, let's say my average score is four,
+Michael's is two, my friend Sarah's average score is three. Michael gave this a three,
+Sarah also gave it a three also. I would come in here and say, well,
+Micheal is one above average, Sarah is at average, that's zero above average,
+that sum is one divided by the two users. And I get back that I should
+add one half to my average and predict that this is a four and a half. Now, there are some interesting
+problems that can come up here. What happens if I discover that something
+should be predicted as six and a half? I'm the big optimist here, my average is
+four and a half or five and a bunch of people who don't like things very much
+rate it three above their average. Well, most systems decide they're
+going to clump the ratings that you don't go below the bottom score or
+above the top score in your prediction You could even do that at the computation
+but you probably don't need to. But this type of simple
+normalization makes sense. So, let's take this and
+move it forward and do the same thing to
+our other algorithm but I think we're going to do
+that on our next slide. So we are going to come back here and
+say that for u and i, We're going to take my average,
+or the average for the target user, and then we will sum, Over all of the other users
+v in our universe of users. Rvi, the rating user v
+gave item i minus r bar v, the user's average rating, Times wuv, the weight for that pair of users. How much v should contribute to u? All divided by the sum over the same set of users of those weights. So that's gotten us much of the way,
+but it hasn't gotten us all of the way. The next thing we've got to ask is,
+how do we compute this weight? What does it mean to say somebody is
+similar, or somebody is predictive? And the most common technique that's used? And this is the one we're
+going to outline here, though there are other
+measures that are used. Is a correlation measure and we're typically using what's
+known as the Pearson Correlation. That turns out to be the standard
+correlation if you take an introductory statistics course or even a typical introductory math
+course that gets to statistics. This is the one that you look at. It looks at the degree to
+which things vary together as a relation to how much
+they vary individually. And a simple way of computing that Is to look at the sum for all items in our dataset of the product
+of these deviations, rui minus ru kha times rvi minus rv kha And then divide that by
+the product of the standard deviations of the two users' ratings. And we can call that our weight, wuv. There are other weights, we don't need
+to get into them in great detail. Once we get this far, we're pretty
+close to the way this stuff works. Let's take care of a couple
+of other issues and then we are going to move one last step. And, introduce the notion
+of the neighborhood. So, one of the issues that we run into is,
+what happens if the number of items that we have that
+we're basing things on is small? So, if you and
+I only have two items in common, well, we can find a linear
+relationship between our tastes. Our correlation is going to be 1. So somehow we have to worry about
+what we're going to do with this correlation if we have
+a small overlap And, there are bunch of techniques for
+that that we'll go into in later lectures. We also have to look at the question
+of what we're going to do if our data doesn't have
+this kind of scale? What if our data is unary or binary? What if it's 0s and 1s or
+1s and don't knows. And we'll use other measures to
+compute similarity in that case. The reason we built this on a similarity
+score, w, rather than building it on correlation to begin with, is that we can
+substitute other similarity measures. So, the last thing I want to add though
+is the notion of the neighborhood. What do I mean by a neighbourhood? I mean that we probably don't
+want to include every user. And so when I'm looking at this summation, there were some people I
+might not want to put in as user v in this universe of users. And there's a number of
+reasons we can do that. The first of those reasons
+is we want v not to equal u. Sort of obvious but
+if I'm predicting for you, I shouldn't throw your data
+in on the right hand side. But there's other things
+that people have learned. If you look at the original systems,
+some people want to limit the size of this neighbourhood. I don't want more than 50 users or
+200 users in it. Some people want to have
+a minimum similarity. Say it just adds too much noise
+if we put into our neighborhood people who aren't alike enough. Of course if you have
+a minimum similarity, you may not get very many neighbors. If you limit the size,
+you may not have very good similarity. There are other questions that come up,
+too. Like what do I do with somebody
+who has a negative weight? What if the correlation is negative? That we disagree. Some people would say
+that's not a problem. If you have a negative correlation,
+that just means if somebody else likes something, you're going to
+dislike it, and vice versa. And in some domains, that may really work. In other domains, we discover that
+because people self select into mostly the things they like, even people who
+have strong negative correlations, mostly end up recommending to each other
+people things that everybody hates. And that doesn't work very well. So we may want to think about how
+we deal with negative similarity. The way we're going to
+deal with all of this is by changing this u, perhaps, to a v. So what if we do our summation
+over users in a neighborhood. Everything else is going to stay
+the same but we'll have a step where we select our neighborhood and
+then we'll only count those people. And in that step, we can think
+about the size of the neighborhood, how many people we need,
+minimum similarity and everything else So, let's go forward. If we look at this in terms of the common
+characteristics of all of the user user recommenders that are out there,
+we start with the collection of ratings, we have some measure of
+inter-user agreement, I showed you correlation for unary data,
+vector cosine is commonly used. We have some form of waited combination
+of other people's ratings for our personalized recommendations and
+predictions. And we have some tweaks to
+make everything work right, neighborhood limitations, normalization, dealing with too few co-ratings to have
+confidence in a particular agreement. We can formalize this, and
+this is the notation we're using consistently throughout this course and
+specialization, that if we're computing the prediction S(u,i) for
+all users v not equal u, we can compute the weight of uv,
+our similarity matrix. We're going to select a neighbourhood
+of users v that to subset of u, with the highest weights, with some
+criteria, we may limit the neighborhood to top-k neighbors, we may limit it to
+those above a similarity threshold, we may use absolute value of
+similarity as our weight, or we may use just strict similarity, depending
+on whether we want negative correlations. We may limit the neighborhood to
+people who rated an item i, if we're just trying to do a single use prediction
+for whether user u would like item i. Once we've done that, we can compute our
+prediction with a much more nicely typeset version of the formula I've shown you,
+and we compute that again by summing up everybody's weighted
+deviations from their average rating and then adding back the average rating
+that the target user has given. One last comment about these averages,
+this is not the normal form of normalization that people with a
+statistical training would typically use. When people talk about normalizing data,
+and in fact when we normalize data
+in a number of applications, we do things like setting the mean to
+zero and the standard deviation to one to create a distribution that
+looks around the same point. We're not doing that here and the reason
+we're not doing that is that the data is often very self-selected, people
+don't rate everything in their range. We don't really get a very good
+estimate of a user standard deviation because of that, and empirical test,
+including in the air locker paper I referenced,
+have shown with simply removing the mean, subtracting out the mean is more
+effective in most cases than trying to get it down to zero mean and
+one standard deviation. Okay, what about implementing this? There's some issues here, it's pretty
+straightforward, but it's expensive. Given a number of users and
+a number of items and just because it looks horrible to
+see those those terms multiplied, I'm going to call them m and n,
+correlating between two users is roughly an order n operation,
+we gotta go over all the items. To do all of the correlations for
+a single user is m times n. All the pairwise correlations
+is m squared times n. You think about that and m is 100
+million users, and n is a million items. Ew. That's 10,000 trillion or 10 quadrillion Yuck. That's a lot of computation. And even recommendations here
+involve going through this m times n to go through everybody and
+find the right values. So, there are lots of ways
+to make this more practical. We can make our neighborhoods more
+persistent, decide we're not going to, every time somebody raids,
+update the neighborhood, or worse yet, compute it on the fly when we need it. We'll decide, here are your 200 neighbors,
+we'll update them again next week. Suddenly those ms can be reduced down to
+k, where they might go from 100 million to 200, that's much more
+computationally efficient, but when a user updates their profile
+much the data falls out of date. We can cache or
+incrementally compute the correlations, rather than compute them on the fly,
+that will save us a bunch of time as long as we use them often compared
+to how often we have to compute them. So there are ways to try to make
+this more efficient as we go, though as we'll see it's not clear we can
+make it efficient enough for many uses. Last thing here,
+we've talked about all these details as to how we make this work,
+when does it work and why does it work? We should break this down to the fact
+that this is still contingent on our core assumption that agreement in
+the past predicts future agreement. We base that primarily on the assumption
+that our tastes are stable. Though in theory it would work if
+our tastes were not stable, but moved in sync with one another. So if you and I were both working our
+way through becoming fans of fancy wine, maybe it's possible that we work our way
+up through the different types of grape and different types of fermentation or
+whatever it is that we're doing, together. But much more common is, I like
+tomorrow like what I liked yesterday, you like tomorrow what you liked
+yesterday, so we are both together here. But there is actually a basic
+assumption number two, which is that the scope of our system is
+appropriate for some domain of agreement. Now, it turns out if you're
+dealing with movies, that works pretty well, people who agree
+on movies tend to agree on movies. When we did original studies looking
+at discussion group postings, that didn't work nearly as well. People who agreed on
+postings about humor didn't necessarily agree about Java
+programming or recipes. And so you had to build a separate
+relationship in each domain. For retailers, this is a significant
+challenge, if I'm selling books but I'm also selling music and
+I'm selling appliances, does my agreement in music predict
+my agreement in appliances? Or do I need to separate that out and
+find different neighbors in each domain? So, as we draw to a close on user
+user collaborative filtering, what I hope you can take away from
+this is that we have a technique, that by finding people most like you and
+combining what they think adequately scaled in relation
+to how much they're like you, we can actually get some pretty
+reasonable predictions for you. What will do moving forward is look
+at ways of tuning this even more and then all sorts of
+special topics around it, including the idea that sometimes
+I want to base it not solely on who it is that is most like me, but
+other notions of who I might trust. Look forward to seeing you then.

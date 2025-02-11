@@ -1,0 +1,189 @@
+Welcome to the module on item-item,
+collaborative filtering. So we start with the limitations of
+user-user collaborative filtering that motivated the development
+of this item-item approach. And fundamentally, user-user
+collaborative filtering was great. It provided good results. People were happy with the predictions and recommendations that it generated,
+but it had a couple of problems. The first problem was
+this issue of sparcsity. That in most datasets, particularly when you think about the
+datasets that involve large businesses. So a retailer that might have
+hundreds of thousand of products but millions or tens of millions of customers. The number of products that any given customer would have
+rated was often way too small. And that sparsity led to
+the problem that there were often points where no
+recommendation could be made. Sometimes a user simply didn't have
+anything in common with anybody else. And in other cases, an item that there was no way to recommend
+to a large swath of users on he site. That sparsity could be addressed in a lot
+of different ways and, in fact, it was. There was work done on filtering
+agents that would put in lots of fake but systematic ratings to try and
+create artificial density. There's work,
+as we're going to discuss today, on pivoting the way we compute
+recommendations to focus on items. And there was working on
+dimensionality reduction, which will be the focus
+of our next module. This item-item approach took that insight
+that if users don't have very much, perhaps items have more because
+there's fewer items and the same number of ratings
+to be divided among them. The other problem was a problem
+of computational performance. As we saw last module,
+the computational performance for the standard user-user collaborative
+filtering algorithms was not very good. It involved things that where m squared,
+n and things that were m times n. Where m and n were the number of users and
+items in the system. And all these all-pair correlations across millions of users started
+getting very expensive. Even the incremental approaches
+turned out to be fairly expensive. We'll hear more about that later
+this module in an interview with former Net Perceptions' Chief
+Technology Officer Brad Miller. But the result was not only that
+the approaches were expensive, but that they needed to
+be recomputed frequently. When a user came in and
+only had perhaps 15 ratings. That user expressing
+preferences on three or more products could be quite a significant
+change in their preferences. And that need to re-compute quickly and
+in almost instantaneous real time. Because folks on the web weren't willing
+to wait more than perhaps a second to get updated recommendations. Caused people to look for
+alternatives to the user-user algorithm. So I want to give you the reference
+to the classic work on item-item collaborative filtering. It's a paper,
+the lead author was Badrul Sarwar. It was the recent winner of
+the 2016 Seoul Test of Time Award. And it goes through, in much more
+painstaking detail than we'll take in this course, the details of item based
+collaborative filtering recommendation. You don't need this for the course. But if you're going out and exploring item based and its alternatives,
+this is a good reference to have. So let's start with the core insight. First of all,
+item-item similarity is fairly stable. But what does that mean when
+we say item-item similarity? In this case we don't mean whether
+two items are the same by attribute. We could do that in a content space. We could say, gee, yellow legal pads and
+white legal pads are pretty similar. They're both legal pads. And they're similar to other pads of
+paper, which are more similar to pens, than they are to mp3 files because
+they're used for writing stuff. In this case,
+what we mean by similarity is do people treat these things the same
+in terms of like and dislike. Do people who like one of them
+tend to also like the other? Or do people who purchase one of
+them tend to purchase the other? And if you have a large set of items in
+your database, you'll discover that gee, rib eye steaks and sirloin steaks tend
+to appeal to mostly the same people. They may not be the same people to whom tofu burgers and tempeh appeal to. Those folks have different tastes and different items have a different
+level of similarity. So the reason this similarity is
+generally fairly stable is because the average item has a lot more
+ratings than the average user. If we have 10 or
+100 times as many customers as we have products and, indeed, many
+businesses that's 1,000 times or more. Then every item on average has10 or
+a 100 times as many ratings. And so each individual rating
+doesn't change things as much. There are some special exceptions, things like time-bound items,
+where we tend to need special treatment. It's certainly going to be the case
+that if you're buying Christmas trees, you're more likely to buy those
+in December than in March. And what they associate with maybe
+at different times of the year. So this insight is that item
+similarity is a route we can use to compute a prediction of
+a user's preference for items. Okay, let's take that in
+a little bit more detail. We are now doing recommendation
+in a two-step process. We are going to compute
+the similarity between pairs of items. We can do this as the correlation
+between rating vectors, which is useful if we have a scale
+of ratings like 1 to 5 or 1 to 7. And in this case, when you compute a correlation it's
+on the items that are co-rated. So what items does the same user rate, and then we're looking at across
+many users who rated both items. Do they tend to treat them similarly or
+differently? We could also use the cosine of
+the two item rating vectors, the angle between them in
+this multi-dimensional space. That actually works with both
+multi-level and unitary ratings. And in many cases, works better if you
+adjust the ratings by normalizing them. There are additional approaches, including conditional probability, which
+we'll talk about in a bit more detail. Second step,
+we want to predict the user item rating. And the way we're going to do that is by
+finding a weighted sum of weighted item neighbors. We'll look at the things this
+person has already weighted or consumed that are closest to
+the item we're trying to evaluate. And we'll compute a weighted sum of
+what the user thought of all of those. We could do this a number
+of different ways. We can do this as a weighted sum. We can do this as a linear regression. But whatever we're doing, we're taking the intuition here that if we
+know which items you've already evaluated. That are most like the thing
+you're considering. Then those are probably
+pretty good predictors for the thing that you're considering next. It's also possible to compute a top-N directly to make recommendations
+without predicting every item. You can do this in an approach that
+was done by Deshpande and Karypis. Where you simplify
+the items you consider to small neighborhoods around the items that
+you've already purchased or rated highly. You take all of these small neighborhoods, let's say you've had 50
+items you have looked at. You now take the 20 items
+closest to each of those and merge them together to see which
+ones appear most often and are closest in aggregate to
+the things that you've liked. And these items are likely to be items you
+are very interested in considering for the future. Of course, you can also go
+through the traditional path of predicting each item with a score and
+computing a top-N from that. But this direct top-N works particularly
+well when you're using implicit data or unary data like did
+somebody purchase the item. So what are the benefits of item-item? First, it actually works pretty well. It has good prediction accuracy. We'll talk through the metrics
+in the next course. But in the standard metrics that people
+use as to how closely does the prediction of what you think about an item match
+the ratings you've all ready given? These predictions are pretty accurate. Second, it works pretty well for top-N. It gives you good recommendations of
+the next items you might be interested in. It turns out to be rather efficient,
+at least in the case where the number of users is way larger than
+the number of items. That efficiency doesn't work if you're in
+a rare situation with a small number of users and a large product set. But that doesn't come up
+very often in practice. And because item relationships
+change more slowly than user relationships
+in this circumstance. It has the benefit of precomputability. Most of the people who started using
+item-item algorithms recognize that it would work fine to recompute item
+relationships only periodically, perhaps overnight or
+on a rotating schedule. And you'd still get pretty
+good quality of performance. Finally, it's pretty broadly applicable
+and flexible to a number of circumstances. So it's as easy to apply
+item-item to a shopping cart as it is to an individual user profile. Just take the items in the shopping
+cart and find the neighbors of those. And see what items somebody
+might want to buy next. Allowing you to do a product
+association type recommendation for an entire shopping cart. And in fact, you can see
+item-item is a simplification or not a simplification but a generalization
+of the product associations. So that it's possible to take
+an individual item and find things that are pretty good recommendations
+to go with that individual item. At the same time there are some core
+assumptions that are needed and some limitations to this algorithm. The core assumptions are about
+item-item relationships being stable. So mostly, this is a corollary
+to stable user preferences. If user preferences are stable, then
+item-item relationships should be stable. As I mentioned,
+there are some special cases. You see this with seasonal items,
+like a Christmas tree. You see this with items that have
+short lifecycles, like calendars. People buy calendars at
+the beginning of the year and they never buy that year's calendar again. Or short-lived books, sometimes political
+books, like biographies of candidates, sell really well and
+correlate with things for a month or two. And then nobody ever wants them again. Products like that are general
+temporal issues and those general temporal issues are things you have to
+address in pretty much any recommender. The main limitation, or if you will the main complaint from
+users about these algorithms is. That they stop giving
+the kind of surprising and the delightful recommendations
+that sometimes come out of a user-user collaborative
+filtering algorithm. So if you put this in really simple terms, more of the products
+recommended are expected. From out there,
+I've bought a lot of stationery products. I've bought pads. I've bought pens, rulers. It's quite like that I'll get
+recommended other stationery products. Maybe a mechanical pencil or a pad holder. It's very unlikely that if I have
+all of these products together, somebody's going to recommend a turkey or
+some form of clothing. That just doesn't happen much. It's not that it couldn't, but it's unlikely to have an item
+relationship that's that stable. The flip side of that side is
+with the user-user algorithm, because one user who's
+very much like you and really loves something,
+can get a recommendation into your set. It becomes much more possible to get
+that kind of eclectic recommendation. Somehow you get a prediction that says,
+wow, I really think you're going to like this movie,
+when you've never looked at movies at all. You've been busy shopping for
+stationary products. Now this problem is still
+being studied in the field. And in fact, as you'll hear later,
+all these measures of diversity and serendipity are items of hot
+debate in the field is to how often they're actually useful,
+and in what applications? But the intuition is clear. As you move towards stable item
+relationships that are based on lots of data, you're going to get things
+are a little bit less surprising. Okay moving forward with
+the rest of this module. As we look forward, we're going to break
+down this core algorithm in more detail. Look at a particular special
+case of implicit feedback. And with that, the unary ratings
+of either I bought it and I don't know anything at all or I clicked
+on it and I don't know anything at all. We're going to look at how we extend
+item-item to incorporate other sources of information. Look at item-item in practice, retracing
+note of how this got going in industry. And in our honors track, we'll be doing a programming lesson on
+how to program item-item and LensKit. As you complete this module, you should be able to achieve each
+of these learning objectives. You should learn to be able to
+explain both the concept and the algorithm for
+item-item collaborative filtering. And the key tuning parameters and the
+strengths and weaknesses of the algorithm. You should be able to implement
+collaborative filtering in an item-item way, both manually on small data sets. Which you'll be able to do through
+a spreadsheet that we'll give you. And by programming it if you
+complete the honors track. And you should be able to identify
+the relative strengths and weaknesses of the user based and
+item-based algorithms. And understand which is a better fit for
+a particular use case. This module has three assignments and
+assessments. There's a spreadsheet item-item
+collaborative filtering assignment and a module quiz for all learners. And then on the honors track, we'll
+have the LensKit programming assignment. Where you'll be programming
+item-item collaborative filtering. So welcome to the Item-Item
+Collaborative Filtering module. We look forward to seeing you
+through this interesting topic.

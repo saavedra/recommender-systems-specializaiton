@@ -1,0 +1,171 @@
+Welcome back. In this interview, we have the privilege
+of talking with Dan Cosley, Dan is a faculty member
+at Cornell University, who earned his PhD in our group, doing
+interesting work on recommender systems, he's now working more broadly in this
+whole social space of social awareness and social explanation, and
+all sorts of cool things. But, for today's interview, we're
+going to focus on a piece of work he did about a decade ago that
+got a lot of publicity. Because it looked at the whole
+question of what happens to those recommendations that people see,
+and do they believe them? And does it affect their opinion, having seen a prediction of what
+the system thinks they will think? So Dan, welcome,
+I'm delighted that you can join us. >> Thanks sir, how's it going? >> It's going well, so, I guess we should start with
+the question that motivated that research. Why don't you tell us,
+why did you go after looking at this question that ended up under the title,
+is seeing believing. >> Okay, so, first of all this was joint
+work with another student, Tony Lamb, and another research scientist,
+Albert, at the lab. And what we were interested
+in was people had. And people who had used MovieLens
+have been talking about when they were rating movies, they didn't
+want to see predictions, right? because they were sure that they were
+being influenced by those predictions, and that seemed like a pretty
+interesting question, and there were kind of good
+reasons to think about whether, think that an interface might
+actually influence you, right? I mean,
+there's been a lot of work where things, if you show on a wine label, you show it's
+a California versus a North Dakota wine. It'll all affect your perception of it,
+even if it's It's the same wine, right? Or if you give somebody just
+a random number in their head, then when they start thinking about like
+prices, or quantities of things later, it tends to anchor them on that number. I'm sure there's a lot of theoretical
+basis for why you might think about the fact that an interface showing you
+the prediction of what it thinks you like, might affect the way that
+you actually rate the item. And in particular, the one we chose,
+the way we chose to think about was based on this classic set of experiments
+by a guy named Ashe in the 50s. Where he asked people to come into a room,
+and they were told that they
+were doing a judgement task. So, say which of three lines on
+a screen was the longest one. And unbeknownst to the person
+in the experiment, everyone else in the room was
+a teammate of the experimenter. And so, after a while,
+they would start lying, and they would say that one of the shorter
+lines was actually the longest one. And often, the person who was
+in the experiment started agreeing with the group,
+even though he knew perfectly well, or she knew perfectly well
+that the line was shorter. And so, we wondered if these effects
+might happen in MovieLens, and other recommender systems where
+they show the rating, right? The predicted rating, right? Next to a place where you could
+actually rate the item yourself. And it's super common,
+because recommender systems need the data. >> So, what did you find? >> Well, so,
+we found that showing a prediction really does anchor people's behavior. So what we did, right, this was. Tony had this really great
+insight that a lot of movies people had already rated in movie one's,
+but a fairly long time ago. And so, what we did was we showed them
+movies that they had rated in the past. Right? And then, beside the place where, and
+we asked them to rate the movies, and beside the rating we
+showed them a prediction. All right, for some people,
+we didn't show them anything. We just showed question marks, like,
+movie one's computer prediction, yeah. Sometimes we showed them their actual
+prior rating of the movie, and then sometimes we took
+their prior rating and we added are lowered in a star from
+what they had originally rated. And so, we mixed these together randomly, so people didn't really
+know what was going on. And in fact, if you show people
+a prediction it anchored, if you show them the original prediction, they rate after their original prediction
+more often than you show them nothing. So, if you showed them nothing, they'll
+rate the same about 60% of the time lower about 20% and higher about 20%. If you show them exactly the rating
+that they had given as their prediction, it goes to 70, 15 and 15. And if you manipulate it down a star,
+it goes to 30, 60 and 10. If you show it up a star,
+it goes to 10, 60 and 30. So basically, whatever we show them,
+people tend to rate in that direction. >> So, that's a pretty interesting result, I mean, we know then that people
+are biased, a little bit. The way you modeled this,
+you could interpret it two different ways. You could interpret it as what happens if
+your recommender just isn't very good? That bad predictions might lead
+to bad data coming back in. But you also looked at it
+as the question of what if the recommender has been
+deliberately manipulated? And I know people have wondered this for
+a while. If I came in and, let's just assume for
+the moment that my goal was to get everyone to think that yours
+was the best interview in the class. I could've started the introduction
+by saying now we're going to get to what I think you're going to find
+to be the best interview, and just used my authority to do it. But I could've also-
+>> I've thought about wearing a five star t-shirt to try to influence people
+exactly in that kind of way. >> Exactly, little did you know
+we're on a nine star scale. >> Damn it. >> But we could also go the direction
+that what would have happened if I just planted four or five fake student accounts
+that each put in a little message saying, hey, this was really the greatest lecture. And so, why don't you talk us through
+what the logic was in the implications of what happens if somebody comes in and
+shills, or deliberately lies to try to make something look better
+or worse in a recommenders system. >> Right, so first of all,
+this happens all time online, from obvious spam where people
+are just posting links and comments. To more subtle stuff, they're posting
+fake reviews in Amazon and Yelp. But I've actually got some colleagues at
+Carnel including and Jeff Hinndencock and Claire who've been studying. Can you tell whether a review is fake or not, based on language
+that people are using? And it turns out that you can. And in fact, we'll get back to this. In MovieLens, people could tell that
+we were playing with movie ratings too. But the problem is that if you
+have this bad data in the system, you get downstream effect, sorry, it's a recommendor system that's using
+this data to calculate the recommendation. So, if I can get bogus high
+ratings on the system, then it's going to tend to
+be shown to more people. And it's going to be shown with
+a higher rating to those people. Which in turn,
+will influence some of those people. And so, you get this kind of vicious
+cycle of bogus in your system. So, is there any good news
+that came out of this day? >> No, [LAUGH] a little bit, so, we actually wanted to see
+whether people notice, right? And so, we, what we did was we asked
+some people to do the task, but didn't show them anything at all. We asked some people to do this task,
+and we were rating movies, but what we showed them, the manipulated
+predictions and the way we saw. And then the two groups when we saw
+some at the end of the experiment how well they liked MovieLens, right? Were the recommendations
+during the experiment useful? And was MovieLens useful overall? People who were in the conditional
+way of playing with the raise gave a significantly lower range,
+they liked their recommendations less, they liked movie lens last. And so, I'd say the manipulation was
+pretty course than what we did, right? We basically manipulated half of
+the movies for the experimental condition. But it was just 40 movies,
+and it was only 10 minutes. And somehow, we were able to
+significantly make MovieLens look worse. Now, that's not good news. But the good news is that that if people
+are reasonably sensitive to these things, and that it's likely that at
+least the companies themselves. Right, the recommender system company
+could also play around with the ratings, recommending products that they wanted
+to get off of their shelves, or recommending products with
+a higher profit margin. And to some extent,
+people can detect these things, and they'll react by liking you and
+going and doing something else. >> So, maybe the third or fourth time they
+start trying to sell you the extended warranty, you stop buying
+the television set there. Or maybe the other lesson for our class
+is if you're going to lie to people, save the lie for
+when it's really worth it. Don't waste. >> [LAUGH]
+>> You lies on small things. >> Yes, can I tell you something
+else about this too though? >> Absolutely. >> Just recommend our systems, right? This is, I mean, if you think about
+Google, right, and search results, they have an algorithm that's trying
+to pick the best things for us. And then the interface
+shows us the top ten, which then drives attention to those
+sites, which increases linking. So those, right, are, in Amazon, where it
+says people who viewed X, also view Y. Part of it is because in
+the Amazon interface, it shows you a thing where people
+who viewed X viewed Y, and so, it increases the probability that it's
+kind of a self-reinforcing effect. Or who's popular on Facebook, right? Good newsfeed algorithm, and
+how it decides to show stores to people who might actually affect the ways
+that you think about other people, and people's perceptions of
+Facebook as a system. And these are all kind
+of the same aesthetics. >> Yeah, and in fact,
+this is an argument that Google made from the beginning about why they
+didn't manipulate their algorithm. They said, look, people use us because we deliver
+the right things at the top of the list. If we start messing with it,
+people will notice and they won't think we're a very good
+search engine, and I think what your study is showing is that has the same
+effect in the recommender system. And we don't know if we people can
+distinguish between manipulated and bad. But in either case,
+they don't like getting bad results. Yeah, but I mean, also in either case, the interface is shaping beliefs and
+behaviors to some extent, right? And that's something,
+no matter what algorithm you put in, even if it's the best one or
+the most accurate one, it's going to tend to tweak people's
+opinions in that direction and have real consequences for
+the world, right? The rich get richer because-
+>> The rich get richer and/or the biased get more biased, right? So, MovieLens has this big dataset. And baked into the MovieLens dataset
+is the MovieLens algorithm and the MovieLens interface. And so, every researcher who ever has
+studied recommender system's has a little bit of influence based on the fact it came
+from these people through this process. And that's something that
+it's easy to forget about. We're doing kind of systems work or data
+mining work, or big data kind of work. >> As long as we're there, the early
+users of a system like MovieLens. Shaped the experience for
+the 100,000 people that followed. And this might be a message that,
+if you really want influence in the world, go find a system that's going to be
+popular, and be one of the early contributors of data, so that you can
+shape the direction the system goes. >> For sure. Think about Wikipedia too, right? A lot of the Wikipedia ethos and the way
+it is today came from that first 50 or 100 people who came along, right? Sort of shaped what it
+means to be Wikipedia. Whether a Wikipedia article is,
+what's allowed into it, not allowed into Wikipedia. The question, right,
+there's 50 million things to bet on. >> Right.
+>> You only have so much time. >> Always a challenge. Well, it's been delightful
+talking with you, and thank you for sharing these insights
+on whether seeing is believing, and what happens when manipulations
+work their way through the chain of perception, opinion,
+expression, and onward. >> Yep, thanks for
+having me, appreciate it.

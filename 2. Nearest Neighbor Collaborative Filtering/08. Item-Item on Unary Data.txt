@@ -1,0 +1,54 @@
+Welcome back, in this video, we're going
+to talk about how to adapt the item-item collaborative filtering algorithm to work
+with implicit feedback or unary data. We've talked about how to
+do it over rating data, but it also works quite well over various
+kinds of unary data implicit feedback, such as link clicks,
+song plays, product purchases. But there are a few tweaks that we
+need to make for the algorithm. If you want more details on this,
+I refer you to the Carapace paper that's going to be linked to in
+the notes as accompanying this module. So first, we need to represent our data. We have the standard user
+item rating matrix but we need to represent this kind
+of purchase data or play data. What we can do, what's often done is
+using a logical 1/0 representation. So an item is 1 if they, rating is 1
+is they purchase and 0 if they haven't. We can also use the purchase
+counter play count, so if we have data about users playing songs,
+we can represent, let's say the rating is the number
+of times the users played that song. And 0, if it's 0 if the user
+has never played that song. We don't pay too much
+attention to the zeros. We represent things as zeros that,
+there's some issues with that. For example, the fact that they have not played a song
+doesn't mean they don't like the song. It might just mean they
+don't know about the song. But, for the purposes of computing
+our recommendations with item-item, we don't worry about that. Also, in a large item space, most items are not going to be
+relevant to any given user. So, the zero's are probably
+irrelevant items even though some of them may be items
+to use you would very much like. There is also mean-centering
+we have a bunch of ones, mean-centering is not useful for
+thing to do. But instead, what we can do is we can
+normalize vectors to unit vectors. If we normalize the user
+vectors to unit vectors, then we get this notion that
+users who like many items, provide less information about
+the value of any particular item. We can also, if we have count data
+we can apply a log function to it, to decrease the impact
+of very large counts. Cosine similarity still works for computing the similarities between users
+or between items, works quite well. We can also use conditional probability as was done in the Deshpande and Karypis paper. So our cosine similarity, the w i j = cos( r ), usually normalized. Or w i j = probability that the user purchased i given that they purchased j. And there's some additional modifications
+that you can make to improve that. It becomes very,
+very similar to association rules. You can think of it effectively as
+plugging the association rules into the item-item collaborative
+filtering algorithm. It's not symmetric, so if you're doing the
+model build with conditional probability, you have to be very careful to make sure
+that you're using the probability function the right way. Because the probability
+of ri given rj is not equal to the probability of j given i. We also have to change how
+we aggregate the scores. For counts, etc.,
+weighted average still works fine, but for binary 0/1 data,
+the weighted average doesn't work. And the cy, the cy, suppose that
+we computed the weighted average, But the ratings Are a bunch of 0s and 1s. So for the items the user's bought,
+you're summing up the weights multiplied by a bunch of 1s and then you're dividing
+by the weights again which equals 1. Which is not a very useful way
+to distinguish between different relevancies of items,
+if all the items have relevance of 1 or not a number because there
+are no related items. So instead what we can do is we say this S (u, i) = the sum of the j and the items purchased by you, w i j. We can also truncate this So we only consider the top k items. The neighborhood selection
+strategy is unchanged, we still pick the most similar items. So in conclusion,
+item-item basically works for unary data. There's a few things you have to change. You'll need to test the variance
+with your data, your context, and again, the material in the next course
+in evaluation is going to help you to do that.

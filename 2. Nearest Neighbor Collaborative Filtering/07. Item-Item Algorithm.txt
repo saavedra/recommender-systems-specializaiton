@@ -1,0 +1,136 @@
+Welcome back,
+in the previous video, we saw the basic idea of how we can do
+collaborative filtering based, rather than looking at users,
+looking at related items. This lecture, we're going to discuss,
+in significantly more detail, how the item-item algorithm is structured
+and how to do the computations. So in the previous module,
+you saw the user-user algorithm, which hads this scoring function. Where the scores for a particular
+user item, for a particular user or computed by looking at other users and
+seeing their preferences for that item. But, we can also average over
+items instead of users so rather than looking at the users, we can
+look at other items rated by this user and compare their preferences
+to the item in question. So the basic structure for
+this algorithm is that we pre-compute item similarities over all pairs of items,
+and then we look for items similar to those that the user likes
+or purchased or has in their basket. With that structure,
+let's look in more detail at what goes on. So we saw our user-user one looks like the score for user U item I equals the sum of other users V W U V for
+the weight. We had a normalized,
+the neighbor's normalized rating. And we had the weights in
+the denominator to compute the average. Instead, we could look at
+the we look at the items. So score user u item i = the sum, instead of summing over other users, we'll sum over other items. J, in some neighborhood N,
+of the weights between i and j and the user's rating for j. So this is very,
+very similar except the weights are between items instead
+of between users. And we use the current users rating for
+the item or for other items, instead of other
+users rating for the current items. But the basic formula looked very similar,
+now, there are a few things that we, a few outstanding issues that
+we have to address here. How do we compute similarities,
+how do we find neighbors? Do we need to do any of the kinds of
+normalizations to the rating data that we did in the user-user example? So we'll start with the question
+of how do we compute similarities. What is the weight ij? And we can use the same
+kind of thinking and reasoning that we used in the user-user. We can look at the similarity or
+the correlation. And we can think of this as a vector,
+we can think of this as statistics but it turns out that we
+want the same formula. We want the cosine similarity
+over normalized vectors. So the normalized vector of ratings for
+item i and the normalized vector of ratings for
+item j. Which is equal to the dot product. Over the product of the vector lengths. And if we expand this vector notation,
+we get a sum. Of rui ruj each user's rating for i times its rating for their rating for j over square root of the sum, Of the squares of the values. That is what the vector notation we have up here expands to this. And then we, this normalization,
+if we expand the normalization. If we assume that we are normalizing
+by subtracting the mean of each vector, then this case we're just subtracting
+item means instead of user means. Then we get, This kind of a formula, divided by the square root, the sum. This should look very familiar,
+this is the Pearson correlation. Again, if we compute these
+lengths over the whole vector not considering what items are or are not present in the other vector or what user are or
+are not present in the other vector then we get a useful
+self damping effect. To attenuate the similarity between items that do not have very
+many users in common. But it gives us the Pearson correlation,
+which is a statistically robust way of asking how related are the ratings
+from one item to another? Specifically, how good a job does a user's rating for
+one item, say Star Wars, predict their rating for
+another item, say Frozen. That's the question
+the Pearson correlation asks, that's the formula we have here. It's convenient to think about
+it in terms of the vector, the cosine of normalized vectors. Because if we do this mean centering, we can think of it as a cosine and we just
+treat all the missing values as zero and we get our useful self damping
+effect with no extra work. But that's how we can go ahead and that's
+how we can compute the similarity between our different items to
+compute our weights. Then we have the question of well,
+how do we pick our neighbors? Well, we want to refine our notion of N, to say we want the neighbors of an item,
+i, with respect to a user, u. Because, if the user hasn't
+rated the neighbor this formula, the computation formula here only
+works if we actually have a rating. It doesn't work if the user
+has not rated the other items. So we have to limit our neighbors to only those items that have been rated by user u. So, what we can do is we can look at k most similar items to i that u has rated. That gives us our neighborhood and
+finally there's one more thing. If you recall, when we looked at,
+when we computed the user-user scores. We normalized neighbor
+ratings by their means and then we added back in
+the target users mean rating. Do we have to do something
+with similar with item-item? It turns out that it's useful to do that,
+when we're computing these cosine similarities, over the item
+mean normalized ratings. It works better to used
+them to interpellate item mean normalized ratings as well. So, we need to do one final modification
+improvement to our formula. We're going to say the score
+of the user and item equals the sum of j in our neighborhood. Of the weight between i and
+j the user's rating, for j minus j's meaning rating, Divide by, The sum of the weights. And if you throw out negative similarities
+the absolute value doesn't matter but I like to include it anyway just to
+keep the formula complete and correct. Then we add back in,
+The average rating for the target item because we subtracted out
+the average rating of the other items. This gets us back, so
+the scores actually a rating prediction, we can use this to rank items etc. Now that we have the mathematical
+underpinnings of how the algorithm works let's look at how this then
+structures into the algorithm itself. So we've got a few components,
+we have our item similarity function. This similarity of output can also
+be called an interpolation weight. We refer to it as WIJ, we have a model builder that's going to
+compute the item similarities. As we discussed in the previous video, item similarity are often more
+stable than user similarities. So, it make sense to
+compute them in advance and then use that pre-computed data to
+speed up the final computation. We're going to have our
+neighborhood selection strategy and score aggregation function So the item similarities, we usually use the
+cosine similarity between the item rating vectors normalized by
+subtracting item mean. We treat missing values as zero, we score the items using our scoring
+function of so, we score item by item. For each item to score, we find
+the similar items rated by the user, compute the weighted average of
+the user's ratings of those items,. We average the normalized ratings and
+then we denormalize when we're done. There are other methods that can be
+considered for this such as linear regression but weighted average
+is again common and works well. We pick our neighbors by picking
+the k most similar items, a good value of k is important. If it's too small we won't get accurate
+scores, but if it's too large we'll also get inaccurate scores because we'll
+be picking up too much noise. Many rating data sets 20
+often works very well, but again you'll need to test and find good
+values that work on your data set. Building the model is one of
+the ways item-item really gets big performance benefits over
+user-user collaborative filtering. We can pre-compute the similarities for
+all pairs of items, the naive way of doing this takes O of N
+squared where N is the number of items. But there are two shortcuts we can take, one, if our similarity
+function is symmetric. That is if the, if Wij equals Wji then we only need to
+compute the similarity function once for each pair of items. No matter which way they appear and
+use that for both directions. Also for most similarity functions
+we can skip pairs of items. If two items have no users
+that have rated both of them, many similarity functions will be zero. Well, if we know that that's the case for
+our similarity function, then we can use the data of who rated what
+to skip a lot of similarity computations in some situations. We can then truncate the model, so we don't need to keep
+the whole item by item model. We just need enough neighbors
+to find neighbors to score with. Also, all the zeros don't matter
+since they're going to fall out of our weighted average. So what we can do is we can drop
+the non-positive neighbors just only save positive similarities in the model. And we can pick a model size and say for each item we're only going to
+keep say, the 4,000 most similar items. We can pick that model size to balance
+the accuracy of recommendations we want to be able to do in covered,
+because if it's too small we won't be able to find neighbors for
+some user item scores. But if it's too big then
+we're wasting space and memory storing a lot more
+similarities than we use very often. So you want to balance that for your
+particular application, your data set, your computational resources, etc. To build the model itself, the algorithm
+is basically a nested loop for each item, for each other item,
+compute the similarity and save it if it's positive,
+then clear all but the M largest values. This does not take into account the
+ability to skip ones that are sparse or the symmetry, you can apply both of these
+optimizations when you implement it. But this is the naive approach that
+you can use as your starting point and then iteratively get better. If your application and your data set
+benefits from the improved performance. So to conclude, item-item is an efficient,
+relatively straightforward algorithm that can get very good performance
+in a variety of situations. There's a few different parameters that
+do need to be tuned for your data set. In the next couple of videos
+we're going to look at various tweaks of item-item
+collaborative filtering. How to apply it to unary data and implicit feedback there's a the few
+changes that have to be made to do that. Then how to repurpose it and augment it
+with additional data and extend it with additional concepts that can be useful to
+integrate with the collaborative filter.

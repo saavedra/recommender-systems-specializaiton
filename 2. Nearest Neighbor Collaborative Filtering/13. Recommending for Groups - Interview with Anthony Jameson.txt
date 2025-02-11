@@ -1,0 +1,186 @@
+Welcome back. Today's interview we've brought back
+Tony Jamison Principal Researcher at DFKI German AI labs. To talk about an interesting
+challenge that we don't talk about nearly
+enough in recommended systems. How do you recommend not for
+an individual, but for an entire group of individuals, each of whom may have
+their individual preferences? Welcome back Tony. >> Glad to be here Joe. >> So why do we start with just
+an example of the kind of place where group recommendation
+has shown up in the past? >> Yeah, we can take one of the very
+first examples from the late 90s. This MusicFX system was designed for
+a gym. So imagine you often go to a gym,
+and while you were working out, music is been played through a loud
+speaker so everybody hears it. So then the question arises
+sort of music should be played? Now the MusicFX was in a studio
+where they had 91 radio stations, each of which had
+different styles of music. And consequently, the problem was to
+choose 1 of those 91 radio stations which was a good match for the musical tastes
+of the people who happened to be there. Who may have been 2 or 3 people,
+or maybe up to 25 people. >> So obviously if I were doing this
+I know what music I would like, but how do you pull together music for
+3 or 5 or 25 different people? >> Well, first thing you have to do is
+figure out somehow what their musical taste are and their ways to doing this,
+what they did at MusicFX is quite simple. They asked people to fill in a form,
+like the one you see here. These are three scales with five points
+ranging from hated to love it, and each person would have to go through and check one of these boxes for
+each of these 91 radio stations. And this was the basis they use for
+it using stations for the group. >> Interesting, well, we'll come back to
+this example, but can you think of other examples where we need to make a selection
+that matches a larger group of people? >> Well one popular system these
+days is Doodle which is used for arranging meetings. And here as some of you probably know what
+each participant does is go through sort of calendar and indicate when they're
+available and when they are not, and sometimes in intermediate state. So here this fourth person who would be
+just about to introduce her preferences for times. >> Neat, so I think what this raises is
+that, we have some interesting choices, as to how we make decisions. And how we make the recommendations
+given all these different inputs, and since we have Doodle on the screen,
+why don't we start there? And we can see right now it looks easy
+because there's one time everybody can make it, but
+when it doesn't work out that easily. How do we end up with
+a meeting time from Doodle? >> Well with Doodle it's pretty easy
+because it's not actually a recommender system it just collects the information,
+and whoever's organizing the meeting
+goes in and makes the decision. So, that person is essentially doing what
+the group recommender would have to do, and then they figure out
+what the best solution is. That means that they can be
+pretty clever for example, that David is the big important boss and
+Richard is just a lower level person. Now the group leader may want to give
+the President's to David's taste. >> And Doodle gives a little bit of help
+by showing this tallies on the bottom, as to how many people can
+make it to a given time. And I know from my own experience one of
+the things I've always done with filling out Doodle balls,
+is if nobody could make it time. I didn't even bother
+marking it anymore because, I knew nobody would pick a time that
+big boss David wouldn't make it. So why bother with typing an extra clicks? >> Exactly that's a good example of why
+the so called specification of preferences is quite different for group recommenders
+and for individual recommenders. That if you happen to be one of
+the later people to fill in your times. You can save time simply by checking
+what other people have marked and just simply not bothering with the dates
+like this Tuesday the 13th which are obviously not going to
+be chosen anyway. So in that sense preference specification
+for group recommenders often takes quite different forms than it does for
+individual recommenders. >> Well let's go back now
+to the example of MusicFX. You obviously can't have somebody sitting
+in the gym reading through all of these profiles and picking a station. You need something that's fairly
+automatic because what we want is for people to focus on exercising. So, how do MusicFX decide
+of which genres to play? >> Yeah, essentially what it
+did was give an overall rating. >> So how did MusicFX do this? >> Essentially, for each radio station, you tried to figure out the overall rating
+of that radio station by the group. Let's look at this example, here we have
+four other people in the gym besides you, Ann, Betsy, Chuck, and Dave. And they have given these rating here. So intuitively, you would think
+that the overall rating for the group at this point would
+be this fourth step here. Now to make it a bit more precise,
+is suppose you're giving your own rating. Let's say you actually
+happen to like step four. One thing the system could do although
+it's not exactly what it did it is compute the median. They need the medium of these five values
+which would then be this fourth step. Now if you happen to give five then that
+would become the median because then you're in the middle there. And similarly if you happen to give three,
+that would become the median. If you give only a two or one, the median would still be three
+because that's the middle value. And so if the system does this for all of these 91 stations which
+is of course no difficulty for a computer, then it has basically
+a profile of the group as a whole. And then it can see what the most
+popular station would be at the moment. >> So, this maybe an approach has
+some interesting benefits that it seems like half the people are reasonably
+happy, but potential drawbacks. You mentioned this isn't
+exactly what MusicFX did. What did it actually do? >> Well on one hand they used a more
+complicated type of averaging median with sort of average square. But that is not the most
+interesting aspect, one thing they did in the beginning
+was to impose a threshold. Saying that no station will be
+considered if even one person hates it as in this case here. And they thought that was a cool idea
+because as you just indicated didn't want to make anybody miserable. >> Well, this is interesting because we
+had built a system called Polly lens that was basically the multi user version
+of Movie lens that's still out there. And we had to face the same question, and we decided to go against
+the idea of averaging or even median what we picked for Polly lens
+and I'm not claiming this was right. In fact we know it was wrong, was that we
+said that the score we would predict for a movie, was the prediction for
+the person who liked it the least. So that if there was a movie that five of
+us really would love then the sixth person would hate, and there was a movie that
+all six of us could barely tolerate. We'd go to the one that all six
+of us could barely tolerate. And it was interesting
+because what we learned In the process was that was
+a pretty lousy recommender. Because it meant that that person
+who liked things the least always drove the decision. And that the person who was
+willing to be grumpy and who just said I don't like much of
+anything, ended up picking the movie. And when we looked at how people
+make decisions in the real world, they often ignore the person
+who's always grumpy. Deciding that, that person is
+not going to be happy anyway, we might as well get with the rest
+of us like and left them be grumpy. This also raises the issue
+of manipulability. Whether people honestly disclose their
+preferences or whether they instead say something to try to get the effect
+that they want rather than be honest. How does that work with
+the system like MusicFX? >> Yeah, actually that came out very
+clearly as one of their first results. They had this system as I mentioned where
+if something is hated wouldn't be used. Sort of related to the misery
+approach you just mentioned. Now, what they found would be the people
+would explicitly choose that hate rating simply if they didn't
+especially like something. Not if they thought it would be some
+better station then they said they hated the current one,
+whether they hated it or not. And consequently this system
+soon became unuseful. You would soon get to a situation where
+no music at all could be played because someone would have said they hated
+it even if no-one really hated it. So that was a clear
+example of manipulation, in fact they changed that algorithm
+very quickly to avoid that problem. >> Yes I remember Joe McCarthy the person
+who led the effort of MusicFx telling the story about, the people in
+the gym who would exercise their power by rating something hated when it was
+playing so they could change the music. And watching when they've
+changed the system so that people who went to do that and tried
+it discovered it didn't work anymore. Which apparently led to some people
+being quite disappointed that their power had been diminished. We should point out that that kind
+of manipulation occurs even in a system like Doodle. We probably all know people
+who are very accommodating and scheduling a meeting and they will check. I could be available all
+of these different times. There are other people who say
+I really want to meet Wednesday between two and four. So those are the only times I'm
+going to check on the meeting form. And it requires a social process to figure out whether you respect
+those people's constraints. Whether you cut them out of meetings
+if they start being too difficult to schedule, or whether somebody has to apply
+social pressure to say, you know what? You need to provide more times,
+you're not playing as part of the team. So this whole problem of
+manipulation is a real one. I should-
+>> Yeah. >> Go ahead. >> Sorry, and you just give it a good
+characterization of what a mess it can be if people start manipulating, and even if
+people are aware of the problem and try to solve it by applying social pressure in
+the right, it's still quite difficult. You can't really force people to be
+honest, but the interesting thing is there are some aggregation algorithms
+which to force people to be honest. For example is median
+one has the advantage, that no matter how evil minded you are. You have nothing whatsoever to gain by
+specifying anything other than your true preference. Not to leave that mathematics
+as an exercise for your students but if you just look
+through the various different cases. You can see that you will never have
+anything to gain by specifying anything other than what you really believe. And that's the best thing because, and you don't have to worry about all those
+processing that you just mentioned. Of course it also implies that you have to
+convince people that it's true that they have nothing to gain by manipulating. The nice thing about the media, this is so simple people may actually pretty
+well see what is the case. >> So, while we talk primarily
+about the algorithms here, maniputability, calculation. We should point out that this
+is in a larger context that involves specifying preferences,
+decision making at the end. All of those aspects to come up with a
+reasonable use of a group recommendation. And some of these will come up later in
+the class when we're talking with pro approve from EPFL, whose done a lot
+of work in the listening preferences. But I know that you have some thoughts
+particularly about interfaces and ways of thinking more creatively about
+how people might express preferences. When we're dealing with groups of people, particularly groups of people who
+may already know one another. >> You and I talked a moment ago about the
+fact that, for example, when using Doodle, people will often save time by just not
+bothering with times that are obviously inappropriate. But there are more subtle ways in which
+people can take advantage of what they see other people to have specified. Why don't we have a look at a slide for
+this purpose? We saw this slide before, but
+here's a point we didn't mention. Let's suppose you are this new person here
+who's going to edit your preferences. And let's suppose, you don't really feel like having a
+meeting at lunch time on Monday, the 12th. But you sort of see that if you don't
+express willingness to take that time, there's not going to be any good time. So you figure, well, let me Just help the
+whole group out a bit to make it easier to find a solution so you actually specify
+that time as one when you're available. Okay this is a phenomenon of simulation
+that we noticed about ten years ago when I first started to study this sort of thing. And it turns out to be quite important, in fact just this year as the CSCW
+conference there was a study involving what the million Doodle
+users where a tendency was found that. If users can see what other
+people have already specified, the group's whole tendency will
+converge on a solution more quickly. Because people tend to assimilate their
+preferences in the way that I just indicated. >> And I think others have found similar
+things in areas like travel where. If you make the preferences
+of different people visible, then when one of them sees, my partner
+wants a beach and I want skiing. They can converge towards a compromise
+which might involve three days skiing and three days at the beach. Much more easily than if they're simply
+seeing the results of scores associated with each one of them. Well, this whole area
+of group recommendation is obviously an interesting and
+challenging one. And thank you for joining us to shed
+some light on the challenges and techniques and group recommendation. >> Sure, yeah glad to do it and
+feel free to visit my home page for more information. This was just a tip of the iceberg,
+and it's a good area for creative people to get involved in.

@@ -1,0 +1,50 @@
+Welcome back. In the last few videos, we've seen how
+to implement item-item collaborative filtering, how to apply it
+to different kinds of data. In this video, we're going to talk about how to extend
+item-item collaborative filtering with additional concepts that can be
+useful in different kinds of domains. Item-item's a very good algorithm for
+extending because it's built of a number of simple parts with
+well defined interfaces. We can modify these individual parts,
+we can swap them out and recombine them in various ways. And it's fairly easy to understand
+what these kinds of extensions and recombinations and reconfigurations
+are doing to the algorithm. So I'm going to walk through a number
+of examples of ways that we can extend item-item collaborative filtering. You'll see a lot more
+of this kind of thing in the last course of the specialization,
+where we talk about hybrid algorithms, but there's a number of things that we
+can do right now with item-item. One example is incorporating a concept
+of the trustworthiness of users. If you remember from the interview
+with Paul Resnik in the first module, it can be useful to look
+at the trustworthiness, the reliability, of a user when
+we incorporate their ratings into the overall collaborative
+filtering structure. So, one way we can do this in item-item
+is if we have some kind of a global reputation score for a user. We can weight users by trust before
+computing item similarities. What can this look like is when
+we compute our weights, wij, We can add in a reputation score,
+I will call it rho, for each user, For the normalized rating. And then similarly, we can,
+in our denominator we will, Include our rhos. So that each users who have high trust,
+high reputation, have more impact in the recommendations. You can see this in Massa and Avesani's 2004 paper on
+Trust-Aware Collaborative Filtering. We can also extend it with
+notions of importance for items. Between two similarly similar items,
+we might want to consider one that has, is somehow more important to
+the overall space of items, to be a better recommendation. One application of this is when
+we're recommending research papers. It can be useful to incorporate notions of
+how highly cited a particular paper is, in addition to how similar
+it is to another paper. This is similar to the idea of scoring
+web pages by how central they are. And so the solution, one way to do this, is to weight the paper vectors by
+using PageRank of HITS or another scoring system that computes an authority
+or an importance score for an item. We could also take
+the item-item structure and replace the weights with
+something else entirely. For example, the similarity
+between item document vectors and content-based filtering, effectively
+building item-item content-based filtering instead of
+collaborative filtering. The core structure of the item-item
+algorithm doesn't care how its similarity is computed,
+and this can work relatively well. Finally, we can directly derive weights, instead of computing
+them from a similarity. By looking, using machine learning or optimization approaches to find
+coefficients that directly minimize, for example, the squared error
+of predicting ratings. We're going to see more of this
+in the next module applied to a different recommendation model. But there are a variety of optimization
+algorithms that can be used to directly learn these coefficients. To conclude, item-item collaborative
+filtering is a very flexible and versatile algorithm. You can build many interesting and different kinds of recommenders
+by reconfiguring it, adding additional concepts, reweighting
+vectors, and those kinds of things.

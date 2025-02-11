@@ -1,0 +1,40 @@
+Welcome back. In this course,
+we're going to move away from the simple popularity and
+the content based approaches to look at a version of recommendation
+called collaborative filtering. In collaborative filtering,
+we ignore the user and item attributes. We don't care what's in the item. We don't care who the user is. We only look at the interactions
+between users and items. And we mine patterns from these, such as looking at what
+people like you also bought. This has two significant benefits. One, it allows us to develop algorithms
+that operate independently of the characteristics of the particular
+items being recommended. It also allows us to mine interesting
+pattern, such as other users who also bought all of this Red Sox paraphernalia,
+really like the clam chowder. >> So the key concepts in this course,
+first, nearest neighbor collaborative filtering. As a concept, as you've just heard, it's based on the idea of finding
+a set of people like you, and understanding what it is that that
+set of people like you also like. We'll start with the user-user
+collaborative filtering algorithm, an algorithm that directly forms
+neighborhoods of other people. And we'll explore topics such as the
+formation of neighborhoods and the tuning parameters that make this algorithm
+work when it works particularly well. We'll also look at alternatives for historic agreement as ways
+of building neighborhoods, things like building neighborhoods
+based on social relationship or trust. We'll then transition into
+item-item collaborative filtering. Where we pivot things around and
+look at relationships among items defined by the users who have
+experience with each of the items. We'll deal with issues such as unary data. What happens when we only know
+about likes, but not dislikes? We will look at hybrids and extensions that can bring new information
+into item-item collaborative filtering. And we'll be talking about the practical
+implications of item-item collaborative filtering, including how this algorithm
+really got its start in commercial use. Finally, we'll pull together a bunch of
+advance topics, including the challenges of getting started with a recommend your
+system when you don't have much data yet. Recommending for groups. Explaining recommendations,
+and threats and attacks when people might try to
+undermine a recommender system. >> This course is structured
+around these algorithms, with the first two weeks spent on
+user-user collaborative filtering. Where we'll have an assignment to do
+basic user-user collaborative filtering in a spreadsheet, an Honors Assignment for
+those of you taking that track, where you'll implement user-user CF in LensKit,
+and then a quiz over the concepts. Weeks three and
+four will be similarly structured, looking at item-item collaborative
+filtering and the advanced topics. Again, with an assignment,
+a programming assignment and a quiz to test your general
+knowledge of the subject. >> So, let's go on into the course.

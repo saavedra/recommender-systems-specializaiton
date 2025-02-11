@@ -1,0 +1,210 @@
+Welcome back. We're delighted in this video
+to have an interview with Dr. Nava Tintarev, a research fellow at
+the University of Aberdeen who's known for her work and her writing on
+explanations in recommender systems. She wrote a lovely article in the UMUAI journal that
+we'll have a link to on our website. She also wrote a chapter in
+the Recommender Systems Handbook. And she's joining us today to tell us
+a bunch more about recommender systems. Welcome Nava. >> Thank you.
+I'm really excited to be here. >> So let's start right at the beginning. What do you mean when you talk about
+explanations in recommender systems? >> Right, so a lot of the time recommender
+systems work like black boxes. So let me just show you. So what you see here is a recommendation
+from MovieLens, actually, and it's a movie called Purple Rain. I might wonder,
+why on earth is it giving me this movie? Is it Yoda that's sitting in a box and just magically decides that
+this is what I want to see? What's actually going on here? >> So what kinds of things
+could be going on here? Obviously we've studied
+the algorithms here. But can you explain that kind
+of complexity to somebody who's just getting a recommendation for
+a movie? >> Yeah, to some extent you can. And really this is something that Amazon
+has been doing for quite some time. So you can have something that you've
+bought in the past and it's trying to tell you based on your previous behaviors that
+it's recommended to you in that way. So people have looked at
+different ways that you decide how you make a recommendation and
+how you decide the recommendation is good. Some people have looked at basing it
+around the recommendation algorithm, and this is what we call transparency. And this is really what Amazon has
+been doing up until this point. So how is this recommendation made? Well, other people like you
+in the past have done this. And other people have looked
+at optimizing other things. So let's help people make good decisions. And this is a little bit different
+from the transparency aspect because we're looking
+at why not sometimes. So while Amazon is always trying to
+persuade you or trying to make sure that you're buying something, you might also
+have a scenario where a recommender system might want to tell you actually,
+I don't think this is that good for you. And one scenario where that comes up
+is when you're comparing a search scenario with a top end list. So, a lot of the time when you're
+going to a system like Amazon it says you should buy this item, or
+you should buy these sets of items. But other times you might be thinking,
+hm, I want to go to the cinema. What should I see next? The likes of MovieLens is actually really
+good for that, because you can look at which movies have come out recently,
+and what your prediction for them is. In that case, you might get
+a poor prediction and it says no, well, maybe you should go and
+see this anyway. >> So I see that notion of helping me
+understand how to make a better decision, and the concept of transparency. Which saying, well this was the data that led me
+to make this recommendation for you. Tell me about some of the other things
+that you have here like trust, and efficiency. >> Right, so trust is a really interesting
+one, and especially because people usually think that if you give a transparent
+recommendation, it's actually going to gain people's trust, and they're going
+to come back to the system more. This hasn't always been the case. So sometimes people have worked on
+making a recommendation transparent, and then people didn't trust it all that much. And they were just asked, so how much do you think the system
+has your interests at heart? And they thought well maybe it doesn't,
+maybe it doesn't get me all that well. Efficiency is particularly relevant when the explanations aren't
+given as a one-shot. So sometimes when you track with
+a recommender system you say, well, what's good for me today? And it just has that one chance to
+find the items that you should like. But other times you can
+have a bit of a dialogue or a conversation with the system. So you say, okay I like this camera but can you give me one that's
+got better resolution? Or can you give me one that's
+a little bit cheaper than this? And then it keeps narrowing down the
+options until it finds the thing that is right for you. And so the length of that conversation, or how many interactions you're
+having with it, or the number of errors that you have along the way can
+be used as a measure of its efficiency. So how quick is it to help you find
+the recommendation that you need? >> So it seems like,
+there's really a lot of different goals, somebody could be using
+a recommender explanation for. And at the extremes we could say well, I just want to inform, or I'm hoping
+to convince you that this is right. But, you're showing
+it's a lot more subtle. How does all this play together when
+somebody's trying to design a recommender system and thinking about explanations and
+whether and how they should be part of it? >> In the ideal world you'd want
+to optimize for all these things. But as I was hinting on before,
+you can't really do all of them at once. So it's really good to be aware
+that there are actual tradeoffs between these different things. So as I hinted before, a transparent explanation isn't
+necessarily one that gains trust. An effective explanation that is helping
+you make decisions might not be persuasive because it might tell you
+this isn't good for you. So you need to think about these
+things a little bit more carefully. >> There's a lot of different situations
+where this arises in the real world before we even bring in
+recommender systems. If I go into an electronics store and
+the person working there says, here's a television I think would
+be good for you, I may ask why. And assuming that the person is
+interested in persuading me, the explanation is probably not
+a recommenders systems explanation. The person's probably not saying well it's
+good for you because 100,000 previous people came in and the ones that
+own your stereo bought this TV. But may come back and
+talk about features and say, well it's good because it
+has the clearest picture. Or it's good because it comes
+from a high quality brand. Does that different set of types
+of recommendation, whether we're using the underlying recommender
+data, whether we're using attributes or other things, come out the same way
+when we automate these recommendations? >> So are you talking about personalized
+verses non-personalized explanations here, just the different types of
+explanations that can be offered? >> Just the different types, and the
+degree to which explanations may draw in information that wasn't part of making
+the recommendation in the first place, necessarily, but might be helpful
+to the user in making a decision. >> Right, so one of the interesting things when you're
+making explanation is that they don't necessarily have to be true to the
+algorithm that they were computed with. So if you're looking at the slide
+here with me, I'm calling them explanation styles because they might
+be consistent with a certain algorithm. So you have something that's based
+on ratings of similar users. But you might have an explanation
+that looks a bit more like this one. That looks at the features of an item. But there are definitely
+these different styles. So if we go back to this, this is an explanation that
+came out in a paper in 2000. And this looked at how other
+people like you graded an item. So this is, in some ways,
+saying that it's popular. But it's not only saying that
+it's popular to anyone, but it's popular that people that
+graded like you in the past. And so what we have here is three columns. The one on the right is people
+that gave it the highest ratings, a star rating from one to five. And there's lots of fours and fives. So most people, 23 out of 33 in fact,
+like this very much. And there are a few people that
+maybe didn't like it so much but they're not as many as
+the comparison that really liked it. And this has actually been found to
+be a really persuasive explanation. So when asked whether or
+not people would like to see this movie, a lot of people said yes, you know what,
+I think this is a good way to tell me that's its sort of
+reflecting my interests. >> Well presumably if you put
+that same explanation up and it had lots of ones and
+twos, it wouldn't be so much persuasive as it would be
+helping somebody make a good decision. Because the data would be there for
+them to analyze on their own. >> Right, yeah. >> Wonderful so, let's take a look
+at that example you gave for Pandora of how you could take a recommendation,
+and now think about it in content. >> Sure, so here we're actually
+describing, instead of a movie we're looking at a song, and
+Pandora is a music radio station. So it's a music recommender. And it's looking at the different
+properties of the song. As you can see, it's quite in depth. It talks about features that possibly
+would be difficult to find automatically. And indeed, this is something that
+algorithmically is a bit of a challenge. If you, for every new song that comes into
+the system, need to know these properties, this is a really costly type
+of explanation to generate. On the other hand, it's very
+helpful in that it gives a lot of properties that people might
+be making decisions on. And that's, again, a tradeoff that you,
+as a designer of a system, would have to consider. >> And for people who are watching this
+who may not be familiar with Pandora. This wasn't a case where the users came
+in and said I like sparse piano solos and leisurely tempo, but rather that Pandora
+has classified all of its music. And taken feedback from users' ratings or the equivalent, what people chose
+to play or to stop playing. And figured out that there's
+a content profile based on this using content filtering techniques. >> That's right, the attraction
+mechanism was Pandora's actually, or has been historically very simple. So it's either a thumbs up or thumbs
+down rating and listening behaviors. So absolutely no information given
+in terms of what they actually like. So the explanation is content-based but the user never explicitly says
+that this is what they like. >> Wonderful, want to tell us about
+the other explanation styles that you brought up here? >> Sure, so I haven't got any more
+screenshots of them just here. But I think I'd like to draw
+your attention particularly to conversational recommenders. As I mentioned, they're this collaborative
+recommendation and this content-based explanation here are, It's pretty much
+one shot, whereas in other cases, you might be interacting with
+the system as you go along. So every set of recommendations
+that's given and each iteration might be explained based on
+the criteria that had been given so far. >> All right, and just to wrap this
+together with some of the things that those in this class will have seen. A case-based style of explanation
+might be is as simple as saying, gee, you liked this restaurant. And it has a similar type of food and
+a similar type of ambience. And therefore,
+we can make the link to something that was an individual case
+that you would have liked. And they've seen examples where
+that's used as the recommender. And it's nice to know it can also
+be used as an explanation, perhaps, when the recommendation
+was generated differently. >> Right, and this is quite interesting
+because it actually interacts with the way we present the recommendations. So we just jumped forward here. This is screenshot taken from Spotify
+which is another music recommender and here's it's recommending something for
+me to listen to. And the explanation is based
+on two previous items. So I don't what about these, this music that's actually similar to
+the song that it's being recommended. But it's using them as cases, as representative of the sort
+of taste that I have. So it's saying this is similar
+to a top item, in some sense. In the previous example that I have here, Purple Rain has several items
+that are similar to it. So Purple Rain can be seen as
+an explanation or justification for these other items. But we don't know much about
+the properties of that in this particular instance. >> No, good example. So, you've talked about a lot of different
+mechanisms for explaining recommendations. How do we know if
+the explanations are any good? >> Right, so we were looking at
+the criteria just before and I think it's really important
+to have these set out and to understand that there
+are tradeoffs between them. I am particularly excited about
+looking at effectiveness. So making sure that people are making
+the decisions that are the best for them. And one way of doing this is looking
+at before and after writings. So the idea is you're given
+an explanation or recommendation and asked well,
+do you think you're going to like this? What's your impression of this item? You give a rating. And then you go and actually try it out. You either buy the item and
+bring it home or you watch the movie or you go on the holiday. And then you're asked a second time. Right, what's your rating of it now? What do you actually think of it? And you look at that difference. So did you change your opinion? Did the explanation give you
+the information that you needed? If the explanation is perfect,
+your opinion is not going to change. The explanation gave you all
+the information you wanted. You knew you were going to love it,
+and you loved it. Or you thought you didn't like it,
+you had to go with friends anyway. And you know what? The explanation was right,
+it was just wasted time. And maybe it set your expectations
+at the right point and you could enjoy it with your
+friends just as a social thing, not assuming that it was actually
+going to tailor to your tastes. >> Wonderful, and
+then this of course the reason, since that's a very labor
+intensive evaluation process. That the more we know about the types
+of explanations that are effective in different circumstances,
+the more we can use them without having to carry out that
+experiment in every given case. >> Yeah. >> So, well, thank you for
+this wonderful introduction. Is there anything else you want to
+leave us with in your thoughts about explanations? >> Think about the explanation algorithm
+that you have and whether or not being true to that algorithm is actually
+what you want to do in your explanations. The second thing, think about how the recommendations
+themselves are being presented. Is this just one item that you're trying
+to explain or is it a set of item? And then maybe you want to look
+at the interactions between them. Or you might want to look at an item and
+similar items to it and so forth. You might also want to think about how
+people interact with the recommendations. Is this a one shot or is this
+a conversation that you have with it? Do you give people examples so
+that it helps them jog their memory and they can work from that? Or do you want to help them
+search through a whole body of possible recommendations and then they
+can make up their mind from that. And finally, yes absolutely. Think about what you want to
+achieve with your explanations. Are you trying to just improve
+the transparency of the system or do you actually want to
+gain the user's trust and to make sure that they loyally come
+back to your system time and time again? Or is it really most important that
+they make the right decisions? Is this a critical domain and is the main thing that they're actually
+accurate in the choices that they make? Also, I just would like to recommend,
+as I said, there is a book chapter on the topic. I think it might be
+linked from the web site. Otherwise it's linked from mine,
+and I hope you find it interesting. >> Well, thank you.
+We will link people to your website
+where they can find that. And again, I appreciate you joining us. Thanks very much. >> Thanks a lot.

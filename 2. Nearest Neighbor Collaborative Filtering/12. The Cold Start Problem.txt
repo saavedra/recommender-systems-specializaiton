@@ -1,0 +1,152 @@
+Welcome back. As we continue the final week of the
+course, the week where we bring back some advanced topics and clean up some topics
+that we haven't had a chance to cover, we didn't want to miss the cold start
+problem, the subject of this lecture. So our goal is to get you to
+understand that there's actually many cold start problems. The problem of how do you deal with
+a recommender system when a new user arrives, when a new item is added in, or if you're just starting
+a system from scratch. And we want you to understand some of the
+approaches that exist to these problems. We're not getting into
+technical implementation here. We just want to give you an idea of
+the types of approaches that are use in both research and commercial practice. So let's start with the new user problem. Any recommender has this challenge. Somebody shows up for
+the first time and what do you do? The problem, simply said,
+is we don't have a profile. We don't have any preferences. What are we going to give this user? Now, if your system is not personalized,
+this isn't the problem. You give the user whatever
+you give everyone else. So if your system presents items
+based on whatever's newest, whatever's cheapest, whatever's most
+popular, you can stop listening. But if you are personalizing,
+you need to come up with some possible useful default to
+personalize to this user. There are a number of these that are done. A simple one is to start
+with items that are popular. They have two benefits. One is popular items are things
+a user is likely to be interested in, because they're popular. And two as you get user
+reactions to those popular items you may get a lot of quick data that
+will help you personalize rapidly. If all the users saw were esoteric items
+that you have a few ratings on it may be hard to build a profile. But if the user comes into a movie
+system and is suddenly taking a look at Star Wars and Titanic, very quickly you
+find out something about the users tastes. The disadvantage of course
+of popular items is that, they may be things the user knows
+all about and has no interest in. And so
+this is going to be domain dependent. An alternative to generic popular items
+would be demographically relevant items. Actually in one of the lectures back in
+module one, I showed you this example. Drawn in that case from Brooks Brothers, where it showed me a site
+with casual shirts. Presumably derived from behavior
+I'd shown on other sites. You can also do this if
+you know something about the users age, sex,
+geography, even country. To come up with popular items or
+relevant items that fit a few attributes of the user
+even if they're not truly personalized. A second approach is to build
+your initial experience more closely around product association
+which is one of those techniques that's not personalized, but feels personalized
+because of the ephemeral personalization. So, I could show up as a new person
+with no profile at Amazon and wander my way through before very long
+it's showing me things that are related to my current product, to my recent
+browsing history, to my shopping cart. It starts to feel personalized even if
+they don't really have very much of a profile on me yet. And a third possibility is to use other
+sorts of data to build a basis for personalization. Social network data, referral data,
+did you join this site or visit it because somebody sent you here? Are you going to log in with your Facebook
+ID and allow the site to get information about your network, which might
+include other people you trust? All of these techniques have
+two goals at the same time. One of them is to get you going quickly, the other is to get you into a set of
+activities that might lead to feedback. Explicit ratings or implicit ratings that
+can then be used to personalize further. If you decide that getting data to
+personalize further is the most important thing, you might start a system like we
+did with the research movie lens system. Where before you can even get in you
+have to tell us a few things about your preferences. Rate ten movies before
+we recommend anything. I don't recommend this for a commercial
+site trying to sell something but it's not a bad idea for a site whose
+interest is primarily in building up personalized databases of experience. You could imagine something that says,
+look, we can't do anything useful for you unless you tell us five or ten
+things about what you like and dislike. And so here's some different
+ways that you could do that. Once we've done all of this,
+in an ideal world we would phase in personalization as feasible
+based on the profile. In fact many systems just do a cut over
+when they hit a certain threshold, but phasing in a balance between
+real personalization and other things makes a lot more sense as
+your try to detect when you have enough data to start doing real
+serious personalization. Do want to note before we move
+on that what you're looking for does depend a lot on
+the type of recommender. If what we're looking for
+is an user-user or item-item recommender, we're very
+interested in do we have enough ratings. If we're looking at a content based
+recommender, we're wondering when do we have enough of a keyword vector
+to start making some matches. If we're using SVD or
+another dimensionality reduction model, while ratings may be how we get data,
+implicit or explicit, what we're really looking for is do we have what seems
+to be a reasonable model across the coefficients that represent the
+particular dimensions in our taste space. In any of these, there are ways to go and
+look at how discriminating a profile is across a set of products, but we're not
+going to go into that in this course. New items also represent a challenge. And in some ways it's very
+much a similar challenge. The problem is, you can't recommend a new item because
+you don't know who would like it. But in order to recommend it,
+you need people to give you feedback. Ratings, implicit ratings, experience. And you need that quickly to
+start recommending this item. So what do you do? Well here things
+are a little bit different. We don't worry about alienating items. We're not worried that a new movie
+is going to run away because we started making matches for it. We worry about the users,
+and so we have two choices. We can degrade our recommendations by
+going to pure content based approaches or other forms of similarity with
+existing items as a proxy for any other type of data
+that we really want. Or, and we can do both of these,
+we can recommend the items to some users even though we don't
+have a basis for doing that. Maybe we call these out. We say, hey, here are some new and
+notable items. Maybe we recommend them to random users
+in the hopes that a few people will find a few of these interesting and
+start to rate them or experience them. Or we could do this with
+a well-chosen set of users. We might want people with diverse tastes. Or people we have a reason to believe
+might like something in this category. People who are tolerant of getting a few
+recommendations that might not be good because we don't want
+them to leave the system. People who we think have
+the right interest in diversifying what they look at. And perhaps most important of all,
+people who might have influence. Meaning people who have enough ratings and
+enough correlations or the equivalent in different algorithms to have this item pass from their
+profile into other people's profiles. Pedro Domingos at the University of
+Washington did some wonderful studies, looking specifically at the question
+of if you want to give away a certain number of products,
+who do you give them to? And who you give them to is
+a balance between two things. What are the chances that they like it? And what are the chances that,
+they let other people know, and pass on the word to others,
+that they like that. And that's the can be studied in
+the context of a recommenders system. Finally, what happens if you just want to
+start a recommender system from scratch? In some sense,
+you're in the worst of both worlds. You have nothing to anchor to. You can't say, well, we'll use some of
+the items, we'll use some of the users. So how do you get a new
+system bootstrapped? If you have the opportunity,
+getting your data from another source, what's sometimes called syndicated data,
+could be useful. This could be content data. This could be rating data. When we launched the movie
+lend system back in 1997, we actually did that because we had about
+2.7 million ratings from another system, digital equipment corporations, each movie
+system that they were willing to give away for somebody else to launch a research
+system when they closed theirs. And we didn't know who the users were. But it gave us information about movies
+and it gave us information about profiles we could correlate with so that as long
+as we got it up quickly, which we did. As new users came in they rated a few
+movies, their profiles would match against the old each movie users who
+we had no way to contact but we had that data and
+that would get things going. Eventually we didn't
+need the each movie data. It got out of date,
+it had no movies in the last ten years. But to get started that
+was an effective way. Other people design systems that don't
+have recommenders as a starting point or at least don't have recommenders
+that depend on data from users. They may have recommenders that
+are entirely attribute based. And they capture the data
+as they go along. So you can imagine if you
+were doing a music service. You might start with a music service that
+says, look, all we really know is things like genre, so we'll have people
+select a genre and play it. But will mark when they say hey, I want to play that song again or don't
+play that song again or other things. And over time you can
+evolve into something that is a more sophisticated taste. You might move from only having
+attribute data to having a content based filtering system, to at
+some point having a more collaborative filtering system based on one or more of
+the technologies we have talked about. But in any case launching
+a new system is challenging. There is plenty of research
+in this general space. It doesn't always get very far for
+a commercial application. Much of that research focuses on using
+other forms of data, on tagging, on using social networks,
+on techniques to infer or boost ratings. A lot of these are cases where you get
+a few ratings and you write a script, or an agent that projects other ratings
+to try to fill up the matrices. There's also a handful of good
+research on how to get more data, strategies for eliciting preferences. How do you ask people? Do you ask people for comparisons? Do you ask people for individual ratings? Do you ask people for rankings? And some of this preference elicitation
+work also can be very useful in getting things going. But in the end, data is valuable. And a recommender system succeeds in
+many cases because it has enough data, and that provides an obstacle
+to others doing the same thing. So that's the end of this lecture
+on The Cold Start Problem. It is a challenging issue that many of you
+will come up against if you start building systems or using systems. It's not that hard to deal with
+new items and new users, but its awfully challenging to deal
+with entirely new systems. [SOUND]

@@ -1,0 +1,181 @@
+Welcome back. In this video, we have with us Brad
+Miller, professor at Luther College, who's also involved with building out industrial
+recommender systems in the first boom of e-commerce and the recommender systems
+that came with them in the late 90s. Welcome to the course. >> Thank you. >> So in this module we've been talking
+about item-item collaborative filtering and that it solves some of the scalability
+challenges that arise when you're trying to do user-user collaborative
+filtering on large sets of data. But you were there when
+that development happened. So how was the idea born? >> Yeah, so let me take you back even
+further than the initial birth of item-item and just talk a little bit about
+scaling in some of those early days. So, we're talking about the time
+frame of 1996 to 1998 here. When you think about it, the time
+when today's incoming undergraduate were [LAUGH] maybe a year old, so
+this is ancient history in some respects. But we had a major release at Net
+Perceptions that we code name Photuris, which itself an interesting story
+because that's the a Photuris is a bug that eats fireflies. And Firefly was the name of the company
+that was founded by a group of students from the MIT Media lab. And whom we competed against
+fiercely in those early days. So that was our,
+this was our Firefly killer release. [LAUGH] So the goals for
+this release I have on a couple of slides. >> Okay.
+>> And as I said, these are kind of ancient history slides. You can see what we were shooting for
+was 10 to 12 million users. Which probably doesn't seem like
+much to anybody these days. But. That was kind of the scale that
+www.Amazon.com was at back in those days. A million rated items, we wanted, this was our first stab at kind of
+creating a distributed architecture. And it was a, there was another requirement that
+we didn't partition the data. So that was a very interesting, one of
+our early attempts at scaling was to take the data and say,
+well, you know what. All users are kind of alike. So let's put a million here, and
+a million here, and a million here, and which ever pot you happen to fall in, that will be the group of users that we
+try to find the correlations for you from. In the user-user world. Amazon was not happy about that. They didn't think that, that was very
+fair, and they didn't, they weren't buying off on keeping, on partitioning
+these users into different buckets. because they thought, well, your soul mate
+could be in in a different bucket from you and that wouldn't be a good thing. If you were missing out on those
+potentially great recommendations that you could get from being in
+the same bucket as your soul mate. But the real ancient history in this comes
+from the hardware requirements that we were working on at the time. And these were,
+we're talking about some of the most advanced machines that money
+could buy at the time. And so a 4 processor Ultra SPARC
+running at a whopping 200MHZ, a gigabyte of RAM which of
+course is nothing these days. And an Oracle version 8 was kind of the
+preferred backend database at the time. So on the next slide we have a little bit of data. These were our goals. This is just a good software
+engineering lesson that we learned at Net P was I wrote these goals
+up on a great big white sheet of paper from a flip board and I had
+them pasted on the wall of my office and so everybody had to walk past these goals
+every day and this was a stretch for us, this was probably one to two
+orders of magnitude better than we had ever done before was what we were
+shooting forwith these performance goals. And so, in those days,
+this is kind of how we measured things. Normally, a company like Amazon,
+or any other e-commerce company, they would want to get a top ten list. Here's the top ten things that we
+think you're going to like, and so we wanted to be able to do a minimum
+of ten top ends per second. A minimum of 25 predictions
+per second per CPU. So that's a slightly different metric,
+because what we're talking about there is if you're going to throw a product
+up on the screen for a customer, and you want to show how
+many stars it's rated. Or on a scale of one to five, or whatever it is that you're
+going to show to the customer. Then you need to just make
+the prediction for that. For that particular item. And then decreased latency going
+from a round trip time to make the calculation of 100
+to 200 milliseconds, so those were our performance goals and
+that was in the user-user space. And given those constraints,
+we met that release, we met those goals but man,
+we just we couldn't squeeze. We just couldn't squeeze any more
+performance out of the algorithms at that point in time. So but of course Amazon kept growing. [LAUGH] As did other customers. And so they really wanted more and
+more performance. And the big performance
+breakthrough really came one day. When our CTO at the time,
+Paul Bieganski, came in and he had been kind of playing around
+on his own trying out some different algorithmic strategies and
+he had this kind of crazy idea. Well what if we compared
+items against items and this had kind of come out of a lot of
+talk about shopping basket analysis was a kind of popular term that was thrown
+around looking at what do people have in their market basket and looking at
+the contents of other market baskets. And maybe just using those market basket
+similarities to make recommendations to people. So the cool thing about the item-item, was that we could do a huge part
+of the computation offline. And so we could come up with these
+vectors of co-occurrences of items that people had bought together. And so if you've got item
+a in your shopping basket. Here, just with a single vector lookup. You could find out, okay. Here's all the other things that people. That people had in their
+shopping baskets or had purchased throughout
+their purchase history. So, you could kind of take,
+if you were purchasing five things today, you can take those five vectors and
+very quickly add them together. And come up with some very
+reasonable recommendations for what other things people might
+be likely to want to buy. So completely different model. I mean we were almost depressed
+>> [LAUGH] >> [LAUGH] when we came up with this, because it seemed so,
+so simple at the time. Like, why didn't we think of that before? Particularly when we could see that
+the results from that were all so stunningly good, so that was kind of
+the birth of the item-item algorithm. >> So rolling that out allowed
+you to scale much more easily. What effect did it have on
+the recommender quality as far as you could observe and tell? >> You know, that was as far as I can
+remember and as far as we could tell. It didn't really. It had no noticeable impact on
+quality of recommendations. At least from a user
+experience point of view. Now, the difficulty of
+course is that if we think about the metrics that we used to measure
+the quality of our recommendations. We were typically used to the mean
+absolute error as a metric. And it's kind of comparing apples and
+oranges, so there was no mean absolute error that came
+out of that early item-item analysis, it was simply, here's some of things
+that you might want to recommend or it might be a score like this
+was bought 10,000 times. [LAUGH] Along with it's like
+the the beer and diapers story that everybody hears about from
+convenience stores, right? It's that analysis shows that 6 times
+out of 10 when somebody comes in and buys beer they are also
+going to buy diapers. Maybe it's the other way around I don't know
+>> [LAUGH] >> [LAUGH] I don't remember the causality there but so
+it was hard to numerically say, well, this is a superior algorithm because
+we've reduced our mean absolute error by 0.2 or,
+that would be great [LAUGH]. >> [LAUGH]
+>> 0.05 or something like that. Yeah. >> So with actually building these out and
+deploying them in a variety of commerce situations and
+getting feedback from your clients, feedback and seeing how they perform,
+what are some things that show up when you actually try to use
+these algorithms in anger or in practice >> [LAUGH] >> that you might not see with the experiments you do in
+the classroom and the laboratory? >> Sure well I think one of the things
+that I always think about with respect to this is just that these are just
+absolute numerical algorithms, they have no idea what
+they're recommending. So sometimes the things that they
+recommend can be really surprising >> [LAUGH] >> to you. In particular there is a great
+story about Great Universal Stores, which was a big call center
+over in the United Kingdom. And one day, there's a group of Net P. The executives that were over
+visiting the Great Universal Store's executives because they were doing about
+a three month trial of our software. And so they hadn't signed
+on the dotted line yet, but if they did sign this we're talking
+about a multi-million dollar deal. So this was huge for us,
+at the time, to get this deal and so they were doing a tour of the call center,
+and they were standing behind
+one of the operators there. And the operator was gong
+through a order processing with some other woman on the phone. And this woman was ordering this and that. And then she ordered two canned hams. And so the operator pressed the button
+to see what might be some good items to up sell, and the top thing that appeared
+on the list was an exercise bicycle >> [LAUGH] >> [LAUGH]. And I think all the Net P executives
+kind of gasped and the call center operator kind of looked behind
+like really, I'm really going to do this? But she boldly went forward and she said, well today we have a sale
+on exercise bicycles. Would you be interested in
+purchasing one of these exercycles? And sure enough, the woman without
+missing a beat on the phone took her up on the offer and ordered an
+exercise bike to go with the canned hams. >> [LAUGH]
+>> [LAUGH] You never know what you're going to get when you let these
+algorithms loose sometimes. Some of the other interesting
+things that we ran into had to do with negative correlations, right? And positive correlations. So there was always
+the story of James Taylor, because everybody loved James Taylor. So, you know, anybody that loved,
+that liked things that James Taylor did. So many people liked James Taylor
+that there was this group of just popular items, right? So that was something that we
+actually kind of had to work against, in those early days, was let's okay let's
+try to filter out some of these things that everybody likes because that doesn't
+really add value to be recommending >> Yeah. >> things that everybody likes. Conversely, there are things
+that everybody hates. [LAUGH]
+>> [LAUGH] >> Apparently like going on vacation in Cleveland [LAUGH] which was sort
+of another famous story because everybody rates Cleveland low
+when they're doing their, and no offense to
+the viewers in Cleveland. >> [LAUGH]
+>> [LAUGH] I've been there, it's a nice place. But as far as this vacation
+application that we had been developing Cleveland
+had a lot of low ratings. So there was a number of
+people that were correlated because of those negative ratings. Right? And so as the algorithms worked out,
+sometimes if you were positively correlated with someone,
+even though lots and lots of people hated Cleveland if you were positively
+correlated with someone you would get Cleveland as a recommended
+vacation destination. >> [LAUGH]
+>> So those are some stories that come to mind. >> So
+anything that you would recommend that our students consider if they're
+going to go and say they're working with a company trying to build out a
+recommender technology into their product? What kinds of things should they think
+about as they're going to actually go out and do that and try to provide some benefit to their
+users or improve their bottom line? >> Good question. I think just incorporating those recommendations in as naturally as you
+can is an important thing to think about. Although nowadays they're
+just sort of pervasive. It's like they're everywhere, right. So they are just today kind of naturally
+kind of the part of the fabric, of what you see on the web. In the early days, this was something new
+and unique and different and nobody knew. [LAUGH]
+>> Yeah. >> People really wondered about
+how you're coming up with that? Are you spying on me? >> [LAUGH]
+>> So and I think back then people were much more touchy about privacy
+issues than people seem to be today. So, the fact that tons and tons of data is being collected on
+you with every click that you make on the web is something that people
+sort of expect to have happen today. It was something back in 1998, 1999 people were very concerned about. It was like, well, wait a minute. [LAUGH] You're keeping
+track of what I click on? [LAUGH] But still I think it's
+important that people understand that they're having this sort of
+relationship with you and your site. And that you respect them,
+that you as a site respect your users and the data that they're giving you. And that when you are gathering
+data from your users, that you as a site have to
+respect their privacy, and make sure that people know okay,
+this is why we're gathering this data. This is what we're going to use it for and this is the benefit that you're
+going to get when we use your data. So I think that still may be a good
+universal thing to keep, to remember, if you're in e-commerce or
+any kind of online application. >> Thank for being with us today. >> Yeah, thank you for having me. [SOUND]

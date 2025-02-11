@@ -1,0 +1,151 @@
+In this lecture, we're going to
+be talking about threat models. We've talked some throughout
+the course about privacy, noise, robustness for against attackers and
+the recommender. This video is going to talk about how
+to think about the threat models, the things that could damage your
+recommender system in a general way. It'll deal with privacy,
+it'll deal with robustness. We'll primarily be thinking
+about malicious behavior, people trying to extract
+information they shouldn't have. Or people trying to disrupt the system for
+some reason, but it also has implications for benign
+problems such as inconstinent ratings from users just due to the fact that users
+don't rate things consistently. The core question that often
+comes up is what does it mean for a recommender to be secure? You want to talk about
+a recommender secure it's robust or maybe it protects privacy. But we need to think about these things
+carefully in order to better understand exactly what kind of security or what kind
+of robustness or what kind of privacy protection the recommender application or
+algorithm provides. So we want to think about a threat model,
+where we're trying to protect something that's important to the recommender or
+to users, from someone who is trying to accomplish certain
+things, and has certain capabilities. And, if we don't think about what
+capabilities we assumed that the attackers has, and we should generally assume
+a generous set of capabilities. Then it’s difficult to think about where
+our implementation might not be adequate. And also if we don't think about what
+is it that we're trying to protect, then it's difficult to formulate clearly
+exactly what protections we're providing. And there may be things where we have
+multiple things we want to protect, but protecting one makes another vulnerable. So for most of the rest of this lecture,
+I'll go through several examples of protections that a recommender
+might want to provide, and talk about the threat model
+underlying those protections. So we had Paul Reznick here,
+we talked about the influence limiter. To protect recommender accuracy and
+neutrality, it's ability to accurately recommend in an unbiased
+fashion items that users will like, from malicious users who want to push,
+promote or kill particular products that they might be associated
+with or associated with competitors too. And what they can do is they
+can create fake account. And they can populate these accounts with
+ratings and use these ratings to try to promote or harm the particular
+product they're targeting. And that's threat model, we want to
+protect accuracy neutrality from malicious users who want to push our kill
+products and can create fake accounts. And the influence limiter may provide
+protections from other threats as well, but this is one of the key
+threat models in any kind of protection from a shilling attack. And so what it does is it requires
+users to prove themselves. Malicious users have some threshold
+to cross before their ratings can be incorporated into prediction,
+and that threshold is designed to measure how much value they're
+providing in the recommendation process. And so it effectively tries to make
+the system resilient to those users. Alternative approaches are attempting
+to detect attacking users, shilling users, and remove them from
+the rating data set or discount them. There are other approaches
+to resilience as well, such as making algorithms that
+don't have as direct a mapping, from what the user does to
+the final recommendations. But still do an effective job
+of accurate recommendation. A more general, not necessarily more
+general, another aspect that can also incorporate some more benign things
+is we want to protect the recommender accuracy from users who either
+want to disrupt its quality. Maybe they're just out to give
+the recommender a bad recommendation, provide bad ratings so
+it gives users bad recommendations. But this threat model, it turns out,
+also deals with users who are just normal users, and by the fact of
+being people, and people aren't terribly consistent in the way they express their
+preferences, they give noisy ratings. And they can create profiles and ratings. And this is basically a normal de-noising
+problem, dealing with either malicious or natural noise. Malicious noise is bad
+ratings introduced for the purpose of disrupting a system or
+promoting or killing particular products. Or a natural noise is just what
+naturally occurs in the fact that we're measuring people's preference. They both fit in this framing. Recommender systems literatures,
+variety of techniques for dealing with this detecting bad ratings. Either just attempting to attack noisy
+ratings within a user's data set or having users rate things again, and using that to detect ratings
+that are particularly noisy. We might also want to
+protect user privacy. So maybe protect user data from
+other users of the system. So we don't want one user to be able
+to figure out what another user's ratings are. There are some systems were
+user ratings are public. For example, Goodreads, your ratings are generally
+shared at least with your friends. But other system ratings are not as
+public or they're publicly aggregated. They are who provided what ratings
+is not public information. So if we want to protect user ratings,
+information about that from other users of the system who
+want to know the private opinions of their fellow users, and they can create
+profiles and they can manipulate ratings. One early recommend the privacy attack
+took advantage of the problem with Pearson correlation and
+user-user collaborative filtering, where the correlation between two users who've
+just rated one thing in common is one. And with given a little bit
+of information about a user, you can create a profile
+that targets them. Creates a similarity of one, and can use
+that to extract their preference for some item you want to
+know their preference of. One mitigation strategy for this is to
+use a less transparent algorithm with something like a matrix factorization,
+a singular value decomposition. It's a lot harder to craft that target and
+attack profile, and accurately obtain the information
+of a particular user in a system. There's also considerations for
+user system privacy. A lot of recommenders don't
+really consider this. Goodreads knows all your ratings and
+the general user contract with Gooodreads, that's fine. But there are situations, there's
+been research work on recommendation, where you protect
+information about the user, including their preferences from
+the service provider itself. Who wants to know users' characteristics,
+and can analyze all the data
+that users give it. And solving this problem is hard, and
+does require some more refinement and exactly what we're trying
+to protect from who. Are we trying to create a system where
+the system can do recommendations without knowing the users' ratings or
+a particular user's ratings? Are we trying to create a system
+where they know the users' ratings, but can't in such a way
+that we try to protect it from being able to infer
+othe datar about the user? Or maybe we have a merchant and we don't want them to be able
+to obtain too much user data. But it's okay if the recommender
+service might know that data so long as the merchant doesn't. And there's a variety of ideas for
+providing this kind of privacy that some of them work fairly well,
+some of them break down fairly quickly. One, you could separate
+the recommender from the vendor. Also, these ideas can be
+combined together, so you can separate
+the recommender from the vendor. So one organization sells things, another
+organization provides recommendations. The recommender company doesn't
+get to find out what users bought, the vendor doesn't get to find out the
+data that's being used in recommendations. There's been a proposals to use trusted
+computing infrastructure to attest recommender integrity. So that the recommendation
+servers running on computers that use cryptography and
+certifications from trusted third parties, that they are implementing
+recommendation in a way that preserves certain guarantees to
+the users of how their data is handled. There's been proposals to pool ratings
+between users so different users will pool their ratings together,
+present them then to the system and get recommendations back,
+to hide themselves among fellow users. Adding noise to ratings and profiles. With some of this issues there
+can be fairly easy to go and just de-noise the ratings. So, if you're going to try that kind of
+strategy, you have to think about how hard is going to be to just take
+out the noise that's being added. Also, there's been work on
+decentralizing recommendations. So that rather than having
+a centralize recommender server, users collaborate with each other directly
+in order to compute recommendations. And then also using things like
+homomorphic encryption which is encryption protocols where you can do
+computation on the encrypted data, and it is computation on
+the underlying real data. So that you can provide an encrypted
+version of your profile to your friend or to the service, that's encrypted
+under homomorphic encryption, you do computation over that, you get
+the recommendations back and decrypt them. That gets very, very expensive and is often not practical to actually
+use in a deployed system, but there's been some work starting to
+explore using it for recommendations. So there's a variety of ideas to provide
+this kind of user-system privacy, there's not a whole lot that's
+been widely deployed at present. And in a lot of systems,
+the user may very well not care. They might be fine with the system
+having access to their data especially if they have a relationship
+of trust with the service provider. So it's important to think carefully about
+the threats that you want to protect from in your recommender system, and
+what threats your users might consider. And if you're going to make privacy
+claims or robustness claims, or security claims about your
+recommender algorithm, to be careful in thinking about what
+protections you're actually providing. Carefully think out the thread
+model to make sure that the claims you're providing about the kind
+of privacy you preserve, in both a research setting and
+in an industrial setting, and the advertising claims that you make to
+your users about what your algorithm does. Think carefully about the threat model to
+make sure the your claims are accurate. And also, it helps you to understand where the
+vulnerabilities in your system might be.

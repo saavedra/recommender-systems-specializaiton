@@ -1,0 +1,218 @@
+Welcome back. In today's interview,
+I'm pleased to bring you Jen Golbeck. The Director of the HCI Lab at
+the University of Maryland and also an Associate Professor
+at that university. Who's an expert in trust
+space recommendations and in social computing in general. In fact, before we go on, I'm going to
+ask you to tell us a little bit about her most recent book but first we're just
+going to welcome her to the class and start right in on trust
+based recommendations. Welcome, good to have you here, Jen. >> I'm great, really happy to be here. >> So far our class has
+learned about recommenders looking at non-personalized
+recommendations like averages and product associations, a content based
+filtering, building up personal profiles. And we've just gone through
+user-user collaborative filtering. Can you tell us what trust based
+recommendation is and how it fits into or extends that framework? >> Sure, so trust based
+recommendations are really a variation on collaborative filtering where
+you're doing user-user computations. So, the most basic idea of a user-user
+collaborative filtering algorithm is that you compute some sort
+of similarity between users. And then that becomes
+a weight that you can use to give priority to users
+who are more similar to you. And to enhance how much you would
+consider their ratings of items. For trust-based recommender systems,
+you are doing a similar thing. But instead of computing
+similarity with other users, you're actually leveraging
+an underlying social network and trust ratings that users have given
+to each other, either explicitly or that you're pulling implicitly
+from existing data. And using that in place of a similarity
+measure to make recommendations. So, the idea is that instead of giving
+more weight to people who are similar to you, you're giving more
+weight to people that you trust. And that captures some more nuanced
+things than similarity gets on its own. >> So, how would you compute
+trust in one of these systems? Are there different models that
+work in different situations? >> Yeah,
+there's a few different ways to do it. When I started doing this work as part
+of my dissertation in like 2003/2004, we were working on models where you had a
+social network like you'd have on Facebook and users would actually explicitly rate how much they trusted other
+people in the network. And we were doing that
+as part of research and so people were willing
+to give us that data. But the fact is that most people
+don't go into Facebook or Twitter and explicitly say how much they
+trust other people there. So, there are a handful of algorithms
+that will work to compute trust based on explicit ratings that people have given
+saying, how much they trust one another. And we'll look at a slide in a minute
+that goes through one of those algorithms because it's similar to most
+of them that are out there. But there's a number of other
+ways that you can do it. Sometimes, you'll infer trust by looking
+at something like similarity but that's actually much more nuanced. And you're computing a lot of other
+attributes between two people and their ratings. So, you get an estimate of
+trust based on similar ratings. But you don't require people
+to actually go in and say how much they trust one another. And there's some systems that are hybrid. And on top of that,
+there's two other ways of looking at this. One is in terms of what we
+would call reputation, and the other in terms of very
+specific personal trust. And we differentiate those where
+reputation is something that's global. So, if I want to know
+how trustworthy you are, I'm going to get the same answer
+as anybody else who asks. You have a general reputation. And a trust system that uses that would
+give the same the value to anyone who asks how trustworthy you are. The more personalized trust systems are actually going to give a different
+answer depending on who asks. And that can be really useful in
+situations, like, say politics. If I'm a very liberal person and you're
+a very conservative person, if I want to know how much to trust you about political
+issues, I'm probably going to get an answer that says not very trustworthy
+based on my personal perspective. But if someone who shares all of your
+views asks, the system may say that you are trustworthy because you
+have similarities with them. And so those systems really rely
+more on the social network and could have some additional
+interesting computational things. The slide that I've prepared for you and
+that you have shows how one of those local trust algorithms works that infers
+a different value for each person. So, we could go through that if you want. >> Sure, let's bring up that slide. >> Okay, so
+what we have here are two nodes. One is called the source and
+the other's called the sink. And that's basic network lingo. The source wants to know
+how much to trust the sink. So, in this algorithm, which is kind of a common base of a lot
+of algorithms that work this way. The source will ask its friends
+how much to trust the sink. So, if you click to the next, you'll
+see the source has a couple of friends. The one on the bottom might
+know the sink directly. So, if we click again, you'll see that there's an edge
+connecting that bottom node to the sink. And that node will return
+its value to the source. So, if you click again,
+you'll see we get an edge coming back. Click again and you'll see, we have a value that's
+stored down at that lower node. And that's going to get
+reported back to the source. So, the source has some information
+from its friend on the bottom. Now the friend on the top might
+not know the sink directly and so the friend on the top's
+going to ask its friends. So, if you click again,
+you'll see those friends show up. Some of those friends might know the sink,
+so if you click, you'll see an edge from some of them. Other of those friends
+might not know the sink. So, if you click again, you'll see
+that they just repeat the process. They ask their friends and this goes on until eventually you get
+some friends that know the sink directly. They'll grab their trust values and
+they'll pass it back to their friends. So, you can see some edges here and
+they start going back. Now when a node gets information from
+a couple of its friends, what it wants to do is take the values from those friends
+about how much they trust the sink. And then compute a value for
+how much it would trust the sink. And it does that with a weighted average. So, the friends it trusts more,
+their opinion gets more weight. So, you'll see a little formula,
+that's just a weighted average. And then this node now has a value for
+how trustworthy it thinks the sink is. And every node repeats that and if you
+keep clicking, you'll see that these values eventually get passed back,
+weighted in an average until they get back to the source which then does its own
+weighted average of its two neighbors. If you click again,
+that should show up underneath. And it ends up with a final score of
+how trustworthy it thinks the sink is. So, that's a simple
+version of the process. Now, if you click one more time, you'll see that there's actually
+a bunch of other nodes and edges included in this network that
+don't get factored into the computation. Because you use a method to try to
+pull out the most relevant nodes and the shortest paths between the source and
+the sink to finally get that value. >> All right, so while we have this
+slide up, a piece of this is clear. We're getting the trust value directly,
+when we have one, from our friends, when we don't. And if I trust my friend,
+I'm more likely to trust what they think of the person I'm trying
+to decide whether to trust. Does something go in later? Does the source update its trust value for
+those close friends? If it turns out they were right or
+wrong about their judgment of the sink, down the road? >> Yeah,
+that's a really interesting question. It's difficult. So, certainly, trust can change
+in any of these systems and the algorithms will update
+the inferred values. The problem is when you're
+doing an inferred value, you generally don't know which of
+your friends is telling you this because it's an algorithm that runs
+in the system in the background. And that's actually important because
+privacy is really important when you're talking about trust. And this was an issue when I
+started running these systems. I had some friends and
+colleagues putting in values. And I had one fellow graduate student and his advisor had put in a really
+low trust value for him. And he was so upset about this and you
+can think of reasons for that happening. But the fact is that most people want
+their trust ratings kept really private. So, generally, the system is not going to reveal what
+information came from what person. So, those trust ratings
+can remain private. So, you have to do a little bit of
+kind of personal investigation to figure out which of your friends is giving
+you good information and which isn't. >> Are there particular benefits and drawbacks that might work in
+certain applications here or other places where trust based
+recommendation just fails miserably? Yeah, there's places where it's good and
+there's places where it's really bad. But the thing that it's good at,
+is when the user, who's giving the recommendation,
+is very different from the average person. So, the common example I give from this,
+is looking at a movie recommender system. A Clockwork Orange is a great example. I hated A Clockwork Orange. Like it's a couple hours of my
+life that I wish I had back. But I understand why people
+give that movie high ratings. I don't ever want to see
+anything like that though. So, if you go into the system,
+if you have, say, a four star scale. Average ratings of that
+movie are like three and half stars because it's very important
+film, people give it high ratings. My rating is whatever the lowest option is
+in the system because I don't want to see anything like that again. In cases like that, collaborative filtering algorithms
+can have some problems. Because there may be people who
+are similar to me in a lot of ways. And in fact, people who like that movie
+tend to be kind of movie buffs like me. So, I'll get recommendations that are very
+high but I'm so different than everyone else that the collaborative filtering
+algorithm kind of fails miserably. But trust algorithms tend to
+do really well in this space. Because trust is certainly
+related to similarity, but it also captures things like how
+much do we agree on items that I'm really passionate about,
+that are important to me. And we've done a lot of studies that
+show that if you and I have one big disagreement on something I care a lot
+about, my trust for you drops way down. And so that means these trust based
+recommender systems are able to capture similarity on those important things
+better than a collaborative filtering algorithm can. So, they do much better in those cases. Overall, they perform about the same. But one of the big
+drawbacks to them is that getting accurate trust data is very hard. There are some systems
+where people provide it. But overall, you don't have a lot
+of it and so you're estimating it, you're pulling it from a network, and
+you're just, you have so much more bootstrapping to do than you would in
+a collaborative filtering type system. That it's hard to get enough initial data
+in the system to get really good results. It's a much more serious problem for trust recommenders than
+other recommender systems. >> I also think,
+it's sometimes just hard to explain. That the first notion when I hear trust
+based recommendation, I think, gee, I sort of trust my relatives but
+I wouldn't be willing to take either movie advice or restaurant or frankly even
+investment advice from most of them. I know them too well to trust
+them in certain specific domains, even if I'd be happy to
+trust them in others. And clarifying the whole idea that you
+build this trust network specifically for a domain seems to be one of those
+important parts that you have to get people over the hurdle to understand
+where the trust really comes from. >> Yeah, and so, that's a great point. I mean, the context of trust is so
+important. And people do have a hard
+time assigning trust ratings. And even if you explain them,
+we want you to think about movies, and how much would you trust a recommendation
+that comes from those people, they feel bad giving low trust ratings
+to people that they really like. There's just a psychological issue there,
+that you want to say, I trust this person about movies, even though they
+don't really reflect your views. And so that can put a lot of
+noise into the data as well. >> Well, and part of that is also the
+difference between trust and agreement. It might be that if I know you,
+even if we disagree on movies, if I know you know my taste,
+I would trust that if I ask you for a movie recommendation, it would be
+a good one because you know my tastes. But I don't trust your ratings
+of movies because we disagree. And the language is not quite subtle
+enough to get those differences out. >> Yeah, I think that's right, and that becomes a real problem in an
+automated system where you're not actually asking the person for a recommendation
+because they could give a good one. But you're just relying on their ratings. >> Great, so, are trust based
+systems out there in widespread use? Are there examples that
+we can point people to? >> Yeah, not as much as I would have
+liked when I was writing my dissertation on this. But the one real example
+of this is Epinions. So, it's epinions.com and it's a general
+review website, kind of like Yelp. But more for
+products than services in restaurants. They have a system called, Web of Trust, which uses trust ratings that
+you can assign to other people. And they propagate those through
+the network like I described. That company is now owned by eBay,
+actually. And sold for, I think,
+$650 million last time it changed hands. Lots of users, lots of activities. So, that's the one big example
+of where you can see these sorts of systems in use in
+real practice on the web. >> Wonderful, well before we go,
+tell us a little bit about your book. because while these students are here for
+recommender systems, I know many of them are more generally interested in social
+computing and analysis in social networks. And it's a nice opportunity to let
+them know about the work you've done. >> Great, yeah so, the book's
+called Analyzing the Social Web. And it's a textbook that I developed
+out of a class on social network and social media analysis that I taught
+at the University of Maryland. And I was teaching that both on
+the graduate level and as a core class for the undergraduates. And it pulls together things like
+graph theory and structural analysis, which you might do in a math or
+computer science course, along with sociological concepts
+like trust and tie strength. And really looking at how people interact
+and how you can study that and understand both networks and who's important in those
+networks by pulling in both computing, mathematical, physics concepts and
+then social science concepts. So, about half the book teaches this
+vocabulary of interdisciplinary ways of looking at networks and the other half
+is looking at case studies in different domains of how you can actually apply
+that and understand the networks better. So, I'm really happy with it because it
+brings a lot of different fields together. And it's a real interdisciplinary
+look at the topic. And it's written for people who
+have no background in the field. So, it's a good way to get started
+learning about how to do social network analysis. >> Well, wonderful. Well, thank you for joining us. It's been a pleasure to have
+a chance to talk with you. >> Thanks, this is so fun.

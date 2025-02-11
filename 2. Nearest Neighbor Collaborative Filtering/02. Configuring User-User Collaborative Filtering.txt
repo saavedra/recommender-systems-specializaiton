@@ -1,0 +1,111 @@
+Welcome back. In the last few videos, we've introduced
+user based collaborative filtering and walked through, in some detail,
+how the algorithm works. In this video, I'm going to be walking through some of
+the different configuration choices that you can make in setting up
+a user-user collaborative filter. And then providing you with
+a baseline configuration and the end that works reasonably well for
+variety of data sets. And our hope is that this module, in connection with the additional
+material you'll see later on how to evaluate recommenders, provide you
+with a starting point for configuring the collaborative filter to meet
+the needs of your particular application. There's several different configuration points we're going to
+talk about in this video. First is how we pick neighborhoods, then
+how we use the neighborhoods to compute scores, the ways we can
+normalize the input data, and then the ways that we can compute the
+similarities between users that user-user collaborative filtering depends on. I'm going to be fairly
+brief in this video. My goal is not to provide an in depth
+discussion of each of this options or configuration points, but to provide you with a starting point
+as well as some current best practices. So to select the neighborhoods, there's several different ways
+that we can select neighbors. One is we can use all possible neighbors,
+all users in a small data set. With relatively few users this
+can be a reasonable decision. We can also threshold the similarity or
+distance. So we could say all users with a
+similarity of at least 0.1 to the user for whom we're generating
+recommendations will be considered. We can pick random neighbors,
+this can be particularly useful with very large data sets, often in
+conjunction with other techniques. So, for example, we could randomly
+pick 10,000 neighbors and then we can threshold them. Or pick the next option
+taking the top end neighbor. So say 30, we want the 30 most similar neighbors
+that can be used to score an item. And then finally, we can use cluster-based
+techniques where we cluster the users, and then a user's neighbors
+are other users in its cluster. There's also the question of how
+many neighbors that we need to use. In theory, the more neighbors the better. If you have a good similarity metric,
+but practically, marginally similar or dissimilar neighbors can introduce
+a lot of noise into the computations. So you get some good signal from
+neighbors with strong similarities, but then if you mix in too many low similarity
+neighbors, then their differences from the target user can start to degrade
+the quality of the recommendations. Between 25 and 100 neighbors is often
+used, 30 to 50 is a very good range for doing say,
+movie recommendation with ratings data. Once we have this neighborhood of say,
+30 neighbors that are the most similar neighbors, we need to be able to
+score items using this neighborhood. There's several different ways we can
+do this, we can do a straight average. We can do a weighted average which
+is what we've seen in most detail. You can also use a multiple linear
+regression where we compute the predictions or scores as
+a regression of neighbor ratings. But weighted average is simple and
+works quite effectively. We also need to consider how
+we can normalize our data. There's several different difficulties
+that arise in the data from which we're computing. Users use the rating scale differently. Some people will use
+the higher end of the scale, while others will use
+more middle of the scale. What one person a rates a five,
+another person might just rate to four saving the five for
+a few particularly special items. Some people use more
+the scale than others. Some people rate four, four and
+a half, with some threes, some fives. Other peoples will liberally use one and
+a half, two, three, four stars. If we just take the average, we're
+ignoring these kinds of differences, but we can compensate for
+them by normalizing the data. Commonly this is done for user based collaborative filtering by
+subtracting each user's average rating from the ratings before we consider them
+either in similarity computation, or as we saw,
+in doing the actual scoring computations. We don't take the way that the average
+of the neighbors raw ratings, instead we take the weighted
+average of how much more or less they liked that movie than
+the average movie that they've seen. We then apply that to the current
+user's average rating and we get back a rating prediction
+in the user's own rating scale. We can also convert ratings to z-scores,
+where a normalized rating of 1 means that they rated that movie 1 standard
+deviation above their mean rating. We can also subtract an item or
+an item user mean. User mean rating works very well,
+and is a very simple computation. Also, when we do the scoring, we have to reverse this computation
+after we're done doing the computation. So if we're doing
+the weighted average S(u, i)= the sum of the weights. Uv times the mean normalized rating. Rvi minus the average rating by user v. Since we subtracted the neighbor's mean rating, we have to add back in the target user's mean rating. And that uses the neighbors' offsets
+from their means to compute how much we expect this user to like
+this movie or book or whatever, better or worse than the average book or
+movie they've seen. And then, we add back in their average
+to get an actual rating prediction. In addition to normalizing the data, there are different ways we
+can compute the similarities. We looked at the Pearson correlation. The naive implementation of
+the Pearson correlation only considers ratings that both users have in common and
+all of the summations. We don't need user normalization
+because the correlation already takes care of that. There's a Spearman rank correlation that
+applies Pearson to the ranks items, but in general this doesn't work as well
+when we're trying to do collaborative filtering. But there's a problem, what about
+if we don't have very much data? Suppose users just have one
+rating in comment or two ratings. The Pearson correlation is one, but
+are the real users really that similar? Are two ratings sufficient evidence to
+believe that two users are completely similar in their preferences? So instead what we do is
+we weight the similarity. And the easy way to do this is if
+we look at our similarity function. In the numerator, we continue summing over
+just the items that they have in common. In the denominator,
+we sum over all of the items. What this is is this effectively,
+if we subtract the mean values, then we just treat all
+missing data as zero. And we sum over all possible items or
+all relevant items, this is the computation we get. The result is that it naturally biases the similarity lower if two users don't have very many common ratings, but they have many ratings. And if they only have two ratings period,
+then it goes ahead and says, they're similar. But it effectively weights it by the
+proportion of items that they've rated, that both of them have rated
+which provides a useful natural way of attenuating the similarity for
+these users with low overlap. Historically, there have been some other
+ways, such as significance weighting, if you look at the research literature,
+that involve damping parameters. The advantage of doing
+this way that arises from the sums is that it doesn't involve
+any parameters that you have to tune. So with all of these different options,
+what's a good starting point? In the next course, if you continue with
+the specialization we'l give you some tools to evaluate the impact
+of these different decisions. But for a good starting point, about
+30 most similar neighbors, throwing out the negative correlations, the negatively
+correlated neighbors, use weighted averaging, user mean normalization,
+cosine similarity over normalized ratings. This gives you a pretty
+solid starting point for building your user-based
+collaborative filter. So in user-user collaborative filtering
+there's a variety of configuration points. Various research over the years have
+suggested some that seemed to work well over a variety of data sets. The next course as I said,
+we'll discuss evaluation methods you can use to find good options for
+your application.

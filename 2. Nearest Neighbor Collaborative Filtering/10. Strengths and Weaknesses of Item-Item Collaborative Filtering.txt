@@ -1,0 +1,101 @@
+Welcome back. As we wrap up our discussion of
+the Item-Item Collaborative Filtering algorithm, wanted to
+take a moment out to just bring together the real world
+experience of the strengths and weaknesses of this algorithm for
+recommending in different contexts. So let's start by going back to the two
+ways of thinking about item-item and the intuitions behind it. One way of thinking about Item-Item was
+as a more efficient implementation of User-User. At the time that these algorithms were
+being invented, we were thinking about the fact that we had this matrix that
+was painfully taller than it was wide. We had lots of users compared
+to the number of items. And yet, all of our comparisons
+were row to row, and that led to both less data
+in each comparison and more comparisons in order to do
+User-user collaborative filtering. And so, part of the intuition
+was if we could somehow flip the computation to work on the columns,
+the item, rather than the rows, the users. We might achieve the same goal, but
+achieve that goal more efficiently. The other intuition, perhaps the intuition
+that brought Item-Item to the folks at places like Amazon that were developing
+these in commercial recommenders early, was Item-Item as an aggregating
+Product-Association Recommender. Now we're already doing things like,
+gee, for this product, here's the most common other product. What if we just extend that notion to say
+well, what about for all of the products I've ever had together, what are the most
+popular products that go with that? And it turns out that computing that, doing a pure probabilistic approach
+might not be the easiest thing. But you could very quickly get into this,
+well if I have item correlations, I can take the items that best
+matched each of my products and then pull them together and emerge
+with an algorithm very much like our Item-Item Collaborative
+filtering algorithm. So one of these starts with the idea that
+I like User-User collaborative filtering. I like the idea of hearing
+what other people like, but I want to do it more efficiently. The other says,
+I love the idea of saying, well, if you're buying this you
+might want to buy that. But rather than limit it to
+what you're buying right now, what if I extend it to everything
+you've ever bought before? And as those two intuitions come together, we get the reality of
+the Item-Item algorithm. The early experiences, interestingly, were different depending on the domain
+in which this was deployed. All reports were that Item-Item was very
+successful in commercial application. Amazon made a big deal about it,
+had gone out and, did a bunch of work in that space. Other people were using
+Item-Item algorithms. In fact, in our work with the company and
+that perceptions, we moved to the Item-Item algorithms for performance reasons, specifically
+because the companyies wanted it. And they were generally
+delighted with the results, including results that
+were testing how often the things we recommended would
+actually end up being purchased. Around that time we deployed Item-Item
+in MovieLens when we switched from using our original User-User implementation,
+and it was a big disappointment. So what happened? Well, it's interesting
+because Amazon was happy the recommendations worked and
+MovieLens users complained. They said that the things we were
+recommending were too obvious, and that the recommendations and
+predictions weren't bold enough, and they were used to things that
+were bolder and less obvious. In fact, this is a large part of
+what led to the line of research in metrics to evaluate beyond
+accuracy that we'll be talking about in the next
+course in this specialization. So what happened from a very simple
+perspective is that Item-Item is not the same as User-User. It's very difficult if you go
+through the items that are commonly co-purchased with the items
+that you've already purchased to discover things that are very different
+from what you've already consumed. That's just not likely to be commonly
+co-purchased with these items or commonly purchased by the same user. User-User on the otherhand, elevates
+items that a close neighbor loves, even if there's very little evidence
+behind the fact that you would like that. So, if I have my top 20 neighbors and one of the top ones in that has gone off
+and I've mostly looked at comedies, but they see this sort of dark
+animated documentary. I don't know if you can do a dark animated
+documentary, but we'll go with it. And they loved it. That would be enough for User-User to recommend it to me
+because it has no evidence against it. Nobody else in my neighborhood may
+have ever heard of this movie so all the evidence is positive. User-User was built on the notion
+of social word of mouth and that if somebody says it's good,
+that's good enough. And Item-Item was built on the idea
+of let's aggregate the evidence and find the things that there's
+a lot of evidence supporting. Another consequence of this is that
+because Item-Item always was looking for a lot of evidence,
+its predictions tended to be less extreme. User-User had a lot of things
+that were given a five and frankly, a lot of things
+that were given a one. Because, those were
+things that only one or two people had experienced
+within your neighborhood. Item-Item, I never showed you those items, because it didn't have enough evidence
+to put them into your recommendations. With more data, you tend to get a little
+less extreme or perhaps more conservative. So what did we learn? Item-Item is faster and
+it's more stable for domains where there
+are more users than items. That stability is wonderful, it makes
+it possible to precompute and to store Item-Item correlation and do this system
+with a model that runs really quickly. But it's also substantially
+more conservative, which is good in many domains. If you're using up your opportunity to
+find something somebody's going to buy, Item-Item's probably a pretty good choice because it's something
+somebody's likely to buy. It's good in a consumption task. It may be frustrating, however, for
+people who think of a recommender as on its own,
+a source of entertainment and browsing and they're trying to discover things they
+would never have come up with before. And so knowing that, you can use how you apply your
+algorithms in an appropriate direction. So what next? One of the problems is easy to address. The fact that the predictions
+are more conservative is something that can be re-scaled. OrdRec is an approach for mapping a ranked list onto
+arbitrary prediction distribution. It's easy enough to say well gee,
+if you want 15%, 5 stars, we'll just make the top 15% into 5 stars. And matrix factorization techniques,
+which come in the fourth course of this specialization, present an interesting and
+different point in the design space where it may be possible to once
+again do a little bit more discovery. Though again those techniques do not
+reach the point of likely recommending, with very much accuracy, things that you
+have little evidence that you'll like. So with this,
+we're wrapping up our discussion of Item-Item Collaborative Filtering and
+how the algorithm works. As you go forward, you'll see a set
+of exercises including a quiz and the programming in spreadsheet
+problems that will help you pull together your knowledge of Item-Item
+collaborative filters and how to use it. We'll see you there.

@@ -1,0 +1,232 @@
+Welcome back, in the last several lectures
+we've talked about various aspects of doing collaborative filtering and
+implementing it. Today we'll be talking about what can
+go wrong in collaborative filtering and how we can mitigate
+some of these problems. And for this video, we're pleased
+to have with us Paul Resnick, Professor in the University of
+Michigan School of Information. And along with John Riddle one
+of the co-inventors of user-user collaborative filtering. Paul welcome to the class. >> Thank you, nice to be here. >> So in collaborative filtering, we
+assume basically that we have users that are giving us useful information on
+their preferences that we can mine in order to go find items
+that other users might like. What can go wrong in this set up? >> A couple things. One is users might not
+be very informative. And the algorithms are meant
+to take care of that and figure out who's informative or whom and
+use that information as best they can. But we may also have some people who are deliberately trying to manipulate
+the predictions that get made for others. So someone's put out a new movie and they would like everyone
+to go to that movie. If everyone loves it great, but
+if not everyone loves they might make, they'd like it to appear
+as if everyone loves it. So that Netflix people will
+be predicted that they're going to like it and
+more people will go watch it. So, they may do things that. Put in fake ratings for things,
+create civil accounts that are there just in order to manipulate the predictions
+that get made for other people. >> So what can we do to mitigate
+these kinds of problems? Ideally what would you like
+to do is recognized the bad raters or the bad ratings and ignore them. But it's really hard to tell,
+its basically hopeless to try to recognize
+the bad ratings But we might hope to at least
+recognize the bad raters, and ignore them or
+somehow discount what they've done. I've done some work on this and
+a number of others have. The empirical approach is to try and do something that detects
+a signature of a fake account, somebody who's, Rating too many
+items in a short period of time. Somebody who's ratings too closely match
+the ratings of another account that was created two seconds earlier. Things that, if they're not very clever, you might be able to detect
+the signature of those attackers. You might do it based on some behavioral
+things of when the accounts were created. How much time there was
+between account creation, or you might try to do it based on
+content of what were their ratings. And that's not the kind of rating
+distribution that we would expect to see from the people that we have
+had in our system over time. That's the approaches
+that have been tried. Some of the work that I have done with
+the Rahul Sami is tried to take a more theoretical computer
+science approach to it. And prove some theorems about
+what is going to be possible and what's not going to be possible. Iin the cat and mouse game that's
+going on in between Trip Adviser and the people who are trying to inflate
+the ratings for their hotel. And unfortunately we have some good news and some bad news. We've formulated a way of
+thinking about the problem that can characterize a certain
+notion of attack resistance, the ability to resist an attack
+by up to n fake accounts. Where resisting means preventing them
+from doing more than see bits of damage. And I actually brought
+a few slides with me, I can walk us through that a little bit. But the bad news part of
+it is that in doing that, in being provably resistant to any type of attack,
+not just a particular kind of attack, but to all possible attacks from
+no more than n fake accounts. You end up throwing away
+some good information from people who weren't attacking. Because you can't tell whether
+they were the attackers or not, you end up ignoring
+some of that information. And in a subsequent paper
+we showed that that's in some sense a fundamental trade off. That not just our particular approach
+to resisting manipulation, but any approach that is manipulation
+resistant in a certain form or way, has to throw away a certain amount
+of information from good writers. So, is this a good segue into,
+I have a few slides that sort of illustrate the intuitions for that, and
+maybe we'll come back to the conversation. So the first thing that I think
+would be helpful to students is we have this notion of n, c robust. So an attempt to avoid manipulation,
+we say it's n, c robust if n attackers,
+somebody controlling n accounts let's say, can't do more than a fixed
+amount of total damage. Where damage means they got
+predictions to people that weren't the right predictions given the
+information we had from the honest raters. So a manipulation resistance method
+is effective if the algorithm was n, c robust and attackers can't do
+more than c total bits of damage. And I won't get into the details
+of what c bits of damage means. But basically if you were
+making binary predictions, each prediction would be one bit and
+so c is some fraction of it, an error or some number of items that
+you've got wrong predictions for. And what we came to is
+this fundamental tradeoff. That if we want to be resistant
+to more attackers, a higher n, then we're going to end up throwing
+away more information from the genuine raters who weren't part of the attack. And I won't go into all
+the mathematical details. But I can give you an intuitive sense of
+why there's going to be this tradeoff. Imagine a very simple setting where
+we're just trying to make a prediction. This item will be good or bad. And we might do it in a personalized way
+as we do in collaborative filtering. So imagine we're trying to figure
+out whether Michael Ekstrand will like this hotel in Cancun. And suppose that we have
+a bunch of people who are pretty well matched with you,
+our target, and that when they rate an item, three
+quarters of the time they agree with you. And then we have our attacker whose
+going to maybe try to shill for This particular hotel and
+they can create a bunch of accounts but they don't have any
+special affinity to you. They're making it up and
+half the time they agree with you. So if we had a whole bunch of these ratings for
+the particular hotel in Cancun and the vast majority of them said,
+good, Michael's going to like this. Then if they were all of the informative
+type and the vast majority of them said good, then it's a very good
+prediction that you'll like it as well. But what if they're not all informative? Some of them are noisy, they just didn't
+have any information, or some of them are made by an attacker deliberately
+trying to make it look like this. And they all say, yes, great hotel, but in fact, there's no reason to believe
+that you would like the hotel. So we might try to look at their past
+histories, each of these writers and say did they match with Michael? Much like what you would do in a user,
+user collaborative filtering algorithm and I assume you've talked
+about in previous classes. So look at this history,
+and try to decide up, this is somebody who is a good predictor for
+Michael, and this is someone who is not. Well, suppose you only
+had two items of history. On the left, we get the distribution of how well
+those a rater would agree with you. Well, half the time they would agree with
+you, so with two items a quarter of those shill raters will agree
+with you on two items. A half once and then a half again. Half of those raters will
+agree with you once, and a quarter of them will
+be wrong both times. Compare that to, on the right of this
+in the red, the informative raters. Well, if somebody's informative,
+three-quarters of the time they agree with you, so on two items three quarters
+squared nine-sixteenth the time, there I'll agree with you
+on both of the two items. So they're more likely to agree
+with on both of the items but there's not a big difference
+between these distributions. If I only saw the history two times,
+I wouldn't know very well whether it was somebody who was
+a good match for you or a poor match. I've just superimposed the blue and the red into a single graph here, so
+we can see that even if we only took the people who were correct on
+both of the previous items. We would be getting only a little more
+than half of the honest raters and we would be getting a quarter of
+the completely uninformative raters. So with two items of history, we can't tell very well,
+suppose we had more than two items. Well, here after five items,
+over on the far right you see the people who
+agreed with you all five times. Given that someone agreed with you all
+five times there much more likely to be an informative rater than somebody who was
+guessing, but so, we're not perfect there. Even among the people who agreed
+with you 5 times in a row, 3% of the complete frauds
+still agree with you 5 times. And I don't know, 50%,
+actually if we look at these people, even if we put our cutoff there, we would
+still be allowing some of the frauds in. And most of the reds are not going to
+have agreed with you all five times, so we'll still be throwing away most of them. It gets a little better
+with ten items of history, you start to get more separation
+between those two distributions. If we got up to 30, now if we said
+only people who got it right 25 times, we would almost only be getting
+the informative people. But we would still be throwing
+away a bunch of informative who by luck hadn't managed to
+get it 25 times out of 30. So you can see that's it's difficult
+to separate the good people from the uninformative just using the history,
+you have to have a fair bit of history. Now, suppose that the uninformative
+people aren't just uninformative but that they're actually attackers. With the scenario I gave,
+we're going to ignore their first 30 items until they show that
+they're very informative. An attacker might be able to
+fake being informative for 30 items and then start attacking. And if they can do that by, say, copying
+the ratings of an informative person, and it's even this problem of
+separating gets even harder. So whereas with just separating
+informative from uninformative raters, we have to throw away the first few items to separate the deliberate cheaters
+from the informative raters. We would actually have to in some
+sense throw away the first few items where they gave new,
+novel information that they couldn't have gotten by copying anybody else and
+that starts to be quite a tall order. So and I've done this in
+the very specific setting, but we actually are able to prove a much
+more general theorem that says. Any algorithm that is (n,c) robust,
+that is, preventing an attacker's from doing more than (c) bits of damage,
+has to throw away at least this omega( n log(n/c)) bits of
+information from the good people. All right, you started by
+asking what can we do about it? And I'm sort of saying well,
+we can't perfectly do anything, we can't perfectly solve it. And when we finish this maybe we can talk
+a little bit about some other things that I know have been, we found, other researchers have found
+on TripAdvisor reviews. But we're not going to be
+able to perfectly do this, given that there's this
+fundamental tradeoff. What can we do? Well, we can tradeoff,
+if we get better at keeping the attackers from making fake accounts,
+by charging them for accounts, or having CAPTCHA's that
+actually work, or something else. We might limit then and if we aren't worried about the attacker
+having more than 20 accounts, then we only have to throw away omega of log n
+over c and that's small that's not so bad. Another thing we can do is
+allow the attackers to have a little bit more damage. This log n over c, if c gets bigger then we don't have to throw away as
+much information from the good guys. Well, why is it okay to allow the
+attackers to do more damage maybe we have some ways of recovering. Maybe we have some honest
+raters who go in and fix things very quickly like we know on
+Wikipedia that there are good ways of. Reverting the damage and
+instead of preventing people from doing the vandalism they try
+to recover very quickly. And the third possibility,
+since I was talking about the attackers being able to copy what informative
+people to sort of simulate. And make themselves look like
+as somebody whose informative, is to make it harder for
+them to do that copying. And there are more or less good ways
+to do that; I think there going to be limits to that,
+because the simplest form of copying is to get a prediction for you And
+then say what was predicted. With some noise around that. And so,
+its going to be pretty hard to keep the attackers from knowing anything
+about what the ratings database is. So they are going to be able to
+have some ability to do what to reuse the ratings that you already
+have and make it look like they're smart. So that's the set of
+things that I prepared. >> So how have these attacks and mitigation strategies
+worked out in practice? >> So this is something that,
+giving this the theoretical argument, in practice It is a cat and mouse game. And the attackers are getting
+a little more sophisticated and the sites are getting more sophisticated
+at trying to weed them out. One of the things that is helpful for
+the sites is to not tell everybody exactly how much attack they have come under or
+what they are doing as counter measures. Because that gives the attackers a leg up. So, partly, I don't know exactly how well they're
+doing or how much attacking is happening. Because they don't want to talk about it. As with all kinds of cyber security
+things or general security measures. There have been some academic
+studies that have tried to see how well can people do at telling
+whether there's an attack going on. And one that I think was very
+well done came out of Cornell. Where they looked not at ratings of the
+kind we talked about with collaborative filtering but with the reviews. The text reviews that
+are done of hotels and such. But we don't know with those text
+reviews that are on the site. Which of them are from real customers and
+which are fake. So, how can they do a study to
+tell whether people can determine good ones from the fakes? What they did was,
+they hired Mechanical Turk Workers. To create new fakes. And then they tested other people's
+ability to distinguish between the known fakes, and
+the ones that were actually on the site. And they weren't able to do that. People were not able to distinguish. The fakes that were
+created by Turkers from the things that were
+actually shown on the site. So I had actually had some debates with
+one my colleagues, Richard Zeckhauser, over the years. Saying, I thought I could tell. >> [LAUGH]
+>> Looking at TripAdvisor what are the ones that are real. He said he didn't think he could. Now a little more convinced that
+maybe I'm fooling myself, or maybe that I'm looking at
+some additional cues that. That the typical person in
+this study wasn't given or wasn't looking at that I suspect
+TripAdvisor probably is using. Things like is this the only
+review from this person? Did person visit TripAdvisor? And look at that site sometime
+a few months before or a few weeks before they put in the rating? They may have a bunch of cues that a human
+just looking at the review doesn't have. So I don't think it is hopeless,
+I still use TripAdvisor app and every time I have I've found that it
+has actually been pretty helpful. So I am of the belief that
+the majority of the reviews that are on there are actually from
+real people, and are informative. I think, so far,
+they are winning the cat and mouse game. But definitely, it's an ongoing battle. In those systems where people
+are actually using them. When we make our academic systems and we're testing them out, we don't get
+attackers because the stakes are too low. But when these things actually matter,
+then we start to get attackers. >> So, if some of our students are going
+and they're trying to build recommender technology into, say,
+their company's product. Then they should be looking
+at a wide array of data, and not just the opinions the users expressed
+to try to be able to detect when their users might be using the site for
+less than honest motives? >> Yes, it won't be the first
+thing that you have to solve, it won't be the first
+problem you have to solve. The first problem you'll have to
+solve is getting anyone to use it and making predictions that
+are actually useful. It's only after the stakes matter that you
+should expect you'll get some attacks. And you need to play the cat and mouse
+game and once it looks like it's working, then you gotta be doing some effort
+to notice and respond to fraud. >> Thank you for being with us today. >> Great, thank you.
