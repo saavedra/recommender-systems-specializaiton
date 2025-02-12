@@ -1,0 +1,80 @@
+Welcome back. In the previous video,
+we saw a method of learning and matrix factorization that uses gradient
+descent to approximate the SVD. And this algorithm we called FunkSVD. In this video, we're going to look
+at where the formulas came from. So we described the structure of the
+algorithm, we gave you the update rules. How do you update the user and item feature values at each
+step of the algorithm? But we didn't explained how
+we derived those values, so in this video that's
+what we're going to do. We're going to walk through,
+we're going to derive, each of those update formula values. So gradient decent tells
+us how to find a minimum. We've got a sum function,
+and we want to find where is the x value that
+has the smallest value, or the largest value if we're
+doing gradient descent. So we have this update
+rule that we use for this, it uses a vector a partial derivatives. So this lecture is going to
+use some calculus. So as you saw in the previous video,
+we followed the error. We take the insight,
+the single value decomposition is the breakdown of the matri
+that has minimal RMSE. So we're just going to directly,
+using gradient descent, find the matrices that minimize the RMSE. First we do a couple of simplifications. So we've got,
+the RMSE is the square root of the sum of the squared errors
+over the number of items. Now square root is monotonic. That is if a value goes up,
+so does its square root. Also we're testing over a single data set. We're testing all these triangles, all
+these same matrices on the same dataset. So n is the same. Dividing by a constant is also monotonic,
+if it goes up. So does divided by the constant. So if we find
+the recommendation parameters that minimize the sum of squared error. Those same matrices will minimize
+the root mean squared error and sum of squared error is a much
+easier formula to work with. So we're going to minimize
+the sum of the squared error. Now if you recall our prediction rule. The score of item i for a particular user, which I'm going to abbreviate
+here as r tilde ui, to say the prediction of the rating, is our baseline value plus the sum or
+the dot product of the user and item feature vectors for
+that user in that item. So we compute the error by
+subtracting the prediction from the rating which is r sub ui- b
+sub ui minus this dot product. But then the updates, gradient descent
+is based on the rule, That theta, so we're going to, it's common to call the
+parameters of one of these models theta. So theta is P and Q together,
+the two matrices. That theta at step n equals theta at step n- 1 plus the gradient of our error with respect of theta. And the gradient is just this big
+matrix of partial derivatives. So we're trying to care, though we're training individual user
+item feature values that are timed. So we've got a particular rating,
+r sub ui. It has a particular item. It has a particular user,
+a particular item. We're also training one feature at a time. So we train the first feature. Then we train the second feature. So we're training at feature f. So we're trying to update P sub uf,
+and Q sub if. The user and item feature values for
+that particular feature. So we really only have two values
+we care about at any step. We're using something called
+stochastic gradient descent in FunkSVD, which means we're updating for
+every rating. Rather than going over all the ratings and
+computing a big update matrix. We're just automatically
+upgrading with every rating. So at any given point,
+any given step through the algorithm, we care about these two values. We're trying to update these two values. So how do we do that? We want to take the derivative. The derivative with respect to Puf of the squared error, or of epsilon sub ui squared. So if you've taken calculus and remember your derivative rules for dealing with powers, that's going to be equal to 2 times epsilon sub ui, times the derivative with respect to P sub uf of epsilon sub ui. And now epsilon sub ui, That is r sub ui minus r twiddle sub ui. So we get, 2 epsilon sub ui, dP sub uf, Of r sub ui- b sub ui minus the sum over the features of P sub uf, q sub uf. Now only one of these
+terms has P sub uf in it. And that is the element of this sum. That contains piece of uf. Everything else does not
+have any piece of uf. Which when we take the derivative means,
+They're going to go away. Because the derivative of something that
+doesn't have the thing we're deriving with respect to is 0. So 0, 0, a bunch of 0 here except for
+one thing which is piece of p sub uf times q sub uf,
+which is multiplying by a constant. So it's going to be q sub uf is all we have in this derivative. Negative q sub uf. So that's going to be equal to, 2 epsilon sub ui, q sub uf, negative, because -q sub uf. So the derivative with
+respect to the primer that we're updating,
+the user feature value is n- 2 times the error times
+the item feature value. And if you take the derivative with
+respect to the item feature value, you get all this out, so
+you get the user feature value. So this brings us to the, since the update is the value plus
+the derivative times a learning rate lambda to get things to slow down. We get a P sub uf prime. The next value equals P sub uf minus lambda minus 2 epsilon ui, q if. So we can roll this two into this lambda. And so we get the update rule that we saw. We get the, in the previous video, we get the value plus lambda epsilon i,
+q if. That gives us our update rule of four FunkSVD So as we saw the gradient descent. The next value is the learning
+rate times the derivative, or is previous value minus the learning
+rate times the derivative. This uses the previous steps values. Uses the learning rate,
+it uses the gradient of the error. We apply this to our derivative. We get exactly the update
+rules that we saw last time. So we add lambda times
+the error times the item value to get the feature value update. We then apply a regularization
+to discourage the item, user feature values from getting
+very big without a lot of evidence. So we take this additional term gamma,
+that's this regularization parameter. And so, we decrease the update based
+on how big the value we're updating is. And this makes it take a lot more
+data to justify large item and user feature values. So that is the calculus behind
+the FunkSVD update rules. A lot of algorithms are going to
+follow the same approach. We're going to talk about this more in
+detail towards the end of this course. This basic approach of
+optimizing an error function and in order to actually implement
+it you're going to need to compute the derivatives which
+give you the update rules. A lot of times in an algorithms published
+it's going to do that for you, sometimes especially if you're developing your own
+new algorithm you're going to have to do it yourself This is an example of how to
+do that, with one widely used algorithm.

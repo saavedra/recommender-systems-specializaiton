@@ -1,0 +1,53 @@
+Welcome to matrix factorization and
+advanced techniques, the fourth course in our
+specialization on recommender systems. The idea of matrix factorization
+starts with the concept of dimensionality reduction. When we think about a ratings matrix and
+we think about having millions or hundreds of millions of users and
+thousands, or hundreds of thousands, or millions of products, what we have is
+a highly specialized representation. And frankly an overly detailed
+representation of taste. What do people like? And what do they like in products? The whole idea of the techniques
+were studying in this course is to find a way to compress that representation
+and distill out whether there were some essential and
+important dimensions of taste. That if we can represent,
+we can simplify the whole process of recommendation into identifying
+a person's taste and identifying how each individual
+product matches against taste space. Now this gives us the promise of
+efficiency and higher quality. This is one of those cases
+were compressing and losing a little bit of data,
+helps us get over artifacts and get to a smoother and more realistic
+rendering of people's taste. So, in this course, we're going to be looking at exploiting
+the best of machine learning. Machine learning techniques have been
+doing a lot to look at dimensionality reduction and at how we can, not only take
+a look at taste as a function of ratings, but take the both end approach of
+weaving in whatever we know about user properties like demographics,
+item properties like content, even contextual properties,
+all into a model that represents taste as compactly as possible, to give us the
+most effective recommendations possible. >> The key concepts of this course
+start with matrix factorization for collaborative filtering,
+where we'll learn how to break the ratings matrix down into smaller matrices
+that describe user preference for different types of items or
+characteristics of items, and the extent to which items
+express those characteristics. Through this, we'll also start
+to look at machine learning and optimization approaches to recommender
+systems, where we directly learn our recommender that minimizes some error or
+maximizes some kind of utility function. We'll then move in to hybrid
+algorithms which look at combining multiple algorithms into one, so you
+could combine a collaborative filter and a content based filter for example. To allow their strength to
+compliment each other and build a better recommendation than
+either one can compute alone. These types of recommenders
+are very widely used in practice. We'll then look at learning-to-rank
+which looks at what happens if we skip this whole prediction thing entirely? And directly optimize our recommender for
+producing good top end lists. And finally we will talk about number of
+advanced topics such as context to where recommendation, aspects, and issues
+of deploying recommenders at scale on industrial applications and
+several addition topics. >> This course is structured
+around three major topics. Weeks one and
+two focus on matrix factorization. There will be a spreadsheet assignment
+that builds upon matrix factorization. And for the honors track
+a programming assignment plus a quiz. Week three will focus
+on hybrid algorithms, which will also have a spreadsheet
+assignment and a quiz. And week four will look at
+advanced techniques and topics, where there will be an honors assignment
+programmed in LensKit as well as the final quiz of this course and
+of this specialization. Let's move forward into
+matrix factorization.
